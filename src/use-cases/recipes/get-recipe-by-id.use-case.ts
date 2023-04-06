@@ -8,7 +8,7 @@ export class GetRecipeById {
     this.recipeRepository = recipeRepositoryImplementation;
   }
 
-  async execute(contractId: string): Promise<Recipe> {
-    return this.recipeRepository.getOneById(contractId);
+  async execute(recipeId: string): Promise<Recipe> {
+    return this.recipeRepository.getOneById(recipeId);
   }
 }
