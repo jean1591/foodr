@@ -9,7 +9,7 @@ export const ingredientFactory = (
   return {
     id: faker.datatype.uuid(),
     name: faker.vehicle.model(),
-    quantity: faker.datatype.number(),
+    quantity: faker.datatype.number({ min: 1, max: 1000 }),
     unit: sample(Object.values(Units)),
     ...options,
   };
