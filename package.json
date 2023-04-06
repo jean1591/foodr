@@ -1,7 +1,7 @@
 {
-  "name": "clean-archi-101",
+  "name": "foodr",
   "version": "0.0.1",
-  "description": "Template repository for clean-architecture",
+  "description": "Foodr API",
   "author": "Jean Robertou",
   "private": true,
   "license": "private",
