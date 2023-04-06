@@ -1,9 +1,8 @@
 export class Author {
-  id: string;
   firstname: string;
+  id: string;
   lastname: string;
 
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
 }
