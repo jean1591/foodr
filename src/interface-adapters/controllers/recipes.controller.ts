@@ -10,7 +10,7 @@ export class RecipesController {
     this.recipeRepository = recipeRepositoryImplementation;
   }
 
-  async getRecipess(): Promise<Recipe[]> {
+  async getRecipes(): Promise<Recipe[]> {
     const useCase = new GetAllRecipes(this.recipeRepository);
 
     return useCase.execute();
