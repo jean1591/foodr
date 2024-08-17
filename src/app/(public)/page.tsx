@@ -7,7 +7,7 @@ export default function Home() {
       <div className="rounded-lg bg-white p-8 shadow-lg">
         <WeekPlanner />
 
-        <div className="mt-8">
+        <div className="mt-20">
           <Dishes />
         </div>
       </div>

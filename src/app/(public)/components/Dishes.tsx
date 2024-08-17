@@ -35,10 +35,13 @@ export const Dishes = () => {
   return (
     <div>
       {Object.entries(weeklyMeals).map(([keyDay, day]) => (
-        <div key={keyDay} className="my-16 grid grid-cols-3 gap-8">
-          {Object.entries(day).map(([keyMeal, meal]) => (
-            <DishItem key={keyMeal} type={keyMeal as Meals} meal={meal} />
-          ))}
+        <div key={keyDay}>
+          <p className="text-xl font-bold capitalize">{keyDay}</p>
+          <div className="mb-16 mt-4 grid grid-cols-3 gap-8">
+            {Object.entries(day).map(([keyMeal, meal]) => (
+              <DishItem key={keyMeal} type={keyMeal as Meals} meal={meal} />
+            ))}
+          </div>
         </div>
       ))}
     </div>
