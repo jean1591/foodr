@@ -1,43 +1,29 @@
 'use client'
 
-import { MealType, WeeklyMeals } from '@/utils/interfaces/meals'
-import { useDispatch, useSelector } from 'react-redux'
-
 import { DishItem } from './DishItem'
 import { DishesSkeleton } from './skeleton/Dishes'
+import { MealType } from '@/utils/interfaces/meals'
 import { RootState } from '@/app/lib/store/store'
 import { classNames } from '@/utils/classNames'
-import { setWeeklyMeals } from '@/app/lib/store/features/meals/slice'
-import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 export const Dishes = () => {
-  const dispatch = useDispatch()
-  const { weeklyMeals } = useSelector((state: RootState) => state.meals)
+  const { loadingWeeklyMeals, weeklyMeals } = useSelector(
+    (state: RootState) => state.meals
+  )
 
-  useEffect(() => {
-    ;(async function getWeeklyMeals() {
-      const weeklyMealsResponse = await fetch('/api/meals', {
-        method: 'POST',
-        body: JSON.stringify({ filters: [] }),
-        headers: { 'Content-Type': 'application/json' },
-      })
-
-      const { weeklyMeals } = (await weeklyMealsResponse.json()) as {
-        weeklyMeals: WeeklyMeals
-      }
-
-      dispatch(setWeeklyMeals(weeklyMeals))
-    })()
-  }, [])
+  if (loadingWeeklyMeals) {
+    return <DishesSkeleton />
+  }
 
   if (!weeklyMeals) {
-    return <DishesSkeleton />
+    return <></>
   }
 
   const breakfastIncluded = !!weeklyMeals.monday.breakfast
 
   return (
-    <div>
+    <div className="mt-20">
       {Object.entries(weeklyMeals).map(([keyDay, day]) => (
         <div key={keyDay}>
           <p className="text-xl font-bold capitalize">{keyDay}</p>

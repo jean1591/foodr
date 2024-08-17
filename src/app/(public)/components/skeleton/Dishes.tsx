@@ -14,7 +14,7 @@ const fakeMeals = [1, 2, 3]
 
 export const DishesSkeleton = () => {
   return (
-    <div>
+    <div className="mt-20">
       {days.map((day) => (
         <div key={day}>
           <p className="text-xl font-bold capitalize">{day}</p>

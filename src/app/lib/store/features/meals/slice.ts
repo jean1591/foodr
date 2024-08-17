@@ -4,14 +4,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface MealSlice {
   breakfastSelected: boolean
-  healthySelected: boolean
+  loadingWeeklyMeals: boolean
   veggiesSelected: boolean
   weeklyMeals: WeeklyMeals | null
 }
 
 const initialState: MealSlice = {
   breakfastSelected: false,
-  healthySelected: false,
+  loadingWeeklyMeals: false,
   veggiesSelected: false,
   weeklyMeals: null,
 }
@@ -23,8 +23,8 @@ export const mealSlice = createSlice({
     setBreakfastSelected: (state) => {
       state.breakfastSelected = !state.breakfastSelected
     },
-    setHealthySelected: (state) => {
-      state.healthySelected = !state.healthySelected
+    setLoadingWeeklyMeals: (state, action: PayloadAction<boolean>) => {
+      state.loadingWeeklyMeals = action.payload
     },
     setVeggiesSelected: (state) => {
       state.veggiesSelected = !state.veggiesSelected
@@ -37,7 +37,7 @@ export const mealSlice = createSlice({
 
 export const {
   setBreakfastSelected,
-  setHealthySelected,
+  setLoadingWeeklyMeals,
   setVeggiesSelected,
   setWeeklyMeals,
 } = mealSlice.actions

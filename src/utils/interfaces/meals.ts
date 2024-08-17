@@ -12,6 +12,7 @@ export type Colours =
   | 'blue'
   | 'gray'
   | 'green'
+  | 'indigo'
   | 'orange'
   | 'pink'
   | 'purple'
