@@ -1,10 +1,12 @@
 'use client'
 
-import { Meals, WeeklyMeals } from '@/utils/interfaces/meals'
+import { MealType, WeeklyMeals } from '@/utils/interfaces/meals'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { DishItem } from './DishItem'
+import { DishesSkeleton } from './skeleton/Dishes'
 import { RootState } from '@/app/lib/store/store'
+import { classNames } from '@/utils/classNames'
 import { setWeeklyMeals } from '@/app/lib/store/features/meals/slice'
 import { useEffect } from 'react'
 
@@ -28,18 +30,25 @@ export const Dishes = () => {
     })()
   }, [])
 
-  // TODO: add skeleton
   if (!weeklyMeals) {
-    return <></>
+    return <DishesSkeleton />
   }
+
+  const breakfastIncluded = !!weeklyMeals.monday.breakfast
+
   return (
     <div>
       {Object.entries(weeklyMeals).map(([keyDay, day]) => (
         <div key={keyDay}>
           <p className="text-xl font-bold capitalize">{keyDay}</p>
-          <div className="mb-16 mt-4 grid grid-cols-3 gap-8">
+          <div
+            className={classNames(
+              breakfastIncluded ? 'grid-cols-3' : 'grid-cols-2',
+              'mb-16 mt-4 grid gap-8'
+            )}
+          >
             {Object.entries(day).map(([keyMeal, meal]) => (
-              <DishItem key={keyMeal} type={keyMeal as Meals} meal={meal} />
+              <DishItem key={keyMeal} type={keyMeal as MealType} meal={meal} />
             ))}
           </div>
         </div>

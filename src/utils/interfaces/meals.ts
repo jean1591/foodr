@@ -8,8 +8,8 @@ type WeekDays =
   | 'sunday'
 
 export type Colours =
+  | 'amber'
   | 'blue'
-  | 'brown'
   | 'gray'
   | 'green'
   | 'orange'
@@ -19,9 +19,15 @@ export type Colours =
   | 'teal'
   | 'yellow'
 
-export type Meals = 'breakfast' | 'lunch' | 'dinner'
+export type MealType = 'breakfast' | 'lunch' | 'dinner'
 
-export type WeeklyMeals = Record<WeekDays, Record<Meals, Meal>>
+type Meals = {
+  breakfast?: Meal
+  lunch: Meal
+  dinner: Meal
+}
+
+export type WeeklyMeals = Record<WeekDays, Meals>
 
 export interface Meal {
   calories: number
