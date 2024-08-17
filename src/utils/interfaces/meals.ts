@@ -13,6 +13,7 @@ export type Colours =
   | 'gray'
   | 'green'
   | 'orange'
+  | 'pink'
   | 'purple'
   | 'red'
   | 'teal'
