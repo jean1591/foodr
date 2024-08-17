@@ -26,29 +26,29 @@ const colorToTextColorMapper: Record<Colours, string> = {
   orange: 'text-orange-900/75',
 }
 
-export const DishItem = ({ meal, dish }: { meal: Meals; dish: Meal }) => {
+export const DishItem = ({ type, meal }: { type: Meals; meal: Meal }) => {
   return (
     <div
       className={classNames(
-        colorToBgColorMapper[dish.color],
+        colorToBgColorMapper[meal.color],
         'relative rounded-lg p-4 shadow-lg'
       )}
     >
       <div className="absolute bottom-3/4 left-1/2 -translate-x-1/2 transform">
-        <p className="rounded-full bg-white p-4 text-5xl">{dish.icon}</p>
+        <p className="rounded-full bg-white p-4 text-5xl">{meal.icon}</p>
       </div>
 
       <div className="mt-8">
         <p
           className={classNames(
-            colorToTextColorMapper[dish.color],
+            colorToTextColorMapper[meal.color],
             'capitaliz text-sm font-semibold capitalize'
           )}
         >
-          {meal}
+          {type}
         </p>
-        <p className="mt-2 font-bold">{dish.name}</p>
-        <p className="mt-4 text-xs text-slate-400">{dish.calories} kcal</p>
+        <p className="mt-2 font-bold">{meal.name}</p>
+        <p className="mt-4 text-xs text-slate-400">{meal.calories} kcal</p>
       </div>
     </div>
   )
