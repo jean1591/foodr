@@ -1,11 +1,12 @@
 import { PiCheck, PiX } from 'react-icons/pi'
 
+import Link from 'next/link'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className="my-12">
       <div className="mt-24 md:mt-48">
         <div>
           <Hero />
@@ -156,14 +157,16 @@ const Pricing = () => {
 
 const CtaButton = () => {
   return (
-    <button
-      className={classNames(
-        buttonHoverTransition,
-        'w-full rounded-lg bg-green-800 p-4 font-bold text-white shadow-none hover:bg-green-900 hover:shadow-lg'
-      )}
-    >
-      Generate your weekly meals
-    </button>
+    <Link href="/login">
+      <button
+        className={classNames(
+          buttonHoverTransition,
+          'w-full rounded-lg bg-green-800 p-4 font-bold text-white shadow-none hover:bg-green-900 hover:shadow-lg'
+        )}
+      >
+        Generate your weekly meals
+      </button>
+    </Link>
   )
 }
 
@@ -189,7 +192,8 @@ const FreeTrialCard = () => {
         </li>
       </ul>
 
-      <div className="mt-8">
+      <div className="mt-16 w-full">
+        {' '}
         <CtaButton />
       </div>
     </div>
@@ -221,11 +225,11 @@ const OneTimePaymentCard = () => {
         </li>
       </ul>
 
-      <div className="mt-8">
+      <div className="mt-16 w-full">
         <CtaButton />
       </div>
 
-      <p className="mt-4 text-sm font-medium text-slate-600">
+      <p className="mt-4 text-center text-sm font-semibold text-slate-600">
         Pay it once, own it forever
       </p>
     </div>

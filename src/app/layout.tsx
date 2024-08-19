@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const whiteBgPages = ['/', '/tos', '/privacy-policy']
+const whiteBgPages = ['/', '/tos', '/privacy-policy', '/login']
 
 export default function RootLayout({
   children,
@@ -19,8 +19,8 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname()
 
-  const isLandingPage = whiteBgPages.includes(pathname)
-  const backgroundColor = isLandingPage ? 'bg-white' : 'bg-green-100'
+  const isWhiteBgPage = whiteBgPages.includes(pathname)
+  const backgroundColor = isWhiteBgPage ? 'bg-white' : 'bg-green-100'
 
   return (
     <StoreProvider>

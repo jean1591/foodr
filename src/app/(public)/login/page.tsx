@@ -1,13 +1,17 @@
 'use client'
 
+import { ChangeEvent, useState } from 'react'
+
+import { buttonHoverTransition } from '@/utils/design/constants'
+import { classNames } from '@/utils/classNames'
 import { login } from './actions'
 import toast from 'react-hot-toast'
-import { useState } from 'react'
 
 const notify = () =>
   toast.success('Check you emails to login', { duration: 5000 })
 
 export default function LoginPage() {
+  const [buttonDisabled, setIsButtonDisabled] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
 
   const handleLogin = () => {
@@ -16,11 +20,22 @@ export default function LoginPage() {
     login({ email })
   }
 
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length > 0) {
+      setIsButtonDisabled(false)
+    } else {
+      setIsButtonDisabled(true)
+    }
+
+    setEmail(event.target.value)
+  }
+
   return (
-    <div>
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div>
         <h2 className="text-center text-2xl font-bold leading-9 tracking-tight">
-          Sign in to your account
+          Sign in to your{' '}
+          <span className="bg-green-800 p-1 text-white">Foodr</span> account
         </h2>
       </div>
 
@@ -38,7 +53,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleOnChange}
               autoComplete="email"
               className="block w-full rounded-md py-2 pl-2 text-slate-800 shadow-sm ring-1 ring-inset ring-slate-800/25 sm:text-sm sm:leading-6"
             />
@@ -46,11 +61,22 @@ export default function LoginPage() {
         </div>
 
         <button
+          disabled={buttonDisabled}
           onClick={handleLogin}
-          className="bgslate-800-content textslate-800 hover:bgslate-800-content/80 w-full rounded-md px-4 py-2 text-center text-base font-semibold leading-6 shadow-sm"
+          className={classNames(
+            buttonHoverTransition,
+            'w-full rounded-md bg-green-800 px-4 py-2 text-center text-base font-semibold leading-6 text-white shadow-lg hover:bg-green-900 hover:shadow-none disabled:bg-slate-200 disabled:text-slate-800'
+          )}
         >
           Log in
         </button>
+
+        <div>
+          <p className="mt-4 text-sm font-medium text-white">
+            If you don't have an account, one will be automatically created for
+            you
+          </p>
+        </div>
       </div>
     </div>
   )
