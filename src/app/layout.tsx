@@ -10,6 +10,8 @@ import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const whiteBgPages = ['/', '/tos', '/privacy-policy']
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,12 +19,12 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname()
 
-  const isLandingPage = pathname === '/'
+  const isLandingPage = whiteBgPages.includes(pathname)
   const backgroundColor = isLandingPage ? 'bg-white' : 'bg-green-100'
 
   return (
     <StoreProvider>
-      <html lang="fr">
+      <html lang="fr" className="scroll-smooth">
         <body
           className={classNames(
             inter.className,

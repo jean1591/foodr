@@ -16,11 +16,11 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="mt-24 md:mt-32">
+      <div id="features" className="mt-24 md:mt-32">
         <FeaturesCard />
       </div>
 
-      <div className="mt-24 md:mt-32">
+      <div id="pricing" className="mt-24 md:mt-32">
         <Pricing />
       </div>
     </div>
