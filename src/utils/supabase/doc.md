@@ -12,7 +12,7 @@ This app is already setup to work with Magic Link. You'll need to update some pa
 
 ##### Email Template
 
-Go to `https://supabase.com/dashboard/project/<your supabase projectId>/auth/templates` and select Magic Link tab. Use the following as template:
+Go to `https://supabase.com/dashboard/project/azwdccsonovwijbbsxoa/auth/templates` and select Magic Link tab. Use the following as template:
 
 ```
 <h2>Magic Link</h2>
@@ -25,7 +25,7 @@ The `a.href` must be setup as specified, the rest can be updated.
 
 ### Site URLs
 
-Go to `https://supabase.com/dashboard/project/<your supabase projectId>/auth/url-configuration` and change `Site URL` to your custom url.
+Go to `https://supabase.com/dashboard/project/azwdccsonovwijbbsxoa/auth/url-configuration` and change `Site URL` to your custom url.
 
 For instance, if your website is hosted at `https://jeanrobertou.com`, use this as `Site URL`.
 
@@ -38,5 +38,5 @@ In order to work in development, you can add `Redirect URLs`. For instance, if y
 Create at least one table (there is no need to input data at this stage), and once done, run the following command each time your DB is updated (new table or column, column type update, ...)
 
 ```
-npx supabase gen types typescript --project-id <your supabase projectId> ./src/utils/supabase/database.types.ts
+npx supabase gen types --lang=typescript --project-id "azwdccsonovwijbbsxoa" --schema public > ./src/utils/supabase/database.types.ts
 ```
