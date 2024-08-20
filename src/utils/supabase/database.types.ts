@@ -14,6 +14,7 @@ export type Database = {
           auth_user_id: string
           created_at: string
           credits: number
+          email: string
           id: string
           plan: string
         }
@@ -21,6 +22,7 @@ export type Database = {
           auth_user_id: string
           created_at?: string
           credits?: number
+          email?: string
           id?: string
           plan?: string
         }
@@ -28,10 +30,19 @@ export type Database = {
           auth_user_id?: string
           created_at?: string
           credits?: number
+          email?: string
           id?: string
           plan?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_auth_user_id_fkey"
+            columns: ["auth_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
