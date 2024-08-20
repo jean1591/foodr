@@ -96,19 +96,19 @@ const FeaturesCard = () => {
           <ul className="mt-4 list-none space-y-2 text-left text-sm font-semibold">
             <li className="flex items-center justify-start gap-x-4">
               <PiX className="h-4 w-4" />
-              <p>Personalized Meal Plans</p>
+              <p>Wasted Ingredients and Food</p>
             </li>
             <li className="flex items-center justify-start gap-x-4">
               <PiX className="h-4 w-4" />
-              <p>Time-Saving Convenience</p>
+              <p>Time-Consuming Meal Planning</p>
             </li>
             <li className="flex items-center justify-start gap-x-4">
               <PiX className="h-4 w-4" />
-              <p>Nutritional Balance</p>
+              <p>Inconsistent Nutrition</p>
             </li>
             <li className="flex items-center justify-start gap-x-4">
               <PiX className="h-4 w-4" />
-              <p>Effortless Recipe Discovery</p>
+              <p>Recipe Overwhelm</p>
             </li>
           </ul>
         </div>
