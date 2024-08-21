@@ -41,7 +41,7 @@ export const WeekPlanner = () => {
   }
 
   return (
-    <div className="rounded-lg bg-green-100 px-4 py-8 shadow-lg">
+    <div className="rounded-lg bg-green-200 px-4 py-8 shadow-lg">
       <div className="flex items-center justify-between">
         <p className="text-2xl font-bold">Create a weekly meal plan</p>
         <button

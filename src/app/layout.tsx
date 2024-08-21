@@ -20,7 +20,7 @@ export default function RootLayout({
   const pathname = usePathname()
 
   const isWhiteBgPage = whiteBgPages.includes(pathname)
-  const backgroundColor = isWhiteBgPage ? 'bg-white' : 'bg-green-100'
+  const backgroundColor = isWhiteBgPage ? 'bg-white' : 'bg-slate-50'
 
   return (
     <StoreProvider>

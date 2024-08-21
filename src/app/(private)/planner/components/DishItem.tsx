@@ -1,6 +1,21 @@
 import { Colours, Meal, MealType } from '@/utils/interfaces/meals'
 
 import { classNames } from '@/utils/classNames'
+import { useState } from 'react'
+
+const colorToBorderColorMapper: Record<Colours, string> = {
+  amber: 'border-amber-100',
+  blue: 'border-blue-100',
+  gray: 'border-gray-100',
+  green: 'border-green-100',
+  indigo: 'border-indigo-100',
+  orange: 'border-orange-100',
+  pink: 'border-pink-100',
+  purple: 'border-purple-100',
+  red: 'border-red-100',
+  teal: 'border-teal-100',
+  yellow: 'border-yellow-100',
+}
 
 const colorToBgColorMapper: Record<Colours, string> = {
   amber: 'bg-amber-100',
@@ -21,7 +36,7 @@ const colorToTextColorMapper: Record<Colours, string> = {
   blue: 'text-blue-900/75',
   gray: 'text-gray-900/75',
   green: 'text-green-900/75',
-  indigo: 'bg-indigo-100',
+  indigo: 'text-indigo-900/75',
   orange: 'text-orange-900/75',
   pink: 'text-pink-900/75',
   purple: 'text-purple-900/75',
@@ -31,28 +46,58 @@ const colorToTextColorMapper: Record<Colours, string> = {
 }
 
 export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
+  const [count, setCount] = useState<number>(1)
+
+  const handleCountDecrement = () => {
+    if (count > 0) {
+      setCount(count - 1)
+    }
+  }
+
+  const handleCountIncrement = () => {
+    if (count < 10) {
+      setCount(count + 1)
+    }
+  }
+
   return (
     <div
       className={classNames(
-        colorToBgColorMapper[meal.color],
-        'relative rounded-lg p-4 shadow-lg'
+        colorToBorderColorMapper[meal.color],
+        'flex items-center justify-between space-x-4 rounded-lg border-2 bg-white pr-2 shadow-lg'
       )}
     >
-      <div className="absolute bottom-3/4 left-1/2 -translate-x-1/2 transform">
-        <p className="rounded-full bg-white p-4 text-5xl">{meal.icon}</p>
-      </div>
-
-      <div className="mt-8">
+      <div className="flex items-center justify-start space-x-4">
         <p
           className={classNames(
-            colorToTextColorMapper[meal.color],
-            'text-sm font-semibold capitalize'
+            colorToBgColorMapper[meal.color],
+            'rounded-sm p-4 text-4xl md:text-5xl'
           )}
         >
-          {type}
+          {meal.icon}
         </p>
-        <p className="mt-2 font-bold">{meal.name}</p>
-        <p className="mt-4 text-xs text-slate-400">{meal.calories} kcal</p>
+
+        <div>
+          <p
+            className={classNames(
+              colorToTextColorMapper[meal.color],
+              'text-sm font-semibold capitalize'
+            )}
+          >
+            {type}
+          </p>
+          <p className="font-bold">{meal.name}</p>
+        </div>
+      </div>
+
+      <div className="flex items-baseline justify-center space-x-4 rounded-e-full rounded-s-full bg-slate-100 p-1 text-sm">
+        <button onClick={handleCountDecrement} className="pl-1">
+          -
+        </button>
+        <p className="px-1 font-semibold">{count}</p>
+        <button onClick={handleCountIncrement} className="rounded-e-full pr-1">
+          +
+        </button>
       </div>
     </div>
   )

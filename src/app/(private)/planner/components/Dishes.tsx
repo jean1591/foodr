@@ -4,7 +4,6 @@ import { DishItem } from './DishItem'
 import { DishesSkeleton } from './skeleton/Dishes'
 import { MealType } from '@/utils/interfaces/meals'
 import { RootState } from '@/app/lib/store/store'
-import { classNames } from '@/utils/classNames'
 import { useSelector } from 'react-redux'
 
 export const Dishes = () => {
@@ -20,19 +19,12 @@ export const Dishes = () => {
     return <></>
   }
 
-  const breakfastIncluded = !!weeklyMeals.monday.breakfast
-
   return (
-    <div>
+    <div className="space-y-12 md:space-y-20">
       {Object.entries(weeklyMeals).map(([keyDay, day]) => (
         <div key={keyDay}>
           <p className="text-xl font-bold capitalize">{keyDay}</p>
-          <div
-            className={classNames(
-              breakfastIncluded ? 'grid-cols-3' : 'grid-cols-2',
-              'mb-16 mt-4 grid gap-8'
-            )}
-          >
+          <div className="mt-4 space-y-8">
             {Object.entries(day).map(([keyMeal, meal]) => (
               <DishItem key={keyMeal} type={keyMeal as MealType} meal={meal} />
             ))}
