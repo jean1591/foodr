@@ -23,7 +23,7 @@ export const Dishes = () => {
   const breakfastIncluded = !!weeklyMeals.monday.breakfast
 
   return (
-    <div className="mt-20">
+    <div>
       {Object.entries(weeklyMeals).map(([keyDay, day]) => (
         <div key={keyDay}>
           <p className="text-xl font-bold capitalize">{keyDay}</p>

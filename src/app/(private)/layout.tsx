@@ -18,7 +18,7 @@ export default function PrivateLayout({
     ;(async function getUser() {
       try {
         const userResponse = await fetch('/api/users')
-        const user = (await userResponse.json()) as User
+        const { user } = (await userResponse.json()) as { user: User }
 
         dispatch(setUser(user))
       } catch (error) {
