@@ -4,7 +4,7 @@ export enum Plan {
 }
 
 export interface User {
-  credit: number
+  credits: number
   email: string
   plan: Plan
 }

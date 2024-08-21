@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 
 const formatDbUserToUser = (user: DbUser): User => {
   return {
-    credit: user.credits,
+    credits: user.credits,
     email: user.email,
     plan: user.plan as Plan,
   }

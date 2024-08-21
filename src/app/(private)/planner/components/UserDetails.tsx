@@ -18,7 +18,7 @@ export const UserDetails = () => {
         <p className="rounded-lg border-[1px] border-green-800 px-2 py-1 text-sm font-semibold text-green-800">
           {user.plan}
         </p>
-        <p className="text-right text-xl font-bold">{user.credit} 💎</p>
+        <p className="text-right text-xl font-bold">{user.credits} 💎</p>
       </div>
     </div>
   )
