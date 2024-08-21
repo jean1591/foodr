@@ -1,11 +1,10 @@
 import { Colours, WeeklyMeals } from '@/utils/interfaces/meals'
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  completionNoBreakfast,
-  completionWithBreakfast,
-} from '@/utils/mocks/openai/weeklyMeals'
 
 import OpenAI from 'openai'
+import { completionWithBreakfast } from '@/utils/mocks/openai/weeklyMeals'
+import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAPI_KEY })
 
@@ -40,6 +39,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const weeklyMeals = openAiResponseToJsonFormatter(
     completion.choices[0].message.content ?? '{}'
   )
+
+  await decrementUserCredits()
 
   await sleep(500)
 
@@ -80,4 +81,38 @@ const generatePrompt = (filters: Filters): string => {
     'Only return the JSON, with color as a Tailwind base color'
 
   return [responseStructure, mealSelection, technicalDetails].join(' ')
+}
+
+const decrementUserCredits = async () => {
+  const supabase = createClient()
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!session || !session.user) {
+    throw new Error('User is not connected')
+  }
+
+  const { user: authUser } = session
+
+  const { data: users } = await supabase
+    .from('users')
+    .select('credits')
+    .eq('auth_user_id', authUser.id)
+
+  if (!users || users.length === 0) {
+    redirect('/login')
+  }
+
+  const { error: updateUserCreditError } = await supabase
+    .from('users')
+    .update({ credits: users[0].credits - 1 })
+    .eq('auth_user_id', authUser.id)
+
+  if (updateUserCreditError) {
+    console.error('An error occured while updating user credits', {
+      error: JSON.stringify(updateUserCreditError, null, 2),
+    })
+  }
 }
