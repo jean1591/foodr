@@ -6,7 +6,7 @@ import { completionWithBreakfast } from '@/utils/mocks/openai/weeklyMeals'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAPI_KEY })
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
