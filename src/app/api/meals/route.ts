@@ -21,7 +21,6 @@ interface Filters {
 const regex = /(?:bg-|text-)?([a-z]+)-\d{3}/
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  console.log('🚀 ~ POST api/meals')
   const { filters }: { filters: Filters } = await request.json()
 
   const prompt = generatePrompt(filters)

@@ -5,6 +5,7 @@ import { classNames } from '@/utils/classNames'
 import { login } from './actions'
 import { useState } from 'react'
 
+// Add logout button
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')

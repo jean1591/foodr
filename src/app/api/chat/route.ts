@@ -17,8 +17,6 @@ export async function POST(request: Request) {
       model: 'gpt-4o-mini',
     })
 
-    console.log(completion.choices[0])
-
     return NextResponse.json({ text: completion.choices[0] })
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
