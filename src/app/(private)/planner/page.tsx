@@ -5,7 +5,7 @@ import { UserDetails } from './components/UserDetails'
 
 export default function Home() {
   return (
-    <div className="my-20 space-y-12">
+    <div className="my-12 space-y-12">
       <UserDetails />
       <Options />
       <GenerateMealPlanButton />

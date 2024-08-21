@@ -1,24 +1,22 @@
 'use client'
 
 import { RootState } from '@/app/lib/store/store'
+import { UserDetailsSkeleton } from './skeleton/UserDetails'
 import { useSelector } from 'react-redux'
 
 export const UserDetails = () => {
   const { user } = useSelector((state: RootState) => state.user)
 
-  // TODO: add skeleton
   if (!user) {
-    return <></>
+    return <UserDetailsSkeleton />
   }
 
   return (
-    <div className="space-y-8 rounded-lg bg-indigo-100 px-4 py-8 shadow-lg">
+    <div className="flex items-center justify-between rounded-lg bg-indigo-100 px-4 py-8 shadow-lg">
       <p className="text-lg font-medium">{user.email}</p>
-      <div className="flex items-center justify-between">
-        <p className="rounded-lg border-[1px] border-green-800 px-2 py-1 text-sm font-semibold text-green-800">
-          {user.plan}
-        </p>
-        <p className="text-right text-xl font-bold">{user.credits} 💎</p>
+      <div className="flex items-center justify-end gap-x-2">
+        <p className="text-right text-2xl font-bold">{user.credits}</p>
+        <p className="text-right text-2xl font-bold">💎</p>
       </div>
     </div>
   )

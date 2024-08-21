@@ -6,6 +6,7 @@ import {
 } from '@/app/lib/store/features/meals/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { GenerateMealPlanButtonSkeleton } from './skeleton/GenerateMealPlanButton'
 import { NoCreditsModal } from './NoCreditsModal'
 import { RootState } from '@/app/lib/store/store'
 import { WeeklyMeals } from '@/utils/interfaces/meals'
@@ -23,9 +24,8 @@ export const GenerateMealPlanButton = () => {
     (state: RootState) => state.interactions
   )
 
-  // TODO: add skeleton
   if (!user) {
-    return <></>
+    return <GenerateMealPlanButtonSkeleton />
   }
 
   const handleGenerateWeeklyMeals = () => {
