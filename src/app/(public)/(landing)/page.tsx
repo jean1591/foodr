@@ -190,7 +190,7 @@ const CtaButton = () => {
 
 const FreeTrialCard = () => {
   return (
-    <div className="rounded-lg border-[1px] border-slate-500 bg-slate-50 p-8">
+    <div className="order-2 rounded-lg border-[1px] border-slate-500 bg-slate-50 p-8 md:order-1">
       <div className="flex items-baseline justify-start gap-x-2">
         <p className="text-5xl font-extrabold">Free</p>
       </div>
@@ -216,35 +216,41 @@ const FreeTrialCard = () => {
 
 const OneTimePaymentCard = () => {
   return (
-    <div className="rounded-lg border-[1px] border-slate-500 bg-slate-50 p-8">
-      <div className="flex items-baseline justify-start gap-x-2">
-        <p className="text-lg font-medium text-slate-600 line-through">18€</p>
-        <p className="text-5xl font-extrabold">9€</p>
-      </div>
+    <div className="order1 md:order-2">
+      <BorderGradient>
+        <div className="rounded-lg bg-white p-8">
+          <div className="flex items-baseline justify-start gap-x-2">
+            <p className="text-lg font-medium text-slate-600 line-through">
+              18€
+            </p>
+            <p className="text-5xl font-extrabold">9€</p>
+          </div>
 
-      <ul className="mt-8 list-none space-y-2 text-left font-medium">
-        <li className="flex items-center justify-start gap-x-4">
-          <PiCheck className="h-6 w-6 text-green-500" />
-          <p>Unlimited parameters</p>
-        </li>
-        <li className="flex items-center justify-start gap-x-4">
-          <PiCheck className="h-6 w-6 text-green-500" />
-          <p>
-            10 generations{' '}
-            <span className={classNames(bgGradient, 'p-1 text-white')}>
-              per day
-            </span>
+          <ul className="mt-8 list-none space-y-2 text-left font-medium">
+            <li className="flex items-center justify-start gap-x-4">
+              <PiCheck className="h-6 w-6 text-green-500" />
+              <p>Unlimited parameters</p>
+            </li>
+            <li className="flex items-center justify-start gap-x-4">
+              <PiCheck className="h-6 w-6 text-green-500" />
+              <p>
+                10 generations{' '}
+                <span className={classNames(bgGradient, 'p-1 text-white')}>
+                  per day
+                </span>
+              </p>
+            </li>
+          </ul>
+
+          <div className="mt-16 w-full">
+            <CtaButton />
+          </div>
+
+          <p className="mt-4 text-center text-sm font-semibold text-slate-600">
+            Pay it once, own it forever
           </p>
-        </li>
-      </ul>
-
-      <div className="mt-16 w-full">
-        <CtaButton />
-      </div>
-
-      <p className="mt-4 text-center text-sm font-semibold text-slate-600">
-        Pay it once, own it forever
-      </p>
+        </div>
+      </BorderGradient>
     </div>
   )
 }
