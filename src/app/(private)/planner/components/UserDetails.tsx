@@ -12,8 +12,12 @@ export const UserDetails = () => {
   }
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-indigo-100 px-4 py-8 shadow-lg">
-      <p className="text-lg font-medium">{user.email}</p>
+    <div className="flex items-center justify-between">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100">
+        <p className="text-center text-2xl font-medium uppercase">
+          {user.email[0]}
+        </p>
+      </div>
       <div className="flex items-center justify-end gap-x-2">
         <p className="text-right text-2xl font-bold">{user.credits}</p>
         <p className="text-right text-2xl font-bold">💎</p>

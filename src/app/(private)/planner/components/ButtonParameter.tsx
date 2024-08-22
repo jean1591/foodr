@@ -1,4 +1,5 @@
-import { buttonHoverTransition } from '@/utils/design/constants'
+import { bgGradient, buttonHoverTransition } from '@/utils/design/constants'
+
 import { classNames } from '@/utils/classNames'
 
 export const ButtonParameter = ({
@@ -15,8 +16,10 @@ export const ButtonParameter = ({
       onClick={onClickHandler}
       className={classNames(
         buttonHoverTransition,
-        selected ? 'border-[1px] font-medium shadow-none' : 'shadow-lg',
-        'rounded-lg border-green-800 bg-white px-4 py-2 text-sm text-slate-500 hover:bg-green-50 hover:shadow-none'
+        selected
+          ? classNames(bgGradient, 'text-white')
+          : 'border-green-800 bg-white text-slate-500',
+        'rounded-lg px-4 py-2 text-sm shadow-lg'
       )}
     >
       {label}

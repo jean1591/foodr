@@ -1,13 +1,16 @@
 export const UserDetailsSkeleton = () => {
   return (
-    <div className="flex animate-pulse items-center justify-between rounded-lg bg-indigo-100 px-4 py-8 shadow-lg">
-      <p className="bg-slate-300 text-lg font-medium text-slate-300">
-        jeanrobertou.com
-      </p>
-
-      <p className="bg-slate-300 text-right text-2xl font-bold text-slate-300">
-        10
-      </p>
+    <div className="flex animate-pulse items-center justify-between">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-200">
+        <p className="text-center text-2xl font-medium uppercase text-slate-200">
+          J
+        </p>
+      </div>
+      <div className="flex items-center justify-end gap-x-2">
+        <p className="bg-slate-200 text-right text-2xl font-bold text-slate-200">
+          5 5 5
+        </p>
+      </div>
     </div>
   )
 }
