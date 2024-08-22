@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 
-// TODO: reset email flow
+// TODO: reset password flow
 export async function login({
   email,
   password,

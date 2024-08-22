@@ -56,17 +56,17 @@ function useOptionsHook(): Options {
   return {
     meals: [
       {
-        label: '☕️ Add breakfast',
+        label: '☕️ Breakfast',
         onClick: () => dispatch(setBreakfastSelected()),
         selected: breakfastSelected,
       },
       {
-        label: '🥪 Add lunch',
+        label: '🥪 Lunch',
         onClick: () => dispatch(setLunchSelected()),
         selected: lunchSelected,
       },
       {
-        label: '🍽️ Add dinner',
+        label: '🍽️ Dinner',
         onClick: () => dispatch(setDinnerSelected()),
         selected: dinnerSelected,
       },
