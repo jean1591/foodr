@@ -6,5 +6,6 @@ export enum Plan {
 export interface User {
   credits: number
   email: string
+  hasCompletedOnboarding: boolean
   plan: Plan
 }

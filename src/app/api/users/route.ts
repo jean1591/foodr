@@ -34,6 +34,7 @@ const formatDbUserToUser = (user: DbUser): User => {
   return {
     credits: user.credits,
     email: user.email,
+    hasCompletedOnboarding: user.has_completed_onboarding,
     plan: user.plan as Plan,
   }
 }

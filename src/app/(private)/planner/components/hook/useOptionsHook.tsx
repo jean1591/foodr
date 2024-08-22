@@ -1,12 +1,15 @@
+import { Categories, Option } from '@/utils/interfaces/options'
 import {
   setAsianSelected,
   setBreakfastSelected,
   setDairyFreeSelected,
+  setDinnerSelected,
   setFrenchSelected,
   setHighProteinSelected,
   setItalianSelected,
   setLowCarbSelected,
   setLowFatSelected,
+  setLunchSelected,
   setMealPrepSelected,
   setMexicanSelected,
   setNutFreeSelected,
@@ -21,16 +24,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/lib/store/store'
 
-type Option = {
-  label: string
-  onClick: () => void
-  selected: boolean
-}
+type Options = Record<Categories, Option[]>
 
-function useOptionsHook(): Option[] {
+function useOptionsHook(): Options {
   const dispatch = useDispatch()
   const {
     breakfastSelected,
+    lunchSelected,
+    dinnerSelected,
     // Dietary
     nutFreeSelected,
     dairyFreeSelected,
@@ -52,99 +53,111 @@ function useOptionsHook(): Option[] {
     quickAndEasySelected,
   } = useSelector((state: RootState) => state.mealOptions)
 
-  return [
-    {
-      label: '☕️ Add breakfast',
-      onClick: () => dispatch(setBreakfastSelected()),
-      selected: breakfastSelected,
-    },
-
-    // Dietary
-    {
-      label: '🥜 Nut free',
-      onClick: () => dispatch(setNutFreeSelected()),
-      selected: nutFreeSelected,
-    },
-    {
-      label: '🥛 Dairy free',
-      onClick: () => dispatch(setDairyFreeSelected()),
-      selected: dairyFreeSelected,
-    },
-    {
-      label: '💪🏼 High protein',
-      onClick: () => dispatch(setHighProteinSelected()),
-      selected: highProteinSelected,
-    },
-    {
-      label: '🍚 Low carb',
-      onClick: () => dispatch(setLowCarbSelected()),
-      selected: lowCarbSelected,
-    },
-    {
-      label: '🍙 Low fat',
-      onClick: () => dispatch(setLowFatSelected()),
-      selected: lowFatSelected,
-    },
-    {
-      label: '🥕 Vegetarian',
-      onClick: () => dispatch(setVegetarianSelected()),
-      selected: vegetarianSelected,
-    },
-    {
-      label: '🐟 Pescatarian',
-      onClick: () => dispatch(setPescatarianSelected()),
-      selected: pescatarianSelected,
-    },
-    {
-      label: '☘️ Vegan',
-      onClick: () => dispatch(setVeganSelected()),
-      selected: veganSelected,
-    },
-
-    // Cuisine
-    {
-      label: '🇰🇷 Asian',
-      onClick: () => dispatch(setAsianSelected()),
-      selected: asianSelected,
-    },
-    {
-      label: '🇫🇷 French',
-      onClick: () => dispatch(setFrenchSelected()),
-      selected: frenchSelected,
-    },
-    {
-      label: '🇮🇹 Italian',
-      onClick: () => dispatch(setItalianSelected()),
-      selected: italianSelected,
-    },
-    {
-      label: '🇲🇽 Mexican',
-      onClick: () => dispatch(setMexicanSelected()),
-      selected: mexicanSelected,
-    },
-    {
-      label: '🌶️ Spicy',
-      onClick: () => dispatch(setSpicySelected()),
-      selected: spicySelected,
-    },
-
-    // Preparation
-    {
-      label: '📦 Meal prep',
-      onClick: () => dispatch(setMealPrepSelected()),
-      selected: mealPrepSelected,
-    },
-    {
-      label: '🫕 One pot',
-      onClick: () => dispatch(setOnePotSelected()),
-      selected: onePotSelected,
-    },
-    {
-      label: '⚡️ Quick and easy',
-      onClick: () => dispatch(setQuickAndEasySelected()),
-      selected: quickAndEasySelected,
-    },
-  ]
+  return {
+    meals: [
+      {
+        label: '☕️ Add breakfast',
+        onClick: () => dispatch(setBreakfastSelected()),
+        selected: breakfastSelected,
+      },
+      {
+        label: '🥪 Add lunch',
+        onClick: () => dispatch(setLunchSelected()),
+        selected: lunchSelected,
+      },
+      {
+        label: '🍽️ Add dinner',
+        onClick: () => dispatch(setDinnerSelected()),
+        selected: dinnerSelected,
+      },
+    ],
+    dietary: [
+      {
+        label: '🥜 Nut free',
+        onClick: () => dispatch(setNutFreeSelected()),
+        selected: nutFreeSelected,
+      },
+      {
+        label: '🥛 Dairy free',
+        onClick: () => dispatch(setDairyFreeSelected()),
+        selected: dairyFreeSelected,
+      },
+      {
+        label: '💪🏼 High protein',
+        onClick: () => dispatch(setHighProteinSelected()),
+        selected: highProteinSelected,
+      },
+      {
+        label: '🍚 Low carb',
+        onClick: () => dispatch(setLowCarbSelected()),
+        selected: lowCarbSelected,
+      },
+      {
+        label: '🍙 Low fat',
+        onClick: () => dispatch(setLowFatSelected()),
+        selected: lowFatSelected,
+      },
+      {
+        label: '🥕 Vegetarian',
+        onClick: () => dispatch(setVegetarianSelected()),
+        selected: vegetarianSelected,
+      },
+      {
+        label: '🐟 Pescatarian',
+        onClick: () => dispatch(setPescatarianSelected()),
+        selected: pescatarianSelected,
+      },
+      {
+        label: '☘️ Vegan',
+        onClick: () => dispatch(setVeganSelected()),
+        selected: veganSelected,
+      },
+    ],
+    cuisine: [
+      {
+        label: '🇰🇷 Asian',
+        onClick: () => dispatch(setAsianSelected()),
+        selected: asianSelected,
+      },
+      {
+        label: '🇫🇷 French',
+        onClick: () => dispatch(setFrenchSelected()),
+        selected: frenchSelected,
+      },
+      {
+        label: '🇮🇹 Italian',
+        onClick: () => dispatch(setItalianSelected()),
+        selected: italianSelected,
+      },
+      {
+        label: '🇲🇽 Mexican',
+        onClick: () => dispatch(setMexicanSelected()),
+        selected: mexicanSelected,
+      },
+      {
+        label: '🌶️ Spicy',
+        onClick: () => dispatch(setSpicySelected()),
+        selected: spicySelected,
+      },
+    ],
+    preparation: [
+      {
+        label: '📦 Meal prep',
+        onClick: () => dispatch(setMealPrepSelected()),
+        selected: mealPrepSelected,
+      },
+      {
+        label: '🫕 One pot',
+        onClick: () => dispatch(setOnePotSelected()),
+        selected: onePotSelected,
+      },
+      {
+        label: '⚡️ Quick and easy',
+        onClick: () => dispatch(setQuickAndEasySelected()),
+        selected: quickAndEasySelected,
+      },
+    ],
+  }
 }
 
 export default useOptionsHook

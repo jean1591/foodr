@@ -20,6 +20,10 @@ export default function PrivateLayout({
         const userResponse = await fetch('/api/users')
         const { user } = (await userResponse.json()) as { user: User }
 
+        if (!user.hasCompletedOnboarding) {
+          router.push('/onboarding')
+        }
+
         dispatch(setUser(user))
       } catch (error) {
         console.error('An error occured when fetching logged in user')

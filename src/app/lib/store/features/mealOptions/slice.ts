@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface mealOptionsSlice {
+  // Meals
   breakfastSelected: boolean
+  dinnerSelected: boolean
+  lunchSelected: boolean
   // Dietary
   nutFreeSelected: boolean
   dairyFreeSelected: boolean
@@ -24,7 +27,10 @@ export interface mealOptionsSlice {
 }
 
 const initialState: mealOptionsSlice = {
+  // Meals
   breakfastSelected: false,
+  dinnerSelected: false,
+  lunchSelected: false,
   // Dietary
   nutFreeSelected: false,
   dairyFreeSelected: false,
@@ -50,8 +56,15 @@ export const mealOptionsSlice = createSlice({
   name: 'mealOptionsSlice',
   initialState,
   reducers: {
+    // Meals
     setBreakfastSelected: (state) => {
       state.breakfastSelected = !state.breakfastSelected
+    },
+    setDinnerSelected: (state) => {
+      state.dinnerSelected = !state.dinnerSelected
+    },
+    setLunchSelected: (state) => {
+      state.lunchSelected = !state.lunchSelected
     },
     // Dietary
     setNutFreeSelected: (state) => {
@@ -110,7 +123,10 @@ export const mealOptionsSlice = createSlice({
 })
 
 export const {
+  // Meals
   setBreakfastSelected,
+  setDinnerSelected,
+  setLunchSelected,
   // Dietary
   setDairyFreeSelected,
   setHighProteinSelected,

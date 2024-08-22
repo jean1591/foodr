@@ -15,6 +15,7 @@ export type Database = {
           created_at: string
           credits: number
           email: string
+          has_completed_onboarding: boolean
           id: string
           plan: string
         }
@@ -23,6 +24,7 @@ export type Database = {
           created_at?: string
           credits?: number
           email?: string
+          has_completed_onboarding?: boolean
           id?: string
           plan?: string
         }
@@ -31,6 +33,7 @@ export type Database = {
           created_at?: string
           credits?: number
           email?: string
+          has_completed_onboarding?: boolean
           id?: string
           plan?: string
         }

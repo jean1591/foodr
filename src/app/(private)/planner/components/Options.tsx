@@ -5,6 +5,9 @@ import useOptionsHook from './hook/useOptionsHook'
 
 export const Options = () => {
   const options = useOptionsHook()
+  const formattedOptions = Object.values(options).reduce((acc, current) => {
+    return [...acc, ...current]
+  }, [])
 
   return (
     <div className="rounded-lg bg-green-100 px-4 py-8 shadow-lg">
@@ -13,7 +16,7 @@ export const Options = () => {
       </div>
 
       <div className="mt-4 flex flex-wrap items-center justify-start gap-4">
-        {options.map((option) => (
+        {formattedOptions.map((option) => (
           <ButtonParameter
             key={option.label}
             label={option.label}
