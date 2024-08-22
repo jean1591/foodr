@@ -17,7 +17,7 @@ import { setUser } from '@/app/lib/store/features/user/slice'
 
 export const GenerateMealPlanButton = () => {
   const dispatch = useDispatch()
-  const { loadingWeeklyMeals, veggiesSelected, breakfastSelected } =
+  const { loadingWeeklyMeals, vegetarianSelected, breakfastSelected } =
     useSelector((state: RootState) => state.meals)
   const { user } = useSelector((state: RootState) => state.user)
   const { displayNoCreditsModal } = useSelector(
@@ -35,7 +35,7 @@ export const GenerateMealPlanButton = () => {
         const weeklyMealsResponse = await fetch('/api/meals', {
           method: 'POST',
           body: JSON.stringify({
-            filters: { veggiesSelected, breakfastSelected },
+            filters: { vegetarianSelected, breakfastSelected },
           }),
           headers: { 'Content-Type': 'application/json' },
         })

@@ -14,7 +14,7 @@ function sleep(ms: number): Promise<void> {
 
 interface Filters {
   breakfastSelected: boolean
-  veggiesSelected: boolean
+  vegetarianSelected: boolean
 }
 
 const regex = /(?:bg-|text-)?([a-z]+)-\d{3}/
@@ -75,7 +75,7 @@ const generatePrompt = (filters: Filters): string => {
   const responseStructure =
     'Generate a JSON meal plan for the week using this structure: {monday: {lunch: {name: string, calories: number, icon: string, color: tailwind color}}}.'
 
-  const mealSelection = `Include${filters.breakfastSelected ? ' breakfast,' : ''} lunch and dinner for each day,${filters.veggiesSelected ? ' only veggie meals,' : ''} with some dishes lasting up to 3 meals.`
+  const mealSelection = `Include${filters.breakfastSelected ? ' breakfast,' : ''} lunch and dinner for each day,${filters.vegetarianSelected ? ' only veggie meals,' : ''} with some dishes lasting up to 3 meals.`
 
   const technicalDetails =
     'Only return the JSON, with color as a Tailwind base color'

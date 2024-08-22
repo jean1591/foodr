@@ -5,17 +5,18 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface MealSlice {
   breakfastSelected: boolean
   loadingWeeklyMeals: boolean
-  veggiesSelected: boolean
+  vegetarianSelected: boolean
   weeklyMeals: WeeklyMeals | null
 }
 
 const initialState: MealSlice = {
   breakfastSelected: false,
   loadingWeeklyMeals: false,
-  veggiesSelected: false,
+  vegetarianSelected: false,
   weeklyMeals: null,
 }
 
+// TODO: create meal options slice
 export const mealSlice = createSlice({
   name: 'mealSlice',
   initialState,
@@ -26,8 +27,8 @@ export const mealSlice = createSlice({
     setLoadingWeeklyMeals: (state, action: PayloadAction<boolean>) => {
       state.loadingWeeklyMeals = action.payload
     },
-    setVeggiesSelected: (state) => {
-      state.veggiesSelected = !state.veggiesSelected
+    setVegetarianSelected: (state) => {
+      state.vegetarianSelected = !state.vegetarianSelected
     },
     setWeeklyMeals: (state, action: PayloadAction<WeeklyMeals>) => {
       state.weeklyMeals = action.payload
@@ -38,7 +39,7 @@ export const mealSlice = createSlice({
 export const {
   setBreakfastSelected,
   setLoadingWeeklyMeals,
-  setVeggiesSelected,
+  setVegetarianSelected,
   setWeeklyMeals,
 } = mealSlice.actions
 
