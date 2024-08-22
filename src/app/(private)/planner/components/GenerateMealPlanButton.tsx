@@ -17,8 +17,10 @@ import { setUser } from '@/app/lib/store/features/user/slice'
 
 export const GenerateMealPlanButton = () => {
   const dispatch = useDispatch()
-  const { loadingWeeklyMeals, vegetarianSelected, breakfastSelected } =
-    useSelector((state: RootState) => state.meals)
+  const { loadingWeeklyMeals } = useSelector((state: RootState) => state.meals)
+  const { breakfastSelected, vegetarianSelected } = useSelector(
+    (state: RootState) => state.mealOptions
+  )
   const { user } = useSelector((state: RootState) => state.user)
   const { displayNoCreditsModal } = useSelector(
     (state: RootState) => state.interactions

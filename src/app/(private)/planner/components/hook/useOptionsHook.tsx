@@ -1,7 +1,7 @@
 import {
   setBreakfastSelected,
   setVegetarianSelected,
-} from '@/app/lib/store/features/meals/slice'
+} from '@/app/lib/store/features/mealOptions/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/lib/store/store'
@@ -15,7 +15,7 @@ type Option = {
 function useOptionsHook(): Option[] {
   const dispatch = useDispatch()
   const { vegetarianSelected, breakfastSelected } = useSelector(
-    (state: RootState) => state.meals
+    (state: RootState) => state.mealOptions
   )
 
   return [
@@ -26,6 +26,11 @@ function useOptionsHook(): Option[] {
     },
     {
       label: '🥕 Vegetarian',
+      onClick: () => dispatch(setVegetarianSelected()),
+      selected: vegetarianSelected,
+    },
+    {
+      label: '🐟 Pescatarian',
       onClick: () => dispatch(setVegetarianSelected()),
       selected: vegetarianSelected,
     },
