@@ -12,7 +12,7 @@ export const Options = () => {
         <p className="text-xl font-medium">Options</p>
       </div>
 
-      <div className="mt-4 flex items-center justify-start gap-4">
+      <div className="mt-4 flex flex-wrap items-center justify-start gap-4">
         {options.map((option) => (
           <ButtonParameter
             key={option.label}
