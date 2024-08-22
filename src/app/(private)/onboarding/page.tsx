@@ -17,8 +17,9 @@ const OnboardingHeader = () => {
     <div className="text-center">
       <p className="text-6xl font-extrabold leading-none tracking-tight">
         Welcome to{' '}
-        <span className={classNames(textGradient, bgGradient)}>Foodr</span>
+        <span className={classNames(bgGradient, textGradient)}>Foodr</span>
       </p>
+
       <p className="mt-8 text-lg font-medium leading-relaxed">
         Tick some boxes se we can generate a meal plan
         <span

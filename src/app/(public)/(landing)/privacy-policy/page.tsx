@@ -1,7 +1,18 @@
+import { bgGradient, textGradient } from '@/utils/design/constants'
+
+import { classNames } from '@/utils/classNames'
+
 export default function PrivacyPolicy() {
   return (
     <div>
-      <p className="mt-16 text-4xl font-extrabold text-green-800 md:text-5xl">
+      <p
+        className={classNames(
+          bgGradient,
+          textGradient,
+          'mt-16 text-4xl font-extrabold md:text-5xl'
+        )}
+      >
+        {' '}
         Privacy policy
       </p>
 
