@@ -1,7 +1,6 @@
 import { Colours, Meal, MealType } from '@/utils/interfaces/meals'
 
 import { classNames } from '@/utils/classNames'
-import { useState } from 'react'
 
 const colorToBorderColorMapper: Record<Colours, string> = {
   amber: 'border-amber-100',
@@ -46,20 +45,6 @@ const colorToTextColorMapper: Record<Colours, string> = {
 }
 
 export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
-  const [count, setCount] = useState<number>(1)
-
-  const handleCountDecrement = () => {
-    if (count > 0) {
-      setCount(count - 1)
-    }
-  }
-
-  const handleCountIncrement = () => {
-    if (count < 10) {
-      setCount(count + 1)
-    }
-  }
-
   return (
     <div
       className={classNames(
@@ -88,16 +73,6 @@ export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
           </p>
           <p className="font-bold">{meal.name}</p>
         </div>
-      </div>
-
-      <div className="flex items-baseline justify-center space-x-4 rounded-e-full rounded-s-full bg-slate-100 p-1 text-sm">
-        <button onClick={handleCountDecrement} className="pl-1">
-          -
-        </button>
-        <p className="px-1 font-semibold">{count}</p>
-        <button onClick={handleCountIncrement} className="rounded-e-full pr-1">
-          +
-        </button>
       </div>
     </div>
   )
