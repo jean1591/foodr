@@ -1,11 +1,18 @@
-import { Colours, WeeklyMeals } from '@/utils/interfaces/meals'
+import { Colours, WeeklyMeals, days } from '@/utils/interfaces/meals'
 import { NextRequest, NextResponse } from 'next/server'
 
+import { Database } from '@/utils/supabase/database.types'
 import OpenAI from 'openai'
 import { Options } from '@/app/lib/store/features/mealOptions/slice'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { completionWithBreakfast } from '@/utils/mocks/openai/weeklyMeals'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+
+type DbMeal = Omit<
+  Database['public']['Tables']['meals']['Row'],
+  'id' | 'created_at'
+>
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
@@ -17,6 +24,8 @@ const regex = /(?:bg-|text-)?([a-z]+)-\d{3}/
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { options }: { options: Options } = await request.json()
+
+  const supabase = createClient()
 
   const prompt = generatePrompt(options)
 
@@ -36,7 +45,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     completion.choices[0].message.content ?? '{}'
   )
 
-  await decrementUserCredits()
+  const { credits, id: userId } = await getLoggedInUser(supabase)
+  await decrementUserCredits(supabase, credits, userId)
+  await insertMealsToDb(supabase, weeklyMeals, userId)
 
   await sleep(500)
 
@@ -51,7 +62,7 @@ const openAiResponseToJsonFormatter = (content: string) => {
     : null
 
   if (!response) {
-    return null
+    throw new Error('An error occured during openAI response formatting')
   }
 
   Object.values(response).forEach((day) =>
@@ -89,9 +100,9 @@ const generatePrompt = (options: Options): string => {
   return [responseStructure, mealSelection, technicalDetails].join(' ')
 }
 
-const decrementUserCredits = async () => {
-  const supabase = createClient()
-
+const getLoggedInUser = async (
+  supabase: SupabaseClient
+): Promise<{ credits: number; id: string }> => {
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -104,21 +115,67 @@ const decrementUserCredits = async () => {
 
   const { data: users } = await supabase
     .from('users')
-    .select('credits')
+    .select('credits, id')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
+    console.error('User is not connected')
     redirect('/login')
   }
 
+  return users[0]
+}
+
+const decrementUserCredits = async (
+  supabase: SupabaseClient,
+  credits: number,
+  userId: string
+) => {
   const { error: updateUserCreditError } = await supabase
     .from('users')
-    .update({ credits: users[0].credits - 1 })
-    .eq('auth_user_id', authUser.id)
+    .update({ credits: credits - 1 })
+    .eq('id', userId)
 
   if (updateUserCreditError) {
     console.error('An error occured while updating user credits', {
       error: JSON.stringify(updateUserCreditError, null, 2),
+    })
+  }
+}
+
+const formatMealToDb = (weeklyMeals: WeeklyMeals, userId: string): DbMeal[] => {
+  return days.reduce((acc, current) => {
+    const dailyMeals = weeklyMeals[current]
+
+    Object.entries(dailyMeals).forEach(([key, value]) => {
+      acc.push({
+        color: value.color,
+        day: current,
+        icon: value.icon,
+        meal: key,
+        name: value.name,
+        user_id: userId,
+      })
+    })
+
+    return acc
+  }, [] as DbMeal[])
+}
+
+const insertMealsToDb = async (
+  supabase: SupabaseClient,
+  weeklyMeals: WeeklyMeals,
+  userId: string
+) => {
+  const formattedWeeklyMeals = formatMealToDb(weeklyMeals, userId)
+
+  const { error: mealsInsertError } = await supabase
+    .from('meals')
+    .insert(formattedWeeklyMeals)
+
+  if (mealsInsertError) {
+    console.error('An error occured while inserted user meals', {
+      error: JSON.stringify(mealsInsertError, null, 2),
     })
   }
 }

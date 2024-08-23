@@ -1,14 +1,5 @@
 import { DishItemSkeleton } from './DishItem'
-
-const days = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
-]
+import { days } from '@/utils/interfaces/meals'
 
 const fakeMeals = [1, 2, 3]
 

@@ -1,11 +1,14 @@
-type WeekDays =
-  | 'monday'
-  | 'tuesday'
-  | 'wednesday'
-  | 'thursday'
-  | 'friday'
-  | 'saturday'
-  | 'sunday'
+export const days = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+] as const
+
+type WeekDays = (typeof days)[number]
 
 export type Colours =
   | 'amber'
