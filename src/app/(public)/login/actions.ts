@@ -39,6 +39,9 @@ export async function login({
       console.error({ error: userCreatedError })
       throw new Error('An error occured at user created')
     }
+
+    revalidatePath('/', 'layout')
+    redirect('/onboarding')
   }
 
   const { error: signinError } = await supabase.auth.signInWithPassword({

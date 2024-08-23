@@ -21,7 +21,7 @@ const OnboardingHeader = () => {
       </p>
 
       <p className="mt-8 text-lg font-medium leading-relaxed">
-        Tick some boxes se we can generate a meal plan
+        Tick some boxes se we can generate a meal plan{' '}
         <span
           className={classNames(bgGradient, 'rounded px-2 py-1 text-white')}
         >
