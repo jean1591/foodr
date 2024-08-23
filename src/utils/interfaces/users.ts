@@ -7,5 +7,6 @@ export interface User {
   credits: number
   email: string
   hasCompletedOnboarding: boolean
+  options: string[]
   plan: Plan
 }

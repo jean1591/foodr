@@ -1,6 +1,7 @@
 'use client'
 
 import { User } from '@/utils/interfaces/users'
+import { setSelectedOptions } from '../lib/store/features/mealOptions/slice'
 import { setUser } from '../lib/store/features/user/slice'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -25,6 +26,7 @@ export default function PrivateLayout({
         }
 
         dispatch(setUser(user))
+        dispatch(setSelectedOptions(user.options))
       } catch (error) {
         console.error('An error occured when fetching logged in user')
         router.push('/login')

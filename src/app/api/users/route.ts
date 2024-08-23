@@ -5,7 +5,10 @@ import { createClient } from '@/utils/supabase/server'
 import { Plan, User } from '@/utils/interfaces/users'
 import { Database } from '@/utils/supabase/database.types'
 
-type DbUser = Database['public']['Tables']['users']['Row']
+type DbUser = Omit<
+  Database['public']['Tables']['users']['Row'],
+  'auth_user_id' | 'created_at' | 'id'
+> & { options: { label: string }[] }
 
 export async function GET(request: NextRequest) {
   const supabase = createClient()
@@ -20,7 +23,7 @@ export async function GET(request: NextRequest) {
 
   const { data: users } = await supabase
     .from('users')
-    .select('*')
+    .select('credits, email, has_completed_onboarding, plan, options (label)')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
@@ -35,6 +38,7 @@ const formatDbUserToUser = (user: DbUser): User => {
     credits: user.credits,
     email: user.email,
     hasCompletedOnboarding: user.has_completed_onboarding,
+    options: user.options.map(({ label }) => label),
     plan: user.plan as Plan,
   }
 }

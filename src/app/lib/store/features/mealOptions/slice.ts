@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface MealOptionsSlice {
   // Meals
@@ -58,6 +58,12 @@ export const mealOptionsSlice = createSlice({
   name: 'mealOptionsSlice',
   initialState,
   reducers: {
+    // All
+    setSelectedOptions: (state, action: PayloadAction<string[]>) => {
+      action.payload.forEach((option) => {
+        state[option as keyof MealOptionsSlice] = true
+      })
+    },
     // Meals
     setBreakfastSelected: (state) => {
       state.breakfastSelected = !state.breakfastSelected
@@ -125,6 +131,8 @@ export const mealOptionsSlice = createSlice({
 })
 
 export const {
+  // All
+  setSelectedOptions,
   // Meals
   setBreakfastSelected,
   setDinnerSelected,
