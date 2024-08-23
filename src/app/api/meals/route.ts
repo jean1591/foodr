@@ -2,6 +2,7 @@ import { Colours, WeeklyMeals } from '@/utils/interfaces/meals'
 import { NextRequest, NextResponse } from 'next/server'
 
 import OpenAI from 'openai'
+import { Options } from '@/app/lib/store/features/mealOptions/slice'
 import { completionWithBreakfast } from '@/utils/mocks/openai/weeklyMeals'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
@@ -12,17 +13,12 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-interface Filters {
-  breakfastSelected: boolean
-  vegetarianSelected: boolean
-}
-
 const regex = /(?:bg-|text-)?([a-z]+)-\d{3}/
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const { filters }: { filters: Filters } = await request.json()
+  const { options }: { options: Options } = await request.json()
 
-  const prompt = generatePrompt(filters)
+  const prompt = generatePrompt(options)
 
   /* const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -71,11 +67,21 @@ const openAiResponseToJsonFormatter = (content: string) => {
   return response
 }
 
-const generatePrompt = (filters: Filters): string => {
+const generatePrompt = (options: Options): string => {
+  const selectedMeals = `${options.breakfastSelected ? 'breakfast, ' : ''}${options.lunchSelected ? 'lunch, ' : ''}${options.dinnerSelected ? 'dinner, ' : ''}`
+  const dietaryPreferences = `${options.nutFreeSelected ? 'nut-free, ' : ''}${options.dairyFreeSelected ? 'dairy-free, ' : ''}${options.highProteinSelected ? 'high-protein, ' : ''}${options.lowCarbSelected ? 'low-carb, ' : ''}${options.lowFatSelected ? 'low-fat, ' : ''}${options.pescatarianSelected ? 'pescatarian, ' : ''}${options.veganSelected ? 'vegan, ' : ''}${options.vegetarianSelected ? 'vegetarian, ' : ''}`
+  const cuisinePreferences = `${options.asianSelected ? 'Asian, ' : ''}${options.frenchSelected ? 'French, ' : ''}${options.italianSelected ? 'Italian, ' : ''}${options.mexicanSelected ? 'Mexican, ' : ''}${options.spicySelected ? 'spicy, ' : ''}`
+  const preparationPreferences = `${options.mealPrepSelected ? 'meal prep, ' : ''}${options.onePotSelected ? 'one-pot, ' : ''}${options.quickAndEasySelected ? 'quick and easy, ' : ''}`
+
+  const mealSelection = `Generate meal ideas for a weekly meal plan that includes the following:
+  - Meals: ${selectedMeals ? selectedMeals.slice(0, -2) : 'no specific meals'}
+  - Dietary Preferences: ${dietaryPreferences ? dietaryPreferences.slice(0, -2) : 'no specific dietary preferences'}
+  - Cuisines: ${cuisinePreferences ? cuisinePreferences.slice(0, -2) : 'no specific cuisines'}
+  - Preparation Preferences: ${preparationPreferences ? preparationPreferences.slice(0, -2) : 'no specific preparation preferences'}
+  Ensure the meal plan is balanced and uses a variety of ingredients.`
+
   const responseStructure =
     'Generate a JSON meal plan for the week using this structure: {monday: {lunch: {name: string, calories: number, icon: string, color: tailwind color}}}.'
-
-  const mealSelection = `Include${filters.breakfastSelected ? ' breakfast,' : ''} lunch and dinner for each day,${filters.vegetarianSelected ? ' only veggie meals,' : ''} with some dishes lasting up to 3 meals.`
 
   const technicalDetails =
     'Only return the JSON, with color as a Tailwind base color'

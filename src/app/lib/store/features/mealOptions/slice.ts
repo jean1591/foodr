@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface mealOptionsSlice {
+interface MealOptionsSlice {
   // Meals
   breakfastSelected: boolean
   dinnerSelected: boolean
@@ -26,7 +26,9 @@ export interface mealOptionsSlice {
   quickAndEasySelected: boolean
 }
 
-const initialState: mealOptionsSlice = {
+export type Options = MealOptionsSlice
+
+const initialState: MealOptionsSlice = {
   // Meals
   breakfastSelected: false,
   dinnerSelected: false,

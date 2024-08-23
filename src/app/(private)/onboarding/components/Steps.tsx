@@ -25,6 +25,7 @@ export const Steps = () => {
   const [stepIndex, setStepIndex] = useState<number>(0)
   const { user } = useSelector((state: RootState) => state.user)
   const { loadingWeeklyMeals } = useSelector((state: RootState) => state.meals)
+  const mealOptions = useSelector((state: RootState) => state.mealOptions)
 
   if (!user) {
     return <></>
@@ -53,7 +54,7 @@ export const Steps = () => {
       const weeklyMealsResponse = await fetch('/api/meals', {
         method: 'POST',
         body: JSON.stringify({
-          filters: { vegetarianSelected: false, breakfastSelected: false },
+          options: mealOptions,
         }),
         headers: { 'Content-Type': 'application/json' },
       })
