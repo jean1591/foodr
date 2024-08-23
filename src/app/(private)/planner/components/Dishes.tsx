@@ -15,7 +15,7 @@ export const Dishes = () => {
     return <DishesSkeleton />
   }
 
-  // Add skeleton
+  // TODO: Add skeleton
   if (!weeklyMeals) {
     return <></>
   }

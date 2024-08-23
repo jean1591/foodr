@@ -3,8 +3,7 @@ import { GenerateMealPlanButton } from './components/GenerateMealPlanButton'
 import { Options } from './components/Options'
 import { UserDetails } from './components/UserDetails'
 
-// TODO: rename planner
-export default function Home() {
+export default function Planner() {
   return (
     <div className="my-12 space-y-12">
       <UserDetails />

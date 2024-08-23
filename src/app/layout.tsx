@@ -1,36 +1,50 @@
-'use client'
-
 import './globals.css'
 
 import { Inter } from 'next/font/google'
+import { Metadata } from 'next'
 import { StoreProvider } from './lib/store/storeProvider'
 import { Toaster } from 'react-hot-toast'
 import { classNames } from '@/utils/classNames'
-import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const whiteBgPages = ['/', '/tos', '/privacy-policy', '/login']
+const metaDescription =
+  'Say goodbye to the overwhelm of meal planning. Effortlessly enjoy healthy, delicious meals tailored to your preferences, without the hassle.'
+
+export const metadata: Metadata = {
+  title: {
+    template: 'Foodr - AI powered weekly meal plan',
+    default: 'Foodr - AI powered weekly meal plan',
+  },
+  description: metaDescription,
+  keywords: 'meal, planning, food, ai',
+  metadataBase: new URL('https://foodr.jeanrobertou.com'),
+  openGraph: {
+    title: 'Foodr - AI powered weekly meal plan',
+    description: metaDescription,
+    url: 'https://foodr.jeanrobertou.com',
+    siteName: 'Foodr - AI powered weekly meal plan',
+    images: [
+      {
+        url: '/hero-profile.jpeg',
+        width: 500,
+        height: 500,
+      },
+    ],
+    type: 'website',
+  },
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const pathname = usePathname()
-
-  const isWhiteBgPage = whiteBgPages.includes(pathname)
-  const backgroundColor = isWhiteBgPage ? 'bg-white' : 'bg-slate-50'
-
   return (
     <StoreProvider>
       <html lang="fr" className="scroll-smooth">
         <body
-          className={classNames(
-            inter.className,
-            backgroundColor,
-            'text-slate-900'
-          )}
+          className={classNames(inter.className, 'bg-slate-50 text-slate-900')}
         >
           <Toaster position="bottom-right" reverseOrder={true} />
           {children}

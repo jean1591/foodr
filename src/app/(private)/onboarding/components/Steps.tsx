@@ -43,7 +43,6 @@ export const Steps = () => {
     }
   }
 
-  // TODO: save options in DB
   const onGenerate = () => {
     dispatch(setLoadingWeeklyMeals(true))
     ;(async function getWeeklyMeals() {

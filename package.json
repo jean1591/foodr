@@ -1,9 +1,9 @@
 {
-  "name": "",
+  "name": "foodr",
   "version": "1.0.0",
   "author": {
     "name": "jean robertou",
-    "url": ""
+    "url": "https://foodr.jeanrobertou.com"
   },
   "private": false,
   "scripts": {
