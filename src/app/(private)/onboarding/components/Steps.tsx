@@ -49,6 +49,9 @@ export const Steps = () => {
     ;(async function getWeeklyMeals() {
       await fetch('/api/users/hasCompletedOnboarding', {
         method: 'PUT',
+        body: JSON.stringify({
+          options: mealOptions,
+        }),
       })
 
       const weeklyMealsResponse = await fetch('/api/meals', {
