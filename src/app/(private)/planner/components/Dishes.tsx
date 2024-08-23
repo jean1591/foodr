@@ -15,6 +15,7 @@ export const Dishes = () => {
     return <DishesSkeleton />
   }
 
+  // Add skeleton
   if (!weeklyMeals) {
     return <></>
   }

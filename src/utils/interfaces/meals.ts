@@ -8,7 +8,7 @@ export const days = [
   'sunday',
 ] as const
 
-type WeekDays = (typeof days)[number]
+export type WeekDays = (typeof days)[number]
 
 export type Colours =
   | 'amber'
@@ -34,7 +34,6 @@ type Meals = {
 export type WeeklyMeals = Record<WeekDays, Meals>
 
 export interface Meal {
-  calories: number
   color: Colours
   icon: string
   name: string

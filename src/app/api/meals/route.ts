@@ -2,17 +2,13 @@ import { Colours, WeeklyMeals, days } from '@/utils/interfaces/meals'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { Database } from '@/utils/supabase/database.types'
+import { DbMeal } from '../interfaces/meals'
 import OpenAI from 'openai'
 import { Options } from '@/app/lib/store/features/mealOptions/slice'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { completionWithBreakfast } from '@/utils/mocks/openai/weeklyMeals'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-
-type DbMeal = Omit<
-  Database['public']['Tables']['meals']['Row'],
-  'id' | 'created_at'
->
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
@@ -92,7 +88,7 @@ const generatePrompt = (options: Options): string => {
   Ensure the meal plan is balanced and uses a variety of ingredients.`
 
   const responseStructure =
-    'Generate a JSON meal plan for the week using this structure: {monday: {lunch: {name: string, calories: number, icon: string, color: tailwind color}}}.'
+    'Generate a JSON meal plan for the week using this structure: {monday: {lunch: {name: string, icon: string, color: tailwind color}}}.'
 
   const technicalDetails =
     'Only return the JSON, with color as a Tailwind base color'
