@@ -3,9 +3,11 @@ import { ButtonParameter } from '../../planner/components/ButtonParameter'
 import { Option } from '@/utils/interfaces/options'
 
 export const Step = ({
+  details,
   title,
   options,
 }: {
+  details: string
   title: string
   options: Option[]
 }) => {
@@ -15,15 +17,21 @@ export const Step = ({
 
       <div className="mt-8 w-full">
         <BorderGradient>
-          <div className="flex w-full flex-wrap items-center justify-center gap-4 rounded-lg bg-green-50 p-8">
-            {options.map((option) => (
-              <ButtonParameter
-                key={option.label}
-                label={option.label}
-                onClickHandler={option.onClick}
-                selected={option.selected}
-              />
-            ))}
+          <div className="w-full rounded-lg bg-green-50 p-8">
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              {options.map((option) => (
+                <ButtonParameter
+                  key={option.label}
+                  label={option.label}
+                  onClickHandler={option.onClick}
+                  selected={option.selected}
+                />
+              ))}
+            </div>
+
+            <p className="mt-4 text-center text-sm font-medium text-slate-600">
+              {details}
+            </p>
           </div>
         </BorderGradient>
       </div>

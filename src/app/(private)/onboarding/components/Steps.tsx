@@ -65,7 +65,13 @@ export const Steps = () => {
         weeklyMeals: WeeklyMeals
       }
 
-      dispatch(setUser({ ...user, hasCompletedOnboarding: true }))
+      dispatch(
+        setUser({
+          ...user,
+          credits: user.credits - 1,
+          hasCompletedOnboarding: true,
+        })
+      )
       dispatch(setWeeklyMeals(weeklyMeals))
       dispatch(setLoadingWeeklyMeals(false))
       router.push('/planner')
@@ -79,16 +85,29 @@ export const Steps = () => {
           <Step
             title="Which meals would you like to generate ?"
             options={options.meals}
+            details="Default: all options selected"
           />
         )}
         {stepIndex === 1 && (
-          <Step title="Dietary preferences" options={options.dietary} />
+          <Step
+            title="Dietary preferences"
+            options={options.dietary}
+            details="Selecting contradictory options might not generate accurate meal plans"
+          />
         )}
         {stepIndex === 2 && (
-          <Step title="Cuisines & Flavors" options={options.cuisine} />
+          <Step
+            title="Cuisines & Flavors"
+            options={options.cuisine}
+            details="Selecting more than one option might not generate accurate meal plans"
+          />
         )}
         {stepIndex === 3 && (
-          <Step title="Prepation style" options={options.preparation} />
+          <Step
+            title="Prepation style"
+            options={options.preparation}
+            details="Selecting more than one option might not generate accurate meal plans"
+          />
         )}
       </div>
 
