@@ -82,6 +82,7 @@ export type Database = {
           created_at: string
           credits: number
           email: string
+          generation_count: number
           has_completed_onboarding: boolean
           id: string
           plan: string
@@ -91,6 +92,7 @@ export type Database = {
           created_at?: string
           credits?: number
           email?: string
+          generation_count?: number
           has_completed_onboarding?: boolean
           id?: string
           plan?: string
@@ -100,6 +102,7 @@ export type Database = {
           created_at?: string
           credits?: number
           email?: string
+          generation_count?: number
           has_completed_onboarding?: boolean
           id?: string
           plan?: string

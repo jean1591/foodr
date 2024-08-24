@@ -41,9 +41,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     completion.choices[0].message.content ?? '{}'
   )
 
-  const { credits, id: userId } = await getLoggedInUser(supabase)
-  await decrementUserCredits(supabase, credits, userId)
-  await insertMealsToDb(supabase, weeklyMeals, userId)
+  const user = await getLoggedInUser(supabase)
+  await updateUser(supabase, user)
+  // TODO: delete user meals
+  await insertMealsToDb(supabase, weeklyMeals, user.id)
 
   await sleep(500)
 
@@ -98,7 +99,7 @@ const generatePrompt = (options: Options): string => {
 
 const getLoggedInUser = async (
   supabase: SupabaseClient
-): Promise<{ credits: number; id: string }> => {
+): Promise<{ credits: number; generation_count: number; id: string }> => {
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -111,7 +112,7 @@ const getLoggedInUser = async (
 
   const { data: users } = await supabase
     .from('users')
-    .select('credits, id')
+    .select('credits, generation_count, id')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
@@ -122,14 +123,19 @@ const getLoggedInUser = async (
   return users[0]
 }
 
-const decrementUserCredits = async (
+const updateUser = async (
   supabase: SupabaseClient,
-  credits: number,
-  userId: string
+  user: {
+    credits: number
+    generation_count: number
+    id: string
+  }
 ) => {
+  const { credits, generation_count, id: userId } = user
+
   const { error: updateUserCreditError } = await supabase
     .from('users')
-    .update({ credits: credits - 1 })
+    .update({ credits: credits - 1, generation_count: generation_count + 1 })
     .eq('id', userId)
 
   if (updateUserCreditError) {
