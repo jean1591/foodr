@@ -18,9 +18,9 @@ export const UserDetails = () => {
           {user.email[0]}
         </p>
       </div>
-      <div className="flex items-center justify-end gap-x-2">
-        <p className="text-right text-2xl font-bold">{user.credits}</p>
-        <p className="text-right text-2xl font-bold">💎</p>
+      <div className="flex items-center justify-end gap-x-2 text-right text-2xl font-medium">
+        <p>Credits:</p>
+        <p>{user.credits}</p>
       </div>
     </div>
   )

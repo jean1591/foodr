@@ -44,9 +44,9 @@ export const NoCreditsModal = () => {
                   <p>You don't have enough credits 😢</p>
                 </DialogTitle>
 
-                <p className="mt-4 font-medium">
-                  You need credits to generate new meal plans, or wait until
-                  tomorrow if you're on a paid plan.
+                <p className="mt-4 text-center font-medium">
+                  You need credits to generate new meal plans. You can buy more
+                  credits with the button below.
                 </p>
 
                 <div className="mx-auto mt-12 w-full text-sm text-white">
@@ -57,7 +57,7 @@ export const NoCreditsModal = () => {
                       'w-full rounded-lg px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-75 hover:shadow-none disabled:from-slate-500 disabled:to-slate-500'
                     )}
                   >
-                    Buy more generations
+                    Buy 5 generations for 0.99$
                   </button>
                 </div>
               </div>

@@ -11,7 +11,7 @@ const navigation = [
 
 export const Footer = () => {
   return (
-    <footer className={classNames(bgGradient, 'mt-24 text-white md:mt-32')}>
+    <footer className={classNames(bgGradient, 'text-white')}>
       <div className="mx-auto w-full overflow-hidden px-4 py-8 md:py-12 lg:max-w-5xl">
         <nav
           className="-mb-8 columns-2 md:flex md:justify-center md:space-x-12"

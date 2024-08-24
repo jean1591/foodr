@@ -11,7 +11,7 @@ import { classNames } from '@/utils/classNames'
 
 export default function LandingPage() {
   return (
-    <div className="my-12">
+    <div className="my-24">
       <div className="mt-24 md:mt-48">
         <div>
           <Hero />
@@ -164,9 +164,25 @@ const Pricing = () => {
         Try for free
       </p>
 
-      <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-        <FreeTrialCard />
-        <OneTimePaymentCard />
+      <div className="mt-4 text-center font-medium leading-relaxed text-slate-600">
+        <p className="text-lg">
+          Start{' '}
+          <span className={classNames(textGradient, bgGradient, 'font-bold')}>
+            free
+          </span>
+          , pay if you stay
+        </p>
+
+        <div>
+          <p className="mt-4">
+            You user account is credited with{' '}
+            <span className={classNames(textGradient, bgGradient, 'font-bold')}>
+              3 credits
+            </span>{' '}
+            at signup.
+          </p>
+          <p>Each credit allow you to generate a weekly meal plan.</p>
+        </div>
       </div>
     </div>
   )
@@ -185,72 +201,5 @@ const CtaButton = () => {
         Generate your weekly meals
       </button>
     </Link>
-  )
-}
-
-const FreeTrialCard = () => {
-  return (
-    <div className="order-2 rounded-lg border-[1px] border-slate-500 bg-slate-50 p-8 md:order-1">
-      <div className="flex items-baseline justify-start gap-x-2">
-        <p className="text-5xl font-extrabold">Free</p>
-      </div>
-
-      <ul className="mt-8 list-none space-y-2 text-left font-medium">
-        <li className="flex items-center justify-start gap-x-4">
-          <PiCheck className="h-6 w-6 text-green-500" />
-          <p>Unlimited parameters</p>
-        </li>
-        <li className="flex items-center justify-start gap-x-4">
-          <PiCheck className="h-6 w-6 text-green-500" />
-          <p>5 generations</p>
-        </li>
-      </ul>
-
-      <div className="mt-16 w-full">
-        {' '}
-        <CtaButton />
-      </div>
-    </div>
-  )
-}
-
-const OneTimePaymentCard = () => {
-  return (
-    <div className="order1 md:order-2">
-      <BorderGradient>
-        <div className="rounded-lg bg-white p-8">
-          <div className="flex items-baseline justify-start gap-x-2">
-            <p className="text-lg font-medium text-slate-600 line-through">
-              18€
-            </p>
-            <p className="text-5xl font-extrabold">9€</p>
-          </div>
-
-          <ul className="mt-8 list-none space-y-2 text-left font-medium">
-            <li className="flex items-center justify-start gap-x-4">
-              <PiCheck className="h-6 w-6 text-green-500" />
-              <p>Unlimited parameters</p>
-            </li>
-            <li className="flex items-center justify-start gap-x-4">
-              <PiCheck className="h-6 w-6 text-green-500" />
-              <p>
-                10 generations{' '}
-                <span className={classNames(bgGradient, 'p-1 text-white')}>
-                  per day
-                </span>
-              </p>
-            </li>
-          </ul>
-
-          <div className="mt-16 w-full">
-            <CtaButton />
-          </div>
-
-          <p className="mt-4 text-center text-sm font-semibold text-slate-600">
-            Pay it once, own it forever
-          </p>
-        </div>
-      </BorderGradient>
-    </div>
   )
 }
