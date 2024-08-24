@@ -1,6 +1,7 @@
 'use client'
 
-import { buttonHoverTransition } from '@/utils/design/constants'
+import { bgGradient, buttonHoverTransition } from '@/utils/design/constants'
+
 import { classNames } from '@/utils/classNames'
 import { login } from './actions'
 import { useState } from 'react'
@@ -17,7 +18,10 @@ export default function LoginPage() {
       <div>
         <h2 className="text-center text-2xl font-bold leading-9 tracking-tight">
           Sign in to your{' '}
-          <span className="bg-green-800 p-1 text-white">Foodr</span> account
+          <span className={classNames(bgGradient, 'p-1 text-white')}>
+            Foodr
+          </span>{' '}
+          account
         </h2>
       </div>
 
@@ -67,8 +71,11 @@ export default function LoginPage() {
           disabled={isDisabled}
           onClick={() => login({ email, password })}
           className={classNames(
+            isDisabled
+              ? 'bg-slate-200 text-slate-800'
+              : classNames(bgGradient, 'text-white'),
             buttonHoverTransition,
-            'w-full rounded-md bg-green-800 px-4 py-2 text-center text-base font-semibold leading-6 text-white shadow-lg hover:bg-green-900 hover:shadow-none disabled:bg-slate-200 disabled:text-slate-800'
+            'w-full rounded-md px-4 py-2 text-center text-base font-semibold leading-6 shadow-lg hover:opacity-75 hover:shadow-none'
           )}
         >
           Log in

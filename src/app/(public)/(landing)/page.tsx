@@ -29,6 +29,10 @@ export default function LandingPage() {
       <div id="pricing" className="mt-24 md:mt-32">
         <Pricing />
       </div>
+
+      <div className="mt-24 md:mt-32">
+        <CTA />
+      </div>
     </div>
   )
 }
