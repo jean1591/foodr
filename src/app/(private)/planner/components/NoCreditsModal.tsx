@@ -13,12 +13,27 @@ import { BorderGradient } from '@/app/design/BorderGradient'
 import { RootState } from '@/app/lib/store/store'
 import { classNames } from '@/utils/classNames'
 import { setDisplayNoCreditsModal } from '@/app/lib/store/features/interactions/slice'
+import { useState } from 'react'
 
 export const NoCreditsModal = () => {
   const dispatch = useDispatch()
   const { displayNoCreditsModal } = useSelector(
     (state: RootState) => state.interactions
   )
+
+  const [stepIndex, setStepIndex] = useState<number>(0)
+
+  const handleNextStep = () => {
+    if (stepIndex === 0) {
+      setStepIndex(1)
+      ;(async function updateUser() {
+        await fetch('/api/users/hasRequestedCredits', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+        })
+      })()
+    }
+  }
 
   return (
     <Dialog
@@ -44,21 +59,46 @@ export const NoCreditsModal = () => {
                   <p>You don't have enough credits 😢</p>
                 </DialogTitle>
 
-                <p className="mt-4 text-center font-medium">
-                  You need credits to generate new meal plans. You can buy more
-                  credits with the button below.
-                </p>
+                {stepIndex === 0 && (
+                  <p className="mt-4 text-center font-medium">
+                    You need credits to generate new meal plans. You can buy
+                    more credits with the button below.
+                  </p>
+                )}
+
+                {stepIndex === 1 && (
+                  <p className="mt-4 text-center font-medium">
+                    This functionality is not yet developed. You'll be notify
+                    when credits are available to buy.
+                  </p>
+                )}
 
                 <div className="mx-auto mt-12 w-full text-sm text-white">
-                  <button
-                    className={classNames(
-                      buttonHoverTransition,
-                      bgGradient,
-                      'w-full rounded-lg px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-75 hover:shadow-none disabled:from-slate-500 disabled:to-slate-500'
-                    )}
-                  >
-                    Buy 5 generations for 0.99$
-                  </button>
+                  {stepIndex === 0 && (
+                    <button
+                      onClick={handleNextStep}
+                      className={classNames(
+                        buttonHoverTransition,
+                        bgGradient,
+                        'w-full rounded-lg px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-75 hover:shadow-none disabled:from-slate-500 disabled:to-slate-500'
+                      )}
+                    >
+                      Buy 5 generations for 0.99$
+                    </button>
+                  )}
+
+                  {stepIndex === 1 && (
+                    <button
+                      onClick={() => dispatch(setDisplayNoCreditsModal(false))}
+                      className={classNames(
+                        buttonHoverTransition,
+                        bgGradient,
+                        'w-full rounded-lg px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-75 hover:shadow-none disabled:from-slate-500 disabled:to-slate-500'
+                      )}
+                    >
+                      Got it !
+                    </button>
+                  )}
                 </div>
               </div>
             </DialogPanel>

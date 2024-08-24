@@ -84,6 +84,7 @@ export type Database = {
           email: string
           generation_count: number
           has_completed_onboarding: boolean
+          has_requested_credits: boolean
           id: string
           plan: string
         }
@@ -94,6 +95,7 @@ export type Database = {
           email?: string
           generation_count?: number
           has_completed_onboarding?: boolean
+          has_requested_credits?: boolean
           id?: string
           plan?: string
         }
@@ -104,6 +106,7 @@ export type Database = {
           email?: string
           generation_count?: number
           has_completed_onboarding?: boolean
+          has_requested_credits?: boolean
           id?: string
           plan?: string
         }
