@@ -42,9 +42,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   )
 
   const user = await getLoggedInUser(supabase)
-  await updateUser(supabase, user)
-  // TODO: delete user meals
-  await insertMealsToDb(supabase, weeklyMeals, user.id)
+  await updateDbUser(supabase, user)
+  await updateDbMeals(supabase, weeklyMeals, user.id)
 
   await sleep(500)
 
@@ -123,7 +122,7 @@ const getLoggedInUser = async (
   return users[0]
 }
 
-const updateUser = async (
+const updateDbUser = async (
   supabase: SupabaseClient,
   user: {
     credits: number
@@ -164,11 +163,15 @@ const formatMealToDb = (weeklyMeals: WeeklyMeals, userId: string): DbMeal[] => {
   }, [] as DbMeal[])
 }
 
-const insertMealsToDb = async (
+const updateDbMeals = async (
   supabase: SupabaseClient,
   weeklyMeals: WeeklyMeals,
   userId: string
 ) => {
+  // Delete previously generated meals
+  await supabase.from('meals').delete().eq('user_id', userId)
+
+  // Insert new meals
   const formattedWeeklyMeals = formatMealToDb(weeklyMeals, userId)
 
   const { error: mealsInsertError } = await supabase
