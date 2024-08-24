@@ -85,7 +85,7 @@ export const Steps = () => {
           <Step
             title="Which meals would you like to generate ?"
             options={options.meals}
-            details="Default: all options selected"
+            details="Default: lunch and dinner selected"
           />
         )}
         {stepIndex === 1 && (

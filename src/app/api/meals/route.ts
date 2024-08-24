@@ -21,7 +21,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const prompt = generatePrompt(options)
 
-  /* const completion = await openai.chat.completions.create({
+  const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -30,8 +30,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         content: prompt,
       },
     ],
-  }) */
-  const completion = completionWithBreakfast
+  })
+  // const completion = completionWithBreakfast
 
   const weeklyMeals = openAiResponseToJsonFormatter(
     completion.choices[0].message.content ?? '{}'
@@ -75,7 +75,7 @@ const generatePrompt = (options: Options): string => {
   const preparationPreferences = `${options.mealPrepSelected ? 'meal prep, ' : ''}${options.onePotSelected ? 'one-pot, ' : ''}${options.quickAndEasySelected ? 'quick and easy, ' : ''}`
 
   const mealSelection = `Generate meal ideas for a weekly meal plan that includes the following:
-  - Meals: ${selectedMeals ? selectedMeals.slice(0, -2) : 'breakfast, lunch and dinner'}
+  - Meals: ${selectedMeals ? selectedMeals.slice(0, -2) : 'lunch, dinner'}
   - Dietary Preferences: ${dietaryPreferences ? dietaryPreferences.slice(0, -2) : 'no specific dietary preferences'}
   - Cuisines: ${cuisinePreferences ? cuisinePreferences.slice(0, -2) : 'no specific cuisines'}
   - Preparation Preferences: ${preparationPreferences ? preparationPreferences.slice(0, -2) : 'no specific preparation preferences'}
