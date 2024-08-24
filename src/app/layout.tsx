@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { Analytics } from '@vercel/analytics/react'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
 import { StoreProvider } from './lib/store/storeProvider'
@@ -48,6 +49,7 @@ export default function RootLayout({
         >
           <Toaster position="bottom-right" reverseOrder={true} />
           {children}
+          <Analytics />
         </body>
       </html>
     </StoreProvider>
