@@ -54,9 +54,9 @@ const formatDbMealsToWeeklyMeals = (meals: DbMeal[]): WeeklyMeals => {
     const currentDay = current.day as WeekDays
     if (!acc[currentDay]) {
       acc[currentDay] = {
-        breakfast: baseMealItem,
-        dinner: baseMealItem,
-        lunch: baseMealItem,
+        breakfast: undefined,
+        dinner: undefined,
+        lunch: undefined,
       }
     }
 
@@ -68,10 +68,4 @@ const formatDbMealsToWeeklyMeals = (meals: DbMeal[]): WeeklyMeals => {
 
     return acc
   }, {} as WeeklyMeals)
-}
-
-const baseMealItem: Meal = {
-  color: 'gray',
-  icon: '🤷🏼',
-  name: 'no name',
 }

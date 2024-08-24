@@ -12,10 +12,6 @@ import { redirect } from 'next/navigation'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
 const regex = /(?:bg-|text-)?([a-z]+)-\d{3}/
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -44,8 +40,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const user = await getLoggedInUser(supabase)
   await updateDbUser(supabase, user)
   await updateDbMeals(supabase, weeklyMeals, user.id)
-
-  await sleep(500)
 
   return NextResponse.json({ weeklyMeals })
 }
@@ -81,7 +75,7 @@ const generatePrompt = (options: Options): string => {
   const preparationPreferences = `${options.mealPrepSelected ? 'meal prep, ' : ''}${options.onePotSelected ? 'one-pot, ' : ''}${options.quickAndEasySelected ? 'quick and easy, ' : ''}`
 
   const mealSelection = `Generate meal ideas for a weekly meal plan that includes the following:
-  - Meals: ${selectedMeals ? selectedMeals.slice(0, -2) : 'no specific meals'}
+  - Meals: ${selectedMeals ? selectedMeals.slice(0, -2) : 'breakfast, lunch and dinner'}
   - Dietary Preferences: ${dietaryPreferences ? dietaryPreferences.slice(0, -2) : 'no specific dietary preferences'}
   - Cuisines: ${cuisinePreferences ? cuisinePreferences.slice(0, -2) : 'no specific cuisines'}
   - Preparation Preferences: ${preparationPreferences ? preparationPreferences.slice(0, -2) : 'no specific preparation preferences'}
