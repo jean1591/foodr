@@ -113,15 +113,17 @@ export const Steps = () => {
 
       {/* Step selector */}
       <div className="mt-8 flex items-center justify-center gap-x-8">
-        <button
-          onClick={handleStepDecrement}
-          className={classNames(
-            buttonHoverTransition,
-            'w-36 rounded-lg border-2 border-slate-500 py-4 hover:border-slate-300'
-          )}
-        >
-          Back
-        </button>
+        {stepIndex > 0 && (
+          <button
+            onClick={handleStepDecrement}
+            className={classNames(
+              buttonHoverTransition,
+              'w-36 rounded-lg border-2 border-slate-500 py-4 hover:border-slate-300'
+            )}
+          >
+            Back
+          </button>
+        )}
 
         {stepIndex < 3 && (
           <button

@@ -31,8 +31,8 @@ export type Options = MealOptionsSlice
 const initialState: MealOptionsSlice = {
   // Meals
   breakfastSelected: false,
-  dinnerSelected: false,
-  lunchSelected: false,
+  dinnerSelected: true,
+  lunchSelected: true,
   // Dietary
   nutFreeSelected: false,
   dairyFreeSelected: false,
