@@ -83,7 +83,7 @@ export const NoCreditsModal = () => {
                         'w-full rounded-lg px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-75 hover:shadow-none disabled:from-slate-500 disabled:to-slate-500'
                       )}
                     >
-                      Buy 5 generations for 0.99$
+                      Buy 5 generations for 0.49$
                     </button>
                   )}
 
