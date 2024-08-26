@@ -18,30 +18,35 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const { options }: { options: Options } = await request.json()
 
   const supabase = createClient()
-
-  const prompt = generatePrompt(options)
-
-  const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      {
-        role: 'user',
-        content: prompt,
-      },
-    ],
-  })
-  // const completion = completionWithBreakfast
-
-  const weeklyMeals = openAiResponseToJsonFormatter(
-    completion.choices[0].message.content ?? '{}'
-  )
-
   const user = await getLoggedInUser(supabase)
-  await updateDbUser(supabase, user)
-  await updateDbMeals(supabase, weeklyMeals, user.id)
 
-  return NextResponse.json({ weeklyMeals })
+  if (user.credits > 0) {
+    const prompt = generatePrompt(options)
+
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+    })
+    // const completion = completionWithBreakfast
+
+    const weeklyMeals = openAiResponseToJsonFormatter(
+      completion.choices[0].message.content ?? '{}'
+    )
+
+    await updateDbUser(supabase, user)
+    await updateDbMeals(supabase, weeklyMeals, user.id)
+
+    return NextResponse.json({ weeklyMeals })
+  }
+
+  console.error('Use requested weekly meals without credits', user)
+  throw new Error('Use requested weekly meals without credits')
 }
 
 const openAiResponseToJsonFormatter = (content: string) => {
