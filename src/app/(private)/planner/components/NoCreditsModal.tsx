@@ -89,7 +89,7 @@ export const NoCreditsModal = () => {
                         </div>
                         <div className="flex items-center justify-between">
                           <p>Recipe</p>
-                          <p>2 credits</p>
+                          <p>1 credits</p>
                         </div>
                       </div>
                     </div>
@@ -112,7 +112,7 @@ export const NoCreditsModal = () => {
                           'w-full rounded-lg px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-75 hover:shadow-none disabled:from-slate-500 disabled:to-slate-500'
                         )}
                       >
-                        Buy 100 credits for 0.99$
+                        Buy 100 credits for 0.99€
                       </button>
                     )}
 
