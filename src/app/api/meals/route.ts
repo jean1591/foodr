@@ -19,7 +19,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const supabase = createClient()
   const user = await getLoggedInUser(supabase)
 
-  if (user.credits > 0) {
+  if (user.credits > 9) {
     const prompt = generatePrompt(options)
 
     const completion = await openai.chat.completions.create({
@@ -132,7 +132,7 @@ const updateDbUser = async (
 
   const { error: updateUserCreditError } = await supabase
     .from('users')
-    .update({ credits: credits - 1, generation_count: generation_count + 1 })
+    .update({ credits: credits - 10, generation_count: generation_count + 1 })
     .eq('id', userId)
 
   if (updateUserCreditError) {

@@ -1,19 +1,34 @@
 import { Meal, MealType } from '@/utils/interfaces/meals'
+import {
+  setDisplayNoCreditsModal,
+  setDisplayRecipeDetailsModal,
+} from '@/app/lib/store/features/interactions/slice'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { RootState } from '@/app/lib/store/store'
 import { classNames } from '@/utils/classNames'
-import { setDisplayRecipeDetailsModal } from '@/app/lib/store/features/interactions/slice'
 import { setSelectedMeal } from '@/app/lib/store/features/meals/slice'
+import { setUser } from '@/app/lib/store/features/user/slice'
 import useColour from './hook/useColour'
-import { useDispatch } from 'react-redux'
 
 export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   const dispatch = useDispatch()
+  const { user } = useSelector((state: RootState) => state.user)
 
   const { bgColor, borderColor, textColor } = useColour(meal.color)
 
+  if (!user) {
+    return <></>
+  }
+
   const handleDishItemOnClick = () => {
     dispatch(setSelectedMeal({ meal, type }))
-    dispatch(setDisplayRecipeDetailsModal(true))
+    if (user.credits > 0) {
+      dispatch(setDisplayRecipeDetailsModal(true))
+      dispatch(setUser({ ...user, credits: user.credits - 1 }))
+    } else {
+      dispatch(setDisplayNoCreditsModal(true))
+    }
   }
 
   return (

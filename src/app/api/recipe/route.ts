@@ -26,7 +26,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await request.json()
 
   const supabase = createClient()
-  const { id: userId } = await getLoggedInUser(supabase)
+  const { credits, id: userId } = await getLoggedInUser(supabase)
   const { id: mealId } = await getMealFromNameAndUserId(supabase, name, userId)
   const existingRecipe = await getRecipeFromNameAndUserId(supabase, mealId)
 
@@ -34,7 +34,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ recipeDetails: existingRecipe })
   }
 
-  const prompt = generatePrompt(name, options)
+  if (credits > 0) {
+    const prompt = generatePrompt(name, options)
 
   /* const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -46,21 +47,29 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
     ],
   }) */
-  const completion = completionRecipe
+    const completion = completionRecipe
 
-  const recipeDetails = openAiResponseToJsonFormatter(
-    completion.choices[0].message.content ?? '{}'
-  )
+    const recipeDetails = openAiResponseToJsonFormatter(
+      completion.choices[0].message.content ?? '{}'
+    )
 
-  /* await insertRecipeInDb({
+    await updateDbUser(supabase, { id: userId, credits })
+    /* await insertRecipeInDb({
     mealId,
     recipe: recipeDetails,
     supabase,
   }) */
 
-  await sleep(4000)
+    await sleep(4000)
 
-  return NextResponse.json({ recipeDetails })
+    return NextResponse.json({ recipeDetails })
+  }
+
+  console.error('Use requested recipes without credits', {
+    credits,
+    id: userId,
+  })
+  throw new Error('Use requested recipes without credits')
 }
 
 const openAiResponseToJsonFormatter = (content: string): Recipe => {
@@ -87,7 +96,7 @@ const generatePrompt = (name: string, options: Options): string => {
 
 const getLoggedInUser = async (
   supabase: SupabaseClient
-): Promise<{ id: string }> => {
+): Promise<{ credits: number; id: string }> => {
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -100,7 +109,7 @@ const getLoggedInUser = async (
 
   const { data: users } = await supabase
     .from('users')
-    .select('id')
+    .select('id, credits')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
@@ -232,5 +241,26 @@ const formatDbRecipeToRecipe = (recipe: DbRecipeWithRelations): Recipe => {
       stepNumber: instruction.step_number,
     })),
     prepTime: recipe.prep_time,
+  }
+}
+
+const updateDbUser = async (
+  supabase: SupabaseClient,
+  user: {
+    credits: number
+    id: string
+  }
+) => {
+  const { credits, id: userId } = user
+
+  const { error: updateUserCreditError } = await supabase
+    .from('users')
+    .update({ credits: credits - 1 })
+    .eq('id', userId)
+
+  if (updateUserCreditError) {
+    console.error('An error occured while updating user credits', {
+      error: JSON.stringify(updateUserCreditError, null, 2),
+    })
   }
 }
