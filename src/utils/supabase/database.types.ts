@@ -9,6 +9,70 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      ingredients: {
+        Row: {
+          icon: string
+          id: string
+          name: string
+          quantity: number
+          recipe_id: string
+          unit: string
+        }
+        Insert: {
+          icon: string
+          id?: string
+          name: string
+          quantity: number
+          recipe_id: string
+          unit: string
+        }
+        Update: {
+          icon?: string
+          id?: string
+          name?: string
+          quantity?: number
+          recipe_id?: string
+          unit?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ingredients_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      instructions: {
+        Row: {
+          id: string
+          instruction: string
+          recipe_id: string
+          step_number: number
+        }
+        Insert: {
+          id?: string
+          instruction: string
+          recipe_id: string
+          step_number: number
+        }
+        Update: {
+          id?: string
+          instruction?: string
+          recipe_id?: string
+          step_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "instructions_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meals: {
         Row: {
           color: string
@@ -72,6 +136,41 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipes: {
+        Row: {
+          cook_time: number
+          created_at: string
+          description: string
+          id: string
+          meal_id: string
+          prep_time: number
+        }
+        Insert: {
+          cook_time: number
+          created_at?: string
+          description: string
+          id?: string
+          meal_id: string
+          prep_time: number
+        }
+        Update: {
+          cook_time?: number
+          created_at?: string
+          description?: string
+          id?: string
+          meal_id?: string
+          prep_time?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipes_meal_id_fkey"
+            columns: ["meal_id"]
+            isOneToOne: false
+            referencedRelation: "meals"
             referencedColumns: ["id"]
           },
         ]
