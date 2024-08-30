@@ -17,10 +17,6 @@ import { redirect } from 'next/navigation'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { name, options }: { name: string; options: Options } =
     await request.json()
@@ -37,39 +33,37 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (credits > 0) {
     const prompt = generatePrompt(name, options)
 
-  /* const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      {
-        role: 'user',
-        content: prompt,
-      },
-    ],
-  }) */
-    const completion = completionRecipe
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+    })
+    // const completion = completionRecipe
 
     const recipeDetails = openAiResponseToJsonFormatter(
       completion.choices[0].message.content ?? '{}'
     )
 
     await updateDbUser(supabase, { id: userId, credits })
-    /* await insertRecipeInDb({
-    mealId,
-    recipe: recipeDetails,
-    supabase,
-  }) */
-
-    await sleep(4000)
+    await insertRecipeInDb({
+      mealId,
+      recipe: recipeDetails,
+      supabase,
+    })
 
     return NextResponse.json({ recipeDetails })
   }
 
-  console.error('Use requested recipes without credits', {
+  console.error('User requested recipes without credits', {
     credits,
     id: userId,
   })
-  throw new Error('Use requested recipes without credits')
+  throw new Error('User requested recipes without credits')
 }
 
 const openAiResponseToJsonFormatter = (content: string): Recipe => {

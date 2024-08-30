@@ -4,6 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { Recipe } from '@/utils/interfaces/recipes'
 import { createSlice } from '@reduxjs/toolkit'
 
+// TODO: move loeading to interactions slice
 export interface MealSlice {
   loadingRecipeDetails: boolean
   loadingWeeklyMeals: boolean

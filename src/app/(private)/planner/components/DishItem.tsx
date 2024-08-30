@@ -24,6 +24,7 @@ export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   const handleDishItemOnClick = () => {
     dispatch(setSelectedMeal({ meal, type }))
     if (user.credits > 0) {
+      dispatch(setSelectedMeal({ meal, type }))
       dispatch(setDisplayRecipeDetailsModal(true))
       dispatch(setUser({ ...user, credits: user.credits - 1 }))
     } else {

@@ -44,8 +44,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ weeklyMeals })
   }
 
-  console.error('Use requested weekly meals without credits', user)
-  throw new Error('Use requested weekly meals without credits')
+  console.error('User requested weekly meals without credits', user)
+  throw new Error('User requested weekly meals without credits')
 }
 
 const openAiResponseToJsonFormatter = (content: string): WeeklyMeals => {
