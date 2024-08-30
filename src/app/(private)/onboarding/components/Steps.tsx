@@ -11,6 +11,7 @@ import { PiArrowClockwise } from 'react-icons/pi'
 import { RootState } from '@/app/lib/store/store'
 import { Step } from './Step'
 import { WeeklyMeals } from '@/utils/interfaces/meals'
+import { Welcome } from './Welcome'
 import { classNames } from '@/utils/classNames'
 import { setUser } from '@/app/lib/store/features/user/slice'
 import useOptionsHook from '../../planner/components/hook/useOptionsHook'
@@ -38,7 +39,7 @@ export const Steps = () => {
   }
 
   const handleStepIndexIncrement = () => {
-    if (stepIndex < 3) {
+    if (stepIndex < 4) {
       setStepIndex(stepIndex + 1)
     }
   }
@@ -68,7 +69,7 @@ export const Steps = () => {
       dispatch(
         setUser({
           ...user,
-          credits: user.credits - 1,
+          credits: user.credits - 10,
           hasCompletedOnboarding: true,
         })
       )
@@ -81,28 +82,29 @@ export const Steps = () => {
   return (
     <div>
       <div className="mt-16 md:h-60">
-        {stepIndex === 0 && (
+        {stepIndex === 0 && <Welcome />}
+        {stepIndex === 1 && (
           <Step
             title="Which meals would you like to generate ?"
             options={options.meals}
             details="Default: lunch and dinner selected"
           />
         )}
-        {stepIndex === 1 && (
+        {stepIndex === 2 && (
           <Step
             title="Dietary preferences"
             options={options.dietary}
             details="Selecting contradictory options might not generate accurate meal plans"
           />
         )}
-        {stepIndex === 2 && (
+        {stepIndex === 3 && (
           <Step
             title="Cuisines & Flavors"
             options={options.cuisine}
             details="Selecting more than one option might not generate accurate meal plans"
           />
         )}
-        {stepIndex === 3 && (
+        {stepIndex === 4 && (
           <Step
             title="Prepation style"
             options={options.preparation}
