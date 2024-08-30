@@ -1,7 +1,6 @@
 import { Colours, WeeklyMeals, days } from '@/utils/interfaces/meals'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { Database } from '@/utils/supabase/database.types'
 import { DbMeal } from '../interfaces/meals'
 import OpenAI from 'openai'
 import { Options } from '@/app/lib/store/features/mealOptions/slice'
@@ -12,7 +11,7 @@ import { redirect } from 'next/navigation'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-const regex = /(?:bg-|text-)?([a-z]+)-\d{3}/
+const colourRegex = /(?:bg-|text-)?([a-z]+)-\d{3}/
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { options }: { options: Options } = await request.json()
@@ -20,7 +19,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const supabase = createClient()
   const user = await getLoggedInUser(supabase)
 
-  if (user.credits > 0) {
+  if (user.credits > 9) {
     const prompt = generatePrompt(options)
 
     const completion = await openai.chat.completions.create({
@@ -45,11 +44,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ weeklyMeals })
   }
 
-  console.error('Use requested weekly meals without credits', user)
-  throw new Error('Use requested weekly meals without credits')
+  console.error('User requested weekly meals without credits', user)
+  throw new Error('User requested weekly meals without credits')
 }
 
-const openAiResponseToJsonFormatter = (content: string) => {
+const openAiResponseToJsonFormatter = (content: string): WeeklyMeals => {
   const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/)
 
   const response: WeeklyMeals | null = jsonMatch
@@ -62,7 +61,7 @@ const openAiResponseToJsonFormatter = (content: string) => {
 
   Object.values(response).forEach((day) =>
     Object.values(day).forEach((meal) => {
-      const matches = meal.color.match(regex)
+      const matches = meal.color.match(colourRegex)
 
       if (matches && matches.length >= 1) {
         meal.color = matches[1] as Colours
@@ -133,7 +132,7 @@ const updateDbUser = async (
 
   const { error: updateUserCreditError } = await supabase
     .from('users')
-    .update({ credits: credits - 1, generation_count: generation_count + 1 })
+    .update({ credits: credits - 10, generation_count: generation_count + 1 })
     .eq('id', userId)
 
   if (updateUserCreditError) {
@@ -178,7 +177,7 @@ const updateDbMeals = async (
     .insert(formattedWeeklyMeals)
 
   if (mealsInsertError) {
-    console.error('An error occured while inserted user meals', {
+    console.error('An error occured while inserting user meals', {
       error: JSON.stringify(mealsInsertError, null, 2),
     })
   }

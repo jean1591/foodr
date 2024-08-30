@@ -3,6 +3,7 @@
 import { DishItem } from './DishItem'
 import { DishesSkeleton } from './skeleton/Dishes'
 import { MealType } from '@/utils/interfaces/meals'
+import { RecipeDetailsModal } from './RecipeDetailsModal'
 import { RootState } from '@/app/lib/store/store'
 import { useSelector } from 'react-redux'
 
@@ -10,14 +11,12 @@ export const Dishes = () => {
   const { loadingWeeklyMeals, weeklyMeals } = useSelector(
     (state: RootState) => state.meals
   )
+  const { displayRecipeDetailsModal } = useSelector(
+    (state: RootState) => state.interactions
+  )
 
-  if (loadingWeeklyMeals) {
+  if (loadingWeeklyMeals || !weeklyMeals) {
     return <DishesSkeleton />
-  }
-
-  // TODO: Add skeleton
-  if (!weeklyMeals) {
-    return <></>
   }
 
   return (
@@ -32,6 +31,8 @@ export const Dishes = () => {
           </div>
         </div>
       ))}
+
+      {displayRecipeDetailsModal && <RecipeDetailsModal />}
     </div>
   )
 }

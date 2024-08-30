@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  resetGeneratedRecipes,
   setLoadingWeeklyMeals,
   setWeeklyMeals,
 } from '@/app/lib/store/features/meals/slice'
@@ -30,7 +31,7 @@ export const GenerateMealPlanButton = () => {
   }
 
   const handleGenerateWeeklyMeals = () => {
-    if (user.credits > 0) {
+    if (user.credits > 9) {
       dispatch(setLoadingWeeklyMeals(true))
       ;(async function getWeeklyMeals() {
         const weeklyMealsResponse = await fetch('/api/meals', {
@@ -47,7 +48,8 @@ export const GenerateMealPlanButton = () => {
 
         dispatch(setWeeklyMeals(weeklyMeals))
         dispatch(setLoadingWeeklyMeals(false))
-        dispatch(setUser({ ...user, credits: user.credits - 1 }))
+        dispatch(setUser({ ...user, credits: user.credits - 10 }))
+        dispatch(resetGeneratedRecipes())
       })()
     } else {
       dispatch(setDisplayNoCreditsModal(true))

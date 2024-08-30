@@ -94,6 +94,19 @@ const CTA = () => {
 }
 
 const FeaturesCard = () => {
+  const cons = [
+    'Wasted ingredients and food',
+    'Time-consuming meal planning',
+    'Inconsistent nutrition',
+    'Recipe overwhelm',
+  ]
+  const pros = [
+    'Personalized meal plans',
+    'Time-saving convenience',
+    'Nutritional balance',
+    'Effortless meal discovery',
+  ]
+
   return (
     <div>
       <p className="text-center text-3xl font-extrabold tracking-tight">
@@ -105,22 +118,12 @@ const FeaturesCard = () => {
           <p className="text-lg font-bold">Without Foodr</p>
 
           <ul className="mt-4 list-none space-y-2 text-left text-sm font-semibold">
-            <li className="flex items-center justify-start gap-x-4">
-              <PiX className="h-4 w-4" />
-              <p>Wasted ingredients and food</p>
-            </li>
-            <li className="flex items-center justify-start gap-x-4">
-              <PiX className="h-4 w-4" />
-              <p>Time-consuming meal planning</p>
-            </li>
-            <li className="flex items-center justify-start gap-x-4">
-              <PiX className="h-4 w-4" />
-              <p>Inconsistent nutrition</p>
-            </li>
-            <li className="flex items-center justify-start gap-x-4">
-              <PiX className="h-4 w-4" />
-              <p>Recipe overwhelm</p>
-            </li>
+            {cons.map((con) => (
+              <li key={con} className="flex items-center justify-start gap-x-4">
+                <PiX className="h-4 w-4" />
+                <p>{con}</p>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -136,22 +139,15 @@ const FeaturesCard = () => {
               </p>
 
               <ul className="mt-4 list-none space-y-2 text-left text-sm font-semibold">
-                <li className="flex items-center justify-start gap-x-4">
-                  <PiCheck className="h-4 w-4 text-green-600" />
-                  <p>Personalized meal plans</p>
-                </li>
-                <li className="flex items-center justify-start gap-x-4">
-                  <PiCheck className="h-4 w-4 text-green-600" />
-                  <p>Time-saving convenience</p>
-                </li>
-                <li className="flex items-center justify-start gap-x-4">
-                  <PiCheck className="h-4 w-4 text-green-600" />
-                  <p>Nutritional balance</p>
-                </li>
-                <li className="flex items-center justify-start gap-x-4">
-                  <PiCheck className="h-4 w-4 text-green-600" />
-                  <p>Effortless meal discovery</p>
-                </li>
+                {pros.map((pro) => (
+                  <li
+                    key={pro}
+                    className="flex items-center justify-start gap-x-4"
+                  >
+                    <PiCheck className="h-4 w-4 text-green-600" />
+                    <p>{pro}</p>
+                  </li>
+                ))}
               </ul>
             </div>
           </BorderGradient>
@@ -181,11 +177,14 @@ const Pricing = () => {
           <p className="mt-4">
             You user account is credited with{' '}
             <span className={classNames(textGradient, bgGradient, 'font-bold')}>
-              3 credits
+              12 credits
             </span>{' '}
             at signup.
           </p>
-          <p>Each credit allow you to generate a weekly meal plan.</p>
+          <p>
+            Generating a meal plan costs 10 credits, and generating a recipe
+            cost 1 credit
+          </p>
         </div>
       </div>
     </div>
