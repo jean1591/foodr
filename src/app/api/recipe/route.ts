@@ -47,6 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       ],
     })
     // const completion = completionRecipe
+    console.log(completion.choices[0].message.content)
 
     const recipeDetails = openAiResponseToJsonFormatter(
       completion.choices[0].message.content ?? '{}'

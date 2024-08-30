@@ -41,10 +41,10 @@ export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
 
   return (
     <div
-      // onClick={handleDishItemOnClick}
+      onClick={handleDishItemOnClick}
       className={classNames(
         borderColor,
-        // "hover:cursor-pointer",
+        'hover:cursor-pointer',
         'flex items-center justify-between space-x-4 rounded-lg border-2 bg-white pr-2 shadow-lg'
       )}
     >
