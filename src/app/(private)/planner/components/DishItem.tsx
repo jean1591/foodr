@@ -14,6 +14,7 @@ import useColour from './hook/useColour'
 export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   const dispatch = useDispatch()
   const { user } = useSelector((state: RootState) => state.user)
+  const { generatedRecipes } = useSelector((state: RootState) => state.meals)
 
   const { bgColor, borderColor, textColor } = useColour(meal.color)
 
@@ -22,7 +23,13 @@ export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   }
 
   const handleDishItemOnClick = () => {
-    dispatch(setSelectedMeal({ meal, type }))
+    if (generatedRecipes.find((recipe) => recipe === meal.name)) {
+      dispatch(setSelectedMeal({ meal, type }))
+      dispatch(setDisplayRecipeDetailsModal(true))
+
+      return
+    }
+
     if (user.credits > 0) {
       dispatch(setSelectedMeal({ meal, type }))
       dispatch(setDisplayRecipeDetailsModal(true))

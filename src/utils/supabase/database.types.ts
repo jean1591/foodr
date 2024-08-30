@@ -147,6 +147,7 @@ export type Database = {
           description: string
           id: string
           meal_id: string
+          name: string
           prep_time: number
         }
         Insert: {
@@ -155,6 +156,7 @@ export type Database = {
           description: string
           id?: string
           meal_id: string
+          name: string
           prep_time: number
         }
         Update: {
@@ -163,6 +165,7 @@ export type Database = {
           description?: string
           id?: string
           meal_id?: string
+          name?: string
           prep_time?: number
         }
         Relationships: [

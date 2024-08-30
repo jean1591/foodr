@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from '@headlessui/react'
 import {
+  addToGeneratedRecipes,
   setLoadingRecipeDetails,
   setRecipeDetails,
 } from '@/app/lib/store/features/meals/slice'
@@ -53,6 +54,7 @@ export const RecipeDetailsModal = () => {
         }
 
         dispatch(setRecipeDetails(recipeDetails))
+        dispatch(addToGeneratedRecipes(selectedMeal.meal.name))
         dispatch(setLoadingRecipeDetails(false))
       })()
     }

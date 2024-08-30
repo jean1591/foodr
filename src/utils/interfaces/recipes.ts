@@ -3,6 +3,7 @@ export interface Recipe {
   description: string
   ingredients: Ingredient[]
   instructions: Instruction[]
+  name: string
   prepTime: number // In minutes
 }
 

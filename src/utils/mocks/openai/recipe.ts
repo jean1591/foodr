@@ -23,3 +23,29 @@ export const completionRecipe = {
   },
   system_fingerprint: 'fp_f33667828e',
 }
+
+export const completionRecipeFullJson = {
+  id: 'chatcmpl-A1tgSQVewP85zJKDLZxu0ELMiAIfH',
+  object: 'chat.completion',
+  created: 1725015740,
+  model: 'gpt-4o-mini-2024-07-18',
+  choices: [
+    {
+      index: 0,
+      message: {
+        role: 'assistant',
+        content:
+          '{\n  "cookTime": 30,\n  "description": "A healthy and delicious Mixed Vegetable Dim Sum, perfect for a low-fat vegetarian diet. These steamed dumplings are filled with a variety of fresh vegetables, offering a burst of flavor in every bite.",\n  "ingredients": [\n    {\n      "icon": "🥕",\n      "name": "Carrot, finely chopped",\n      "quantity": 80,\n      "unit": "grams"\n    },\n    {\n      "icon": "🌿",\n      "name": "Cabbage, finely chopped",\n      "quantity": 100,\n      "unit": "grams"\n    },\n    {\n      "icon": "🍄",\n      "name": "Mushrooms, finely chopped",\n      "quantity": 75,\n      "unit": "grams"\n    },\n    {\n      "icon": "🧅",\n      "name": "Spring onion, finely chopped",\n      "quantity": 30,\n      "unit": "grams"\n    },\n    {\n      "icon": "🌱",\n      "name": "Fresh ginger, grated",\n      "quantity": 10,\n      "unit": "grams"\n    },\n    {\n      "icon": "⚪",\n      "name": "Dim sum wrappers",\n      "quantity": 20,\n      "unit": "pieces"\n    },\n    {\n      "icon": "🧂",\n      "name": "Soy sauce",\n      "quantity": 15,\n      "unit": "milliliters"\n    },\n    {\n      "icon": "🌶️",\n      "name": "Black pepper, freshly ground",\n      "quantity": 1,\n      "unit": "gram"\n    }\n  ],\n  "instructions": [\n    {\n      "instruction": "In a large mixing bowl, combine the chopped carrot, cabbage, mushrooms, spring onion, and ginger.",\n      "stepNumber": 1\n    },\n    {\n      "instruction": "Add soy sauce and black pepper to the mixture and mix well to combine all ingredients evenly.",\n      "stepNumber": 2\n    },\n    {\n      "instruction": "Take a dim sum wrapper and place about 1 tablespoon of the vegetable mixture in the center.",\n      "stepNumber": 3\n    },\n    {\n      "instruction": "Wet the edges of the wrapper with a little water, fold the wrapper in half to enclose the filling, and pinch the edges to seal securely.",\n      "stepNumber": 4\n    },\n    {\n      "instruction": "Repeat the filling and sealing process for all dim sum wrappers.",\n      "stepNumber": 5\n    },\n    {\n      "instruction": "Prepare a steamer by bringing water to a boil over high heat (100°C).",\n      "stepNumber": 6\n    },\n    {\n      "instruction": "Place the sealed dim sum in the steamer basket, ensuring they do not touch each other.",\n      "stepNumber": 7\n    },\n    {\n      "instruction": "Cover and steam the dim sum for 10-12 minutes until the wrappers are translucent and the vegetables are heated through.",\n      "stepNumber": 8\n    },\n    {\n      "instruction": "Remove the dim sum from the steamer and let them cool slightly before serving.",\n      "stepNumber": 9\n    },\n    {\n      "instruction": "Serve hot with additional soy sauce for dipping if desired.",\n      "stepNumber": 10\n    }\n  ],\n  "prepTime": 20\n}',
+        refusal: null,
+      },
+      logprobs: null,
+      finish_reason: 'stop',
+    },
+  ],
+  usage: {
+    prompt_tokens: 127,
+    completion_tokens: 731,
+    total_tokens: 858,
+  },
+  system_fingerprint: 'fp_f33667828e',
+}

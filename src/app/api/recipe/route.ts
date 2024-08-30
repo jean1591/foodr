@@ -6,12 +6,15 @@ import {
 } from '../interfaces/recipes'
 import { Ingredient, Instruction, Recipe } from '@/utils/interfaces/recipes'
 import { NextRequest, NextResponse } from 'next/server'
+import {
+  completionRecipe,
+  completionRecipeFullJson,
+} from '@/utils/mocks/openai/recipe'
 import { isEmpty, isNil } from 'lodash'
 
 import OpenAI from 'openai'
 import { Options } from '@/app/lib/store/features/mealOptions/slice'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { completionRecipe } from '@/utils/mocks/openai/recipe'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
@@ -52,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await updateDbUser(supabase, { id: userId, credits })
     await insertRecipeInDb({
       mealId,
-      recipe: recipeDetails,
+      recipe: { ...recipeDetails, name },
       supabase,
     })
 
@@ -67,15 +70,25 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 }
 
 const openAiResponseToJsonFormatter = (content: string): Recipe => {
-  const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/)
+  try {
+    const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/)
 
-  const response: Recipe | null = jsonMatch ? JSON.parse(jsonMatch[1]) : null
+    const response: Recipe | null = jsonMatch ? JSON.parse(jsonMatch[1]) : null
 
-  if (!response) {
+    if (response) {
+      return response
+    }
+
+    const formattedContent: Recipe = JSON.parse(content)
+    if (!isNil(formattedContent)) {
+      return formattedContent
+    }
+
+    throw new Error('An error occured during openAI response formatting')
+  } catch (error) {
+    console.error(error)
     throw new Error('An error occured during openAI response formatting')
   }
-
-  return response
 }
 
 const generatePrompt = (name: string, options: Options): string => {
@@ -184,6 +197,7 @@ const formatRecipeToDb = (mealId: string, recipe: Recipe): DbRecipe => {
     cook_time: recipe.cookTime,
     description: recipe.description,
     meal_id: mealId,
+    name: recipe.name,
     prep_time: recipe.prepTime,
   }
 }
@@ -234,6 +248,7 @@ const formatDbRecipeToRecipe = (recipe: DbRecipeWithRelations): Recipe => {
       ...instruction,
       stepNumber: instruction.step_number,
     })),
+    name: recipe.name,
     prepTime: recipe.prep_time,
   }
 }

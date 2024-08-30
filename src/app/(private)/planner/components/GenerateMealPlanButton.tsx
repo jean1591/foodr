@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  resetGeneratedRecipes,
   setLoadingWeeklyMeals,
   setWeeklyMeals,
 } from '@/app/lib/store/features/meals/slice'
@@ -48,6 +49,7 @@ export const GenerateMealPlanButton = () => {
         dispatch(setWeeklyMeals(weeklyMeals))
         dispatch(setLoadingWeeklyMeals(false))
         dispatch(setUser({ ...user, credits: user.credits - 10 }))
+        dispatch(resetGeneratedRecipes())
       })()
     } else {
       dispatch(setDisplayNoCreditsModal(true))
