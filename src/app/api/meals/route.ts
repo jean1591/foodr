@@ -33,6 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       ],
     })
     // const completion = completionWithBreakfast
+    console.log(completion.choices[0].message.content)
 
     const weeklyMeals = openAiResponseToJsonFormatter(
       completion.choices[0].message.content ?? '{}'
