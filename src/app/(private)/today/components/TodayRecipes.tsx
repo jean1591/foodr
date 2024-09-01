@@ -1,29 +1,42 @@
+'use client'
+
+import { useDispatch, useSelector } from 'react-redux'
+
 import { DishItem } from './DishItems'
 import { RecipeItem } from '@/utils/interfaces/recipes'
+import { RootState } from '@/app/lib/store/store'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
+import { setTodayRecipes } from '@/app/lib/store/features/recipes/slice'
+import { useEffect } from 'react'
 
-async function getTodayRecipes() {
-  // TODO: Change recipe for recipes one legacy is gone
-  const recipesResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recipe/v2/today`
-  )
-  const { recipes } = (await recipesResponse.json()) as {
-    recipes: RecipeItem[]
+export const TodayRecipes = () => {
+  const dispatch = useDispatch()
+  const { todayRecipes } = useSelector((state: RootState) => state.recipes)
+
+  useEffect(() => {
+    ;(async function getWeeklyMeals() {
+      // TODO: Change recipe for recipes one legacy is gone
+      const recipesResponse = await fetch(`/api/recipe/v2/today`)
+      const { recipes } = (await recipesResponse.json()) as {
+        recipes: RecipeItem[]
+      }
+
+      dispatch(setTodayRecipes(recipes))
+    })()
+  }, [])
+
+  // TODO: add skeleton
+  if (!todayRecipes) {
+    return <></>
   }
-
-  return { recipes }
-}
-
-export const TodayRecipes = async () => {
-  const { recipes } = await getTodayRecipes()
 
   return (
     <div className="px-4">
       <p className="text-xl font-bold">Today's recipes</p>
 
       <div className="mt-4">
-        {recipes.length === 0 && (
+        {todayRecipes.length === 0 && (
           <div>
             <p className="text-center">
               No meal plan were found for today, generate a one to get ideas
@@ -40,9 +53,9 @@ export const TodayRecipes = async () => {
           </div>
         )}
 
-        {recipes.length > 0 && (
+        {todayRecipes.length > 0 && (
           <div className="space-y-4">
-            {recipes.map((recipe) => (
+            {todayRecipes.map((recipe) => (
               <DishItem key={recipe.label} recipe={recipe} />
             ))}
           </div>

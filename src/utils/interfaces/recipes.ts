@@ -1,3 +1,4 @@
+// TODO: add uuid to directly get recipe from DB
 export interface RecipeItem {
   icon: string
   label: string

@@ -7,7 +7,6 @@ import { DbUserLegacy } from '../interfaces/users'
 import { DbMeal } from '../interfaces/meals'
 import {
   Colours,
-  Meal,
   MealType,
   WeekDays,
   WeeklyMeals,

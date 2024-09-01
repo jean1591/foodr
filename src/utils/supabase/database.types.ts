@@ -147,29 +147,41 @@ export type Database = {
         Row: {
           cook_time: number
           created_at: string
+          day_of_the_week: number
           description: string
+          icon: string | null
           id: string
           meal_id: string
           name: string
           prep_time: number
+          type: string | null
+          user_id: string | null
         }
         Insert: {
           cook_time: number
           created_at?: string
+          day_of_the_week?: number
           description: string
+          icon?: string | null
           id?: string
           meal_id: string
           name: string
           prep_time: number
+          type?: string | null
+          user_id?: string | null
         }
         Update: {
           cook_time?: number
           created_at?: string
+          day_of_the_week?: number
           description?: string
+          icon?: string | null
           id?: string
           meal_id?: string
           name?: string
           prep_time?: number
+          type?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -177,6 +189,13 @@ export type Database = {
             columns: ["meal_id"]
             isOneToOne: false
             referencedRelation: "meals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
@@ -233,7 +252,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_today_recipes: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: {
+          id: string
+          created_at: string
+          cook_time: number
+          prep_time: number
+          description: string
+          meal_id: string
+          name: string
+          user_id: string
+          icon: string
+          type: string
+          day_of_the_week: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
