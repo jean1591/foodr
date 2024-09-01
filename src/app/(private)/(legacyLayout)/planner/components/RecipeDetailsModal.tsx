@@ -11,6 +11,10 @@ import {
   setLoadingRecipeDetails,
   setRecipeDetails,
 } from '@/app/lib/store/features/meals/slice'
+import {
+  setDisplayRecipeDetailsModal,
+  setDisplayRecipeDetailsModalLegacy,
+} from '@/app/lib/store/features/interactions/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Recipe } from './recipeModal/Recipe'
@@ -18,7 +22,6 @@ import { Recipe as RecipeDetails } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
 import { classNames } from '@/utils/classNames'
 import { isNil } from 'lodash'
-import { setDisplayRecipeDetailsModal } from '@/app/lib/store/features/interactions/slice'
 import useColour from './hook/useColour'
 import { useEffect } from 'react'
 
@@ -26,13 +29,12 @@ export const RecipeDetailsModal = () => {
   const dispatch = useDispatch()
 
   const { selectedMeal } = useSelector((state: RootState) => state.meals)
-  const { displayRecipeDetailsModal } = useSelector(
-    (state: RootState) => state.interactions
-  )
+  const { displayRecipeDetailsModalLegacy: displayRecipeDetailsModal } =
+    useSelector((state: RootState) => state.interactions)
   const mealOptions = useSelector((state: RootState) => state.mealOptions)
 
   const modalOnClose = () => {
-    dispatch(setDisplayRecipeDetailsModal(false))
+    dispatch(setDisplayRecipeDetailsModalLegacy(false))
     dispatch(setRecipeDetails(null))
   }
 

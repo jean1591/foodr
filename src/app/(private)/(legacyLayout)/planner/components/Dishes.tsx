@@ -11,9 +11,8 @@ export const Dishes = () => {
   const { loadingWeeklyMeals, weeklyMeals } = useSelector(
     (state: RootState) => state.meals
   )
-  const { displayRecipeDetailsModal } = useSelector(
-    (state: RootState) => state.interactions
-  )
+  const { displayRecipeDetailsModalLegacy: displayRecipeDetailsModal } =
+    useSelector((state: RootState) => state.interactions)
 
   if (loadingWeeklyMeals || !weeklyMeals) {
     return <DishesSkeleton />

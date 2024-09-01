@@ -1,7 +1,7 @@
 import { Meal, MealType } from '@/utils/interfaces/meals'
 import {
   setDisplayNoCreditsModal,
-  setDisplayRecipeDetailsModal,
+  setDisplayRecipeDetailsModalLegacy,
 } from '@/app/lib/store/features/interactions/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -25,14 +25,14 @@ export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   const handleDishItemOnClick = () => {
     if (generatedRecipes.find((recipe) => recipe === meal.name)) {
       dispatch(setSelectedMeal({ meal, type }))
-      dispatch(setDisplayRecipeDetailsModal(true))
+      dispatch(setDisplayRecipeDetailsModalLegacy(true))
 
       return
     }
 
     if (user.credits > 0) {
       dispatch(setSelectedMeal({ meal, type }))
-      dispatch(setDisplayRecipeDetailsModal(true))
+      dispatch(setDisplayRecipeDetailsModalLegacy(true))
       dispatch(setUser({ ...user, credits: user.credits - 1 }))
     } else {
       dispatch(setDisplayNoCreditsModal(true))
