@@ -14,14 +14,6 @@ export const UserDetails = () => {
             <p className="text-xs font-light">Credits</p>
           </div>
         </div>
-        <div>
-          <p className="text-lg font-medium">jose.bove@gmail.com</p>
-          <p className="text-xs font-light">Email</p>
-        </div>
-        <div>
-          <p className="text-lg font-medium">grams, liters</p>
-          <p className="text-xs font-light">Units</p>
-        </div>
       </div>
     </div>
   )

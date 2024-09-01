@@ -1,6 +1,7 @@
 import { GenerateMealButton } from './components/GenerateMealButton'
 import { LatestRecipes } from './components/LatestRecipes'
-import { QuickRecipes } from './components/QuickMeals'
+import { QuickRecipes } from './components/QuickRecipes'
+import { Recipe } from './components/Recipe'
 import { TodayRecipes } from './components/TodayRecipes'
 import { UserDetails } from './components/UserDetails'
 
@@ -24,6 +25,8 @@ export default function Today() {
       <div className="mt-12">
         <LatestRecipes />
       </div>
+
+      <Recipe />
     </div>
   )
 }
