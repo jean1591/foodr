@@ -1,3 +1,4 @@
+import { DishItem } from './DishItems'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
 
@@ -31,19 +32,8 @@ export const TodayRecipes = () => {
 
         {latestRecipes.length > 0 && (
           <div className="space-y-4">
-            {latestRecipes.map(({ icon, label, type }) => (
-              <div className="flex items-center justify-between space-x-4 rounded-lg bg-white pr-2 shadow-lg hover:cursor-pointer">
-                <div className="flex items-center justify-start space-x-4">
-                  <p className="rounded-r-none rounded-s-lg bg-blue-100 p-4 text-4xl md:text-5xl">
-                    {icon}
-                  </p>
-
-                  <div>
-                    <p className="text-sm font-semibold capitalize">{type}</p>
-                    <p className="font-bold">{label}</p>
-                  </div>
-                </div>
-              </div>
+            {latestRecipes.map((recipe) => (
+              <DishItem key={recipe.label} recipe={recipe} />
             ))}
           </div>
         )}
