@@ -1,14 +1,14 @@
 'use client'
 
 import { RootState } from '@/app/lib/store/store'
+import { UserDetailsSkeleton } from './skeletons/UserDetails'
 import { useSelector } from 'react-redux'
 
 export const UserDetails = () => {
   const { user } = useSelector((state: RootState) => state.user)
 
-  // TODO: add skeleton
   if (!user) {
-    return <></>
+    return <UserDetailsSkeleton />
   }
 
   return (

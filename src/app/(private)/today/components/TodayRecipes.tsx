@@ -3,6 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { DishItem } from './DishItems'
+import { LatestAndTodayRecipesSkeleton } from './skeletons/LatestAndTodayRecipes'
 import { RecipeItem } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
 import { buttonHoverTransition } from '@/utils/design/constants'
@@ -26,9 +27,8 @@ export const TodayRecipes = () => {
     })()
   }, [])
 
-  // TODO: add skeleton
   if (!todayRecipes) {
-    return <></>
+    return <LatestAndTodayRecipesSkeleton title="Today's recipes" />
   }
 
   return (
