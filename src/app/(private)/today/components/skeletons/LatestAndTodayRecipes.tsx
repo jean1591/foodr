@@ -1,4 +1,4 @@
-import { DishItemSkeleton } from './DishItems'
+import { RecipeItemSkeleton } from './RecipeItems'
 
 const todayRecipes = [1, 2]
 
@@ -8,7 +8,7 @@ export const LatestAndTodayRecipesSkeleton = ({ title }: { title: string }) => {
       <p className="text-xl font-bold">{title}</p>
       <div className="mt-4 space-y-4">
         {todayRecipes.map((recipe) => (
-          <DishItemSkeleton key={recipe} />
+          <RecipeItemSkeleton key={recipe} />
         ))}
       </div>
     </div>

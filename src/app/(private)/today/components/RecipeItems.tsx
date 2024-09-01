@@ -3,7 +3,7 @@
 import { setDisplayRecipeDetailsModal } from '@/app/lib/store/features/interactions/slice'
 import { useDispatch } from 'react-redux'
 
-export const DishItem = ({
+export const RecipeItem = ({
   recipe,
 }: {
   recipe: {

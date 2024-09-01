@@ -2,9 +2,9 @@
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { DishItem } from './DishItems'
 import { LatestAndTodayRecipesSkeleton } from './skeletons/LatestAndTodayRecipes'
-import { RecipeItem } from '@/utils/interfaces/recipes'
+import { RecipeItem } from './RecipeItems'
+import { RecipeItem as RecipeItemType } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
@@ -20,7 +20,7 @@ export const TodayRecipes = () => {
       // TODO: Change recipe for recipes one legacy is gone
       const recipesResponse = await fetch(`/api/recipe/v2/today`)
       const { recipes } = (await recipesResponse.json()) as {
-        recipes: RecipeItem[]
+        recipes: RecipeItemType[]
       }
 
       dispatch(setTodayRecipes(recipes))
@@ -56,7 +56,7 @@ export const TodayRecipes = () => {
         {todayRecipes.length > 0 && (
           <div className="space-y-4">
             {todayRecipes.map((recipe) => (
-              <DishItem key={recipe.label} recipe={recipe} />
+              <RecipeItem key={recipe.label} recipe={recipe} />
             ))}
           </div>
         )}

@@ -1,4 +1,4 @@
-export const DishItemSkeleton = () => {
+export const RecipeItemSkeleton = () => {
   return (
     <div>
       <div className="flex items-center justify-between space-x-4 rounded-lg bg-white pr-2 shadow-lg hover:cursor-pointer">
