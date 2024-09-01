@@ -5,11 +5,17 @@ export enum Plan {
   PAID = 'paid',
 }
 
-export interface User {
+export interface UserLegacy {
   credits: number
   email: string
   hasCompletedOnboarding: boolean
   options: string[]
   weeklyMeal: WeeklyMeals
   plan: Plan
+}
+
+export interface User {
+  credits: number
+  hasCompletedOnboarding: boolean
+  username: string
 }

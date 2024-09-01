@@ -2,8 +2,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
-import { Plan, User } from '@/utils/interfaces/users'
-import { DbUser } from '../interfaces/users'
+import { Plan, UserLegacy } from '@/utils/interfaces/users'
+import { DbUserLegacy } from '../interfaces/users'
 import { DbMeal } from '../interfaces/meals'
 import {
   Colours,
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ user: formatDbUserToUser(users[0]) })
 }
 
-const formatDbUserToUser = (user: DbUser): User => {
+const formatDbUserToUser = (user: DbUserLegacy): UserLegacy => {
   return {
     credits: user.credits,
     email: user.email,

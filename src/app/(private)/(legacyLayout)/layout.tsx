@@ -1,8 +1,8 @@
 'use client'
 
-import { User } from '@/utils/interfaces/users'
+import { UserLegacy } from '@/utils/interfaces/users'
 import { setSelectedOptions } from '../../lib/store/features/mealOptions/slice'
-import { setUser } from '../../lib/store/features/user/slice'
+import { setUserLegacy } from '../../lib/store/features/user/slice'
 import { setWeeklyMeals } from '../../lib/store/features/meals/slice'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -20,13 +20,13 @@ export default function PrivateLayout({
     ;(async function getUser() {
       try {
         const userResponse = await fetch('/api/users')
-        const { user } = (await userResponse.json()) as { user: User }
+        const { user } = (await userResponse.json()) as { user: UserLegacy }
 
         if (!user.hasCompletedOnboarding) {
           router.push('/onboarding')
         }
 
-        dispatch(setUser(user))
+        dispatch(setUserLegacy(user))
         dispatch(setSelectedOptions(user.options))
         dispatch(setWeeklyMeals(user.weeklyMeal))
       } catch (error) {

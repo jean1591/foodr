@@ -1,19 +1,29 @@
 import { DishItem } from './DishItems'
+import { RecipeItem } from '@/utils/interfaces/recipes'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
 
-export const TodayRecipes = () => {
-  const latestRecipes: { icon: string; label: string; type: string }[] = [
-    { icon: '🥡', label: 'Quick Asian Tofu Bowl', type: 'lunch' },
-    { icon: '🍖', label: 'Pork Belly with Bok Choy', type: 'dinner' },
-  ]
+async function getTodayRecipes() {
+  // TODO: Change recipe for recipes one legacy is gone
+  const recipesResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recipe/v2/today`
+  )
+  const { recipes } = (await recipesResponse.json()) as {
+    recipes: RecipeItem[]
+  }
+
+  return { recipes }
+}
+
+export const TodayRecipes = async () => {
+  const { recipes } = await getTodayRecipes()
 
   return (
     <div className="px-4">
       <p className="text-xl font-bold">Today's recipes</p>
 
       <div className="mt-4">
-        {latestRecipes.length === 0 && (
+        {recipes.length === 0 && (
           <div>
             <p className="text-center">
               No meal plan were found for today, generate a one to get ideas
@@ -30,9 +40,9 @@ export const TodayRecipes = () => {
           </div>
         )}
 
-        {latestRecipes.length > 0 && (
+        {recipes.length > 0 && (
           <div className="space-y-4">
-            {latestRecipes.map((recipe) => (
+            {recipes.map((recipe) => (
               <DishItem key={recipe.label} recipe={recipe} />
             ))}
           </div>

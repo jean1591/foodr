@@ -78,6 +78,7 @@ export type Database = {
           color: string
           created_at: string
           day: string
+          day_as_number: number
           icon: string
           id: string
           meal: string
@@ -88,6 +89,7 @@ export type Database = {
           color: string
           created_at?: string
           day: string
+          day_as_number?: number
           icon: string
           id?: string
           meal: string
@@ -98,6 +100,7 @@ export type Database = {
           color?: string
           created_at?: string
           day?: string
+          day_as_number?: number
           icon?: string
           id?: string
           meal?: string
@@ -189,6 +192,7 @@ export type Database = {
           has_requested_credits: boolean
           id: string
           plan: string
+          username: string
         }
         Insert: {
           auth_user_id: string
@@ -200,6 +204,7 @@ export type Database = {
           has_requested_credits?: boolean
           id?: string
           plan?: string
+          username?: string
         }
         Update: {
           auth_user_id?: string
@@ -211,6 +216,7 @@ export type Database = {
           has_requested_credits?: boolean
           id?: string
           plan?: string
+          username?: string
         }
         Relationships: [
           {

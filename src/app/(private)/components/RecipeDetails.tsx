@@ -120,7 +120,7 @@ export const RecipeDetailsModal = () => {
               </div>
             </div>
 
-            <div className="mt-8 px-4">
+            <div className="mt-8 px-4 pb-8">
               <Ingredients ingredients={recipe.ingredients} />
 
               <div className="mt-12">

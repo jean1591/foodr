@@ -1,3 +1,9 @@
+export interface RecipeItem {
+  icon: string
+  label: string
+  type: string
+}
+
 export interface Recipe {
   cookTime: number // In minutes
   description: string

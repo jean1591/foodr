@@ -13,7 +13,7 @@ import { Step } from './Step'
 import { WeeklyMeals } from '@/utils/interfaces/meals'
 import { Welcome } from './Welcome'
 import { classNames } from '@/utils/classNames'
-import { setUser } from '@/app/lib/store/features/user/slice'
+import { setUserLegacy } from '@/app/lib/store/features/user/slice'
 import useOptionsHook from '../../planner/components/hook/useOptionsHook'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -24,7 +24,7 @@ export const Steps = () => {
   const options = useOptionsHook()
 
   const [stepIndex, setStepIndex] = useState<number>(0)
-  const { user } = useSelector((state: RootState) => state.user)
+  const { userLegacy: user } = useSelector((state: RootState) => state.user)
   const { loadingWeeklyMeals } = useSelector((state: RootState) => state.meals)
   const mealOptions = useSelector((state: RootState) => state.mealOptions)
 
@@ -67,7 +67,7 @@ export const Steps = () => {
       }
 
       dispatch(
-        setUser({
+        setUserLegacy({
           ...user,
           credits: user.credits - 10,
           hasCompletedOnboarding: true,
