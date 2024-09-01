@@ -37,7 +37,5 @@ export default function PrivateLayout({
     })()
   }, [])
 
-  return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">{children}</div>
-  )
+  return <div className="bg-slate-50 text-blue-950">{children}</div>
 }
