@@ -151,6 +151,7 @@ const formatMealToDb = (weeklyMeals: WeeklyMeals, userId: string): DbMeal[] => {
       acc.push({
         color: value.color,
         day: current,
+        day_as_number: 0, // TODO: update this
         icon: value.icon,
         meal: key,
         name: value.name,

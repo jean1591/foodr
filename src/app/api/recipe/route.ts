@@ -196,10 +196,14 @@ const insertRecipeInDb = async ({
 const formatRecipeToDb = (mealId: string, recipe: Recipe): DbRecipe => {
   return {
     cook_time: recipe.cookTime,
+    day_of_the_week: 0, // TODO: use response from openAi
     description: recipe.description,
+    icon: '🍙', // TODO: use response from openAi
     meal_id: mealId,
     name: recipe.name,
     prep_time: recipe.prepTime,
+    type: 'lunch', // TODO: use response from openAi
+    user_id: '0000-0000', // TODO: use userId from supabase
   }
 }
 
