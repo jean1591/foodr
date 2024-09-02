@@ -1,6 +1,7 @@
 'use client'
 
 import { setDisplayRecipeDetailsModal } from '@/app/lib/store/features/interactions/slice'
+import { setSelectedRecipe } from '@/app/lib/store/features/recipes/slice'
 import { useDispatch } from 'react-redux'
 
 export const RecipeItem = ({
@@ -16,10 +17,15 @@ export const RecipeItem = ({
 
   const { icon, label, type } = recipe
 
+  const onClick = () => {
+    dispatch(setDisplayRecipeDetailsModal(true))
+    dispatch(setSelectedRecipe(recipe))
+  }
+
   return (
     <div>
       <div
-        onClick={() => dispatch(setDisplayRecipeDetailsModal(true))}
+        onClick={onClick}
         className="flex items-center justify-between space-x-4 rounded-lg bg-white pr-2 shadow-lg hover:cursor-pointer"
       >
         <div className="flex items-center justify-start space-x-4">

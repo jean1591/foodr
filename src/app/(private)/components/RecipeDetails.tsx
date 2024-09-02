@@ -9,79 +9,48 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { PiXBold } from 'react-icons/pi'
 import { RootState } from '@/app/lib/store/store'
+import { isNil } from 'lodash'
 import { setDisplayRecipeDetailsModal } from '@/app/lib/store/features/interactions/slice'
-import { setRecipeDetails } from '@/app/lib/store/features/meals/slice'
-
-const recipe: Recipe = {
-  cookTime: 35,
-  description:
-    'A classic Italian pasta dish made with eggs, cheese, cured pork, and black pepper, creating a rich and creamy sauce.',
-  ingredients: [
-    {
-      icon: '🍔',
-      name: 'mozzarella cheese',
-      quantity: 250,
-      unit: 'grams',
-    },
-    {
-      icon: '🥯',
-      name: 'pizza dough',
-      quantity: 3,
-      unit: 'liters',
-    },
-    {
-      icon: '🌮',
-      name: 'Avocado',
-      quantity: 4,
-      unit: 'units',
-    },
-    {
-      icon: '🍚',
-      name: 'Bell pepper',
-      quantity: 140,
-      unit: 'grams',
-    },
-    {
-      icon: '🥔',
-      name: 'Cilantro',
-      quantity: 42,
-      unit: 'grams',
-    },
-  ],
-  instructions: [
-    {
-      instruction:
-        'Add the marinated shrimp to the skillet and cook for 3-4 minutes until they turn pink and opaque.',
-      stepNumber: 1,
-    },
-    {
-      instruction:
-        'Assemble the tacos by placing shrimp on each tortilla, topping with fresh salsa, and adding avocado slices.',
-      stepNumber: 2,
-    },
-    {
-      instruction:
-        'Slice the avocado in half, remove the pit, and scoop out the flesh. Slice it into thin pieces.',
-      stepNumber: 3,
-    },
-    {
-      instruction: 'Chop the bell pepper and onion into small pieces.',
-      stepNumber: 4,
-    },
-  ],
-  name: 'Spaghetti Carbonara',
-  prepTime: 15,
-}
+import { setRecipe } from '@/app/lib/store/features/recipes/slice'
+import { useEffect } from 'react'
 
 export const RecipeDetailsModal = () => {
   const dispatch = useDispatch()
   const { displayRecipeDetailsModal } = useSelector(
     (state: RootState) => state.interactions
   )
+  const { recipe, selectedRecipe } = useSelector(
+    (state: RootState) => state.recipes
+  )
 
   const modalOnClose = () => {
     dispatch(setDisplayRecipeDetailsModal(false))
-    dispatch(setRecipeDetails(null))
+    dispatch(setRecipe(null))
+  }
+
+  useEffect(() => {
+    if (!isNil(selectedRecipe)) {
+      ;(async function getRecipeDetails() {
+        // TODO: Change recipe for recipes one legacy is gone
+        const recipeResponse = await fetch(`/api/recipe/v2`, {
+          method: 'POST',
+          body: JSON.stringify({
+            name: selectedRecipe.label,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const { recipe } = (await recipeResponse.json()) as {
+          recipe: Recipe
+        }
+
+        dispatch(setRecipe(recipe))
+      })()
+    }
+  }, [])
+
+  // TODO: add skeleton
+  if (isNil(recipe)) {
+    return <></>
   }
 
   return (
