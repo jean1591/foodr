@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
   )
 
   if (!recipes || getTodayRecipesError) {
+    console.error(getTodayRecipesError)
     throw new Error('An error occured while fetching user today recipes')
   }
 

@@ -3,12 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface InteractionsSlice {
   displayNoCreditsModal: boolean
+  displayOptionSelectorModal: boolean
   displayRecipeDetailsModal: boolean
   displayRecipeDetailsModalLegacy: boolean
 }
 
 const initialState: InteractionsSlice = {
   displayNoCreditsModal: false,
+  displayOptionSelectorModal: false,
   displayRecipeDetailsModal: false,
   displayRecipeDetailsModalLegacy: false,
 }
@@ -19,6 +21,9 @@ export const interactionsSlice = createSlice({
   reducers: {
     setDisplayNoCreditsModal: (state, action: PayloadAction<boolean>) => {
       state.displayNoCreditsModal = action.payload
+    },
+    setDisplayOptionSelectorModal: (state, action: PayloadAction<boolean>) => {
+      state.displayOptionSelectorModal = action.payload
     },
     setDisplayRecipeDetailsModal: (state, action: PayloadAction<boolean>) => {
       state.displayRecipeDetailsModal = action.payload
@@ -34,6 +39,7 @@ export const interactionsSlice = createSlice({
 
 export const {
   setDisplayNoCreditsModal,
+  setDisplayOptionSelectorModal,
   setDisplayRecipeDetailsModal,
   setDisplayRecipeDetailsModalLegacy,
 } = interactionsSlice.actions

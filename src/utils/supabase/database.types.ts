@@ -73,50 +73,6 @@ export type Database = {
           },
         ]
       }
-      meals: {
-        Row: {
-          color: string
-          created_at: string
-          day: string
-          day_as_number: number
-          icon: string
-          id: string
-          meal: string
-          name: string
-          user_id: string
-        }
-        Insert: {
-          color: string
-          created_at?: string
-          day: string
-          day_as_number?: number
-          icon: string
-          id?: string
-          meal: string
-          name: string
-          user_id: string
-        }
-        Update: {
-          color?: string
-          created_at?: string
-          day?: string
-          day_as_number?: number
-          icon?: string
-          id?: string
-          meal?: string
-          name?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "meals_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       options: {
         Row: {
           id: string
@@ -151,7 +107,6 @@ export type Database = {
           description: string
           icon: string | null
           id: string
-          meal_id: string
           name: string
           prep_time: number
           type: string | null
@@ -164,7 +119,6 @@ export type Database = {
           description: string
           icon?: string | null
           id?: string
-          meal_id: string
           name: string
           prep_time: number
           type?: string | null
@@ -177,20 +131,12 @@ export type Database = {
           description?: string
           icon?: string | null
           id?: string
-          meal_id?: string
           name?: string
           prep_time?: number
           type?: string | null
           user_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "recipes_meal_id_fkey"
-            columns: ["meal_id"]
-            isOneToOne: false
-            referencedRelation: "meals"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "recipes_user_id_fkey"
             columns: ["user_id"]
@@ -262,7 +208,6 @@ export type Database = {
           cook_time: number
           prep_time: number
           description: string
-          meal_id: string
           name: string
           user_id: string
           icon: string

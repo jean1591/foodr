@@ -7,7 +7,7 @@ import { UserDetails } from './components/UserDetails'
 
 export default function Today() {
   return (
-    <div className="mx-auto md:max-w-2xl">
+    <div className="mx-auto pb-12 md:max-w-2xl">
       <UserDetails />
 
       <div className="relative">
