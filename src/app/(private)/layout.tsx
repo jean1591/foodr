@@ -1,9 +1,7 @@
 'use client'
 
 import { User } from '@/utils/interfaces/users'
-import { setSelectedOptions } from '../lib/store/features/mealOptions/slice'
 import { setUser } from '../lib/store/features/user/slice'
-import { setWeeklyMeals } from '../lib/store/features/meals/slice'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -19,7 +17,7 @@ export default function PrivateLayout({
   useEffect(() => {
     ;(async function getUser() {
       try {
-        const userResponse = await fetch('/api/users')
+        const userResponse = await fetch('/api/users/v2')
         const { user } = (await userResponse.json()) as { user: User }
 
         if (!user.hasCompletedOnboarding) {
@@ -27,8 +25,6 @@ export default function PrivateLayout({
         }
 
         dispatch(setUser(user))
-        dispatch(setSelectedOptions(user.options))
-        dispatch(setWeeklyMeals(user.weeklyMeal))
       } catch (error) {
         console.error('An error occured when fetching logged in user')
         router.push('/login')
@@ -37,7 +33,5 @@ export default function PrivateLayout({
     })()
   }, [])
 
-  return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">{children}</div>
-  )
+  return <div className="bg-slate-50 text-blue-950">{children}</div>
 }

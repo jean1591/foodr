@@ -20,7 +20,7 @@ export const NoCreditsModal = () => {
   const { displayNoCreditsModal } = useSelector(
     (state: RootState) => state.interactions
   )
-  const { user } = useSelector((state: RootState) => state.user)
+  const { userLegacy: user } = useSelector((state: RootState) => state.user)
 
   const [stepIndex, setStepIndex] = useState<number>(0)
 

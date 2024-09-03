@@ -2,14 +2,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
-import { Plan, UserLegacy } from '@/utils/interfaces/users'
-import { DbUserLegacy } from '../interfaces/users'
-import {
-  Colours,
-  MealType,
-  WeekDays,
-  WeeklyMeals,
-} from '@/utils/interfaces/meals'
+import { DbUser } from '../../interfaces/users'
+import { User } from '@/utils/interfaces/users'
 
 export async function GET(request: NextRequest) {
   const supabase = createClient()
@@ -24,9 +18,7 @@ export async function GET(request: NextRequest) {
 
   const { data: users } = await supabase
     .from('users')
-    .select(
-      'credits, email, has_completed_onboarding, plan, options (label), meals (*)'
-    )
+    .select('credits, has_completed_onboarding, username')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
@@ -36,12 +28,10 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ user: formatDbUserToUser(users[0]) })
 }
 
-const formatDbUserToUser = (user: DbUserLegacy): UserLegacy => {
+const formatDbUserToUser = (user: DbUser): User => {
   return {
     credits: user.credits,
-    email: user.email,
     hasCompletedOnboarding: user.has_completed_onboarding,
-    options: user.options.map(({ label }) => label),
-    plan: user.plan as Plan,
+    username: user.username,
   }
 }

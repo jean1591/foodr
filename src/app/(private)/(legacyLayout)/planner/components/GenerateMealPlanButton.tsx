@@ -14,14 +14,14 @@ import { WeeklyMeals } from '@/utils/interfaces/meals'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
 import { setDisplayNoCreditsModal } from '@/app/lib/store/features/interactions/slice'
-import { setUser } from '@/app/lib/store/features/user/slice'
+import { setUserLegacy } from '@/app/lib/store/features/user/slice'
 
 export const GenerateMealPlanButton = () => {
   const dispatch = useDispatch()
 
   const { loadingWeeklyMeals } = useSelector((state: RootState) => state.meals)
   const mealOptions = useSelector((state: RootState) => state.mealOptions)
-  const { user } = useSelector((state: RootState) => state.user)
+  const { userLegacy: user } = useSelector((state: RootState) => state.user)
   const { displayNoCreditsModal } = useSelector(
     (state: RootState) => state.interactions
   )
@@ -48,7 +48,7 @@ export const GenerateMealPlanButton = () => {
 
         dispatch(setWeeklyMeals(weeklyMeals))
         dispatch(setLoadingWeeklyMeals(false))
-        dispatch(setUser({ ...user, credits: user.credits - 10 }))
+        dispatch(setUserLegacy({ ...user, credits: user.credits - 10 }))
         dispatch(resetGeneratedRecipes())
       })()
     } else {

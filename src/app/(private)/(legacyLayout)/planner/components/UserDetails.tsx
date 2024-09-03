@@ -5,7 +5,7 @@ import { UserDetailsSkeleton } from './skeleton/UserDetails'
 import { useSelector } from 'react-redux'
 
 export const UserDetails = () => {
-  const { user } = useSelector((state: RootState) => state.user)
+  const { userLegacy: user } = useSelector((state: RootState) => state.user)
 
   if (!user) {
     return <UserDetailsSkeleton />

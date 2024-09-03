@@ -73,47 +73,6 @@ export type Database = {
           },
         ]
       }
-      meals: {
-        Row: {
-          color: string
-          created_at: string
-          day: string
-          icon: string
-          id: string
-          meal: string
-          name: string
-          user_id: string
-        }
-        Insert: {
-          color: string
-          created_at?: string
-          day: string
-          icon: string
-          id?: string
-          meal: string
-          name: string
-          user_id: string
-        }
-        Update: {
-          color?: string
-          created_at?: string
-          day?: string
-          icon?: string
-          id?: string
-          meal?: string
-          name?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "meals_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       options: {
         Row: {
           id: string
@@ -144,36 +103,45 @@ export type Database = {
         Row: {
           cook_time: number
           created_at: string
+          day_of_the_week: number
           description: string
+          icon: string | null
           id: string
-          meal_id: string
           name: string
           prep_time: number
+          type: string | null
+          user_id: string | null
         }
         Insert: {
           cook_time: number
           created_at?: string
+          day_of_the_week?: number
           description: string
+          icon?: string | null
           id?: string
-          meal_id: string
           name: string
           prep_time: number
+          type?: string | null
+          user_id?: string | null
         }
         Update: {
           cook_time?: number
           created_at?: string
+          day_of_the_week?: number
           description?: string
+          icon?: string | null
           id?: string
-          meal_id?: string
           name?: string
           prep_time?: number
+          type?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "recipes_meal_id_fkey"
-            columns: ["meal_id"]
+            foreignKeyName: "recipes_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "meals"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
@@ -189,6 +157,7 @@ export type Database = {
           has_requested_credits: boolean
           id: string
           plan: string
+          username: string
         }
         Insert: {
           auth_user_id: string
@@ -200,6 +169,7 @@ export type Database = {
           has_requested_credits?: boolean
           id?: string
           plan?: string
+          username?: string
         }
         Update: {
           auth_user_id?: string
@@ -211,6 +181,7 @@ export type Database = {
           has_requested_credits?: boolean
           id?: string
           plan?: string
+          username?: string
         }
         Relationships: [
           {
@@ -227,7 +198,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_today_recipes: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: {
+          id: string
+          created_at: string
+          cook_time: number
+          prep_time: number
+          description: string
+          name: string
+          user_id: string
+          icon: string
+          type: string
+          day_of_the_week: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

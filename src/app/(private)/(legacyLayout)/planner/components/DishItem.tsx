@@ -1,19 +1,19 @@
 import { Meal, MealType } from '@/utils/interfaces/meals'
 import {
   setDisplayNoCreditsModal,
-  setDisplayRecipeDetailsModal,
+  setDisplayRecipeDetailsModalLegacy,
 } from '@/app/lib/store/features/interactions/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/lib/store/store'
 import { classNames } from '@/utils/classNames'
 import { setSelectedMeal } from '@/app/lib/store/features/meals/slice'
-import { setUser } from '@/app/lib/store/features/user/slice'
+import { setUserLegacy } from '@/app/lib/store/features/user/slice'
 import useColour from './hook/useColour'
 
 export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   const dispatch = useDispatch()
-  const { user } = useSelector((state: RootState) => state.user)
+  const { userLegacy: user } = useSelector((state: RootState) => state.user)
   const { generatedRecipes } = useSelector((state: RootState) => state.meals)
 
   const { bgColor, borderColor, textColor } = useColour(meal.color)
@@ -25,15 +25,15 @@ export const DishItem = ({ type, meal }: { type: MealType; meal: Meal }) => {
   const handleDishItemOnClick = () => {
     if (generatedRecipes.find((recipe) => recipe === meal.name)) {
       dispatch(setSelectedMeal({ meal, type }))
-      dispatch(setDisplayRecipeDetailsModal(true))
+      dispatch(setDisplayRecipeDetailsModalLegacy(true))
 
       return
     }
 
     if (user.credits > 0) {
       dispatch(setSelectedMeal({ meal, type }))
-      dispatch(setDisplayRecipeDetailsModal(true))
-      dispatch(setUser({ ...user, credits: user.credits - 1 }))
+      dispatch(setDisplayRecipeDetailsModalLegacy(true))
+      dispatch(setUserLegacy({ ...user, credits: user.credits - 1 }))
     } else {
       dispatch(setDisplayNoCreditsModal(true))
     }

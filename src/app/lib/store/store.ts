@@ -2,13 +2,17 @@ import { configureStore } from '@reduxjs/toolkit'
 import interactionsReducer from './features/interactions/slice'
 import mealOptionsReducer from './features/mealOptions/slice'
 import mealsReducer from './features/meals/slice'
+import optionsReducer from './features/options/slice'
+import recipesReducer from './features/recipes/slice'
 import userReducer from './features/user/slice'
 
 export const store = configureStore({
   reducer: {
     interactions: interactionsReducer,
     mealOptions: mealOptionsReducer,
+    options: optionsReducer,
     meals: mealsReducer,
+    recipes: recipesReducer,
     user: userReducer,
   },
 })
