@@ -135,9 +135,10 @@ export default function OnboardingWeekly() {
             optionSelected={favoriteIngredients}
           />
         )}
+        {step === 4 && <FinalStep />}
 
         <div className="mt-4 flex items-center justify-end gap-x-4">
-          {step > 0 && (
+          {step > 0 && step < 4 && (
             <button
               className="rounded-lg border-2 border-blue-950 bg-white px-4 py-2 font-bold"
               onClick={() => setStep(step - 1)}
@@ -146,13 +147,32 @@ export default function OnboardingWeekly() {
             </button>
           )}
 
-          <button
-            className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white"
-            onClick={() => setStep(step + 1)}
-          >
-            Continue
-          </button>
+          {step < 4 && (
+            <button
+              className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white"
+              onClick={() => setStep(step + 1)}
+            >
+              Continue
+            </button>
+          )}
         </div>
+
+        {step === 4 && (
+          <div className="mt-4 flex items-center justify-center gap-x-4">
+            <button
+              className="rounded-lg border-2 border-blue-950 bg-white px-4 py-2 font-bold"
+              onClick={() => setStep(step - 1)}
+            >
+              Back
+            </button>
+            <button
+              className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white"
+              onClick={() => setStep(step + 1)}
+            >
+              Generate weekly meal plan
+            </button>
+          </div>
+        )}
       </div>
 
       {displayOptionSelectorModal && (
@@ -207,9 +227,37 @@ const OptionSelector = ({
   )
 }
 
-// TODO: continuer les step
-// TODO: voir pourquoi build failed
+const FinalStep = () => {
+  const {
+    favoriteIngredients,
+    excludedIngredients,
+    selectedDays,
+    selectedMeals,
+  } = useSelector((state: RootState) => state.options)
 
-const ExcludedIngredients = () => {
-  return <div></div>
+  const summary = [
+    { label: "We'll generate meals for", options: selectedMeals },
+    { label: 'On the following days', options: selectedDays },
+    { label: 'Without', options: excludedIngredients },
+    { label: 'And mostly with', options: favoriteIngredients },
+  ]
+
+  return (
+    <div>
+      <p className="text-2xl font-bold">Let's recap !</p>
+
+      <div className="mt-8 space-y-8">
+        {summary.map((details) => (
+          <div>
+            <p className="text-lg font-bold">{details.label}:</p>
+            <div className="mt-2 flex flex-wrap items-center justify-start gap-2">
+              {details.options.map((option) => (
+                <p>{option}</p>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
