@@ -17,8 +17,8 @@ export const OptionSelectorModal = ({
   params,
 }: {
   params: {
-    options: string[]
     handler: (options: string[]) => UnknownAction
+    options: string[]
     selected: string[]
     title: string
     withSearch: boolean

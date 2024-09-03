@@ -61,8 +61,8 @@ const ingredients = [
 type OptionsMapper = Record<
   number,
   {
-    options: string[]
     handler: (options: string[]) => UnknownAction
+    options: string[]
     selected: string[]
     title: string
     withSearch: boolean
@@ -83,29 +83,29 @@ export default function OnboardingWeekly() {
 
   const optionsMapper: OptionsMapper = {
     0: {
-      options: meals,
       handler: setSelectedMeals,
+      options: meals,
       selected: selectedMeals,
       title: 'meals',
       withSearch: false,
     },
     1: {
-      options: days,
       handler: setSelectedDays,
+      options: days,
       selected: selectedDays,
       title: 'days',
       withSearch: false,
     },
     2: {
-      options: ingredients,
       handler: setExcludedIngredients,
+      options: ingredients,
       selected: excludedIngredients,
       title: "Ingredients you don't like",
       withSearch: true,
     },
     3: {
-      options: ingredients,
       handler: setFavoriteIngredients,
+      options: ingredients,
       selected: favoriteIngredients,
       title: 'Ingredients you love',
       withSearch: true,
@@ -113,32 +113,36 @@ export default function OnboardingWeekly() {
   }
 
   return (
-    <div className="mx-auto md:max-w-2xl">
-      <Header />
+    <div className="mx-auto flex min-h-screen flex-col md:max-w-2xl">
+      <div className="flex-1">
+        <Header />
 
-      <div className="mt-8 px-4">
-        {step === 0 && (
-          <OptionSelector title="Meals" optionSelected={selectedMeals} />
-        )}
-        {step === 1 && (
-          <OptionSelector title="Days" optionSelected={selectedDays} />
-        )}
-        {step === 2 && (
-          <OptionSelector
-            title="Ingredients you don't like"
-            optionSelected={excludedIngredients}
-          />
-        )}
-        {step === 3 && (
-          <OptionSelector
-            title="Ingredients you love"
-            optionSelected={favoriteIngredients}
-          />
-        )}
-        {step === 4 && <FinalStep />}
+        <div className="mt-8 px-4">
+          {step === 0 && (
+            <OptionSelector title="Meals" optionSelected={selectedMeals} />
+          )}
+          {step === 1 && (
+            <OptionSelector title="Days" optionSelected={selectedDays} />
+          )}
+          {step === 2 && (
+            <OptionSelector
+              title="Ingredients you don't like"
+              optionSelected={excludedIngredients}
+            />
+          )}
+          {step === 3 && (
+            <OptionSelector
+              title="Ingredients you love"
+              optionSelected={favoriteIngredients}
+            />
+          )}
+          {step === 4 && <FinalStep />}
+        </div>
+      </div>
 
-        <div className="mt-4 flex items-center justify-end gap-x-4">
-          {step > 0 && step < 4 && (
+      <div className="mb-16 mt-8 px-4">
+        <div className="flex items-center justify-end gap-x-4">
+          {step > 0 && (
             <button
               className="rounded-lg border-2 border-blue-950 bg-white px-4 py-2 font-bold"
               onClick={() => setStep(step - 1)}
@@ -155,24 +159,16 @@ export default function OnboardingWeekly() {
               Continue
             </button>
           )}
-        </div>
 
-        {step === 4 && (
-          <div className="mt-4 flex items-center justify-center gap-x-4">
-            <button
-              className="rounded-lg border-2 border-blue-950 bg-white px-4 py-2 font-bold"
-              onClick={() => setStep(step - 1)}
-            >
-              Back
-            </button>
+          {step === 4 && (
             <button
               className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white"
               onClick={() => setStep(step + 1)}
             >
               Generate weekly meal plan
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {displayOptionSelectorModal && (
