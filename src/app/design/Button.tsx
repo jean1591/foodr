@@ -16,7 +16,7 @@ export const ButtonParameterLight = ({
       className={classNames(
         buttonHoverTransition,
         selected
-          ? 'border-blue-400 bg-blue-50 text-blue-700'
+          ? 'border-blue-500 bg-blue-50 text-blue-800'
           : 'border-slate-300 bg-slate-50 text-slate-700',
         'rounded-lg border-2 px-4 py-2 text-sm font-medium capitalize'
       )}

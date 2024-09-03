@@ -1,6 +1,8 @@
 'use client'
 
 import {
+  setExcludedIngredients,
+  setFavoriteIngredients,
   setSelectedDays,
   setSelectedMeals,
 } from '@/app/lib/store/features/options/slice'
@@ -22,6 +24,39 @@ const days = [
   'saturday',
   'sunday',
 ]
+const ingredients = [
+  '🥑 Avocado',
+  '🥓 Bacon',
+  '🥩 Beef',
+  '🥦 Broccoli',
+  '🧈 Butter',
+  '🥬 Cabbage',
+  '🥕 Carrot',
+  '🧀 Cheese',
+  '🍗 Chicken',
+  '🥥 Coconut',
+  '🌽 Corn',
+  '🦀 Crab',
+  '🥒 Cucumber',
+  '🍳 Egg',
+  '🍆 Eggplant',
+  '🧄 Garlic',
+  '🍯 Honey',
+  '🍋 Lemon',
+  '🦞 Lobster',
+  '🍈 Melon',
+  '🥛 Milk',
+  '🍄 Mushroom',
+  '🧅 Onion',
+  '🦪 Oyster',
+  '🍝 Pasta',
+  '🥜 Peanuts',
+  '🥔 Potato',
+  '🍚 Rice',
+  '🍤 Shrimp',
+  '🍠 Sweet Potato',
+  '🍅 Tomato',
+]
 
 type OptionsMapper = Record<
   number,
@@ -30,6 +65,7 @@ type OptionsMapper = Record<
     handler: (options: string[]) => UnknownAction
     selected: string[]
     title: string
+    withSearch: boolean
   }
 >
 
@@ -37,9 +73,12 @@ export default function OnboardingWeekly() {
   const { displayOptionSelectorModal } = useSelector(
     (state: RootState) => state.interactions
   )
-  const { selectedDays, selectedMeals } = useSelector(
-    (state: RootState) => state.options
-  )
+  const {
+    favoriteIngredients,
+    excludedIngredients,
+    selectedDays,
+    selectedMeals,
+  } = useSelector((state: RootState) => state.options)
   const [step, setStep] = useState<number>(0)
 
   const optionsMapper: OptionsMapper = {
@@ -48,12 +87,28 @@ export default function OnboardingWeekly() {
       handler: setSelectedMeals,
       selected: selectedMeals,
       title: 'meals',
+      withSearch: false,
     },
     1: {
       options: days,
       handler: setSelectedDays,
       selected: selectedDays,
       title: 'days',
+      withSearch: false,
+    },
+    2: {
+      options: ingredients,
+      handler: setExcludedIngredients,
+      selected: excludedIngredients,
+      title: "Ingredients you don't like",
+      withSearch: true,
+    },
+    3: {
+      options: ingredients,
+      handler: setFavoriteIngredients,
+      selected: favoriteIngredients,
+      title: 'Ingredients you love',
+      withSearch: true,
     },
   }
 
@@ -67,6 +122,18 @@ export default function OnboardingWeekly() {
         )}
         {step === 1 && (
           <OptionSelector title="Days" optionSelected={selectedDays} />
+        )}
+        {step === 2 && (
+          <OptionSelector
+            title="Ingredients you don't like"
+            optionSelected={excludedIngredients}
+          />
+        )}
+        {step === 3 && (
+          <OptionSelector
+            title="Ingredients you love"
+            optionSelected={favoriteIngredients}
+          />
         )}
 
         <div className="mt-4 flex items-center justify-end gap-x-4">
@@ -88,14 +155,8 @@ export default function OnboardingWeekly() {
         </div>
       </div>
 
-      {/* TODO: directly pass optionsMapper[step] instead of destructuring */}
       {displayOptionSelectorModal && (
-        <OptionSelectorModal
-          options={optionsMapper[step].options}
-          selected={optionsMapper[step].selected}
-          onCloseHandler={optionsMapper[step].handler}
-          title={optionsMapper[step].title}
-        />
+        <OptionSelectorModal params={optionsMapper[step]} />
       )}
     </div>
   )
@@ -134,7 +195,7 @@ const OptionSelector = ({
       >
         {optionSelected.map((option) => (
           <p
-            className="rounded-lg border-2 border-blue-400 bg-blue-50 px-2 py-1 text-sm text-blue-700"
+            className="rounded-lg border-2 border-blue-500 bg-blue-50 px-2 py-1 text-sm font-medium text-blue-800"
             key={option}
           >
             {option}
@@ -147,41 +208,6 @@ const OptionSelector = ({
 
 // TODO: continuer les step
 // TODO: voir pourquoi build failed
-// OptionPicker
-
-const ingredients: { label: string; icon: string }[] = [
-  { label: 'Lemon', icon: '🍋' },
-  { label: 'Melon', icon: '🍈' },
-  { label: 'Tomato', icon: '🍅' },
-  { label: 'Coconut', icon: '🥥' },
-  { label: 'Avocado', icon: '🥑' },
-  { label: 'Eggplant', icon: '🍆' },
-  { label: 'Potato', icon: '🥔' },
-  { label: 'Carrot', icon: '🥕' },
-  { label: 'Corn', icon: '🌽' },
-  { label: 'Cucumber', icon: '🥒' },
-  { label: 'Cabbage', icon: '🥬' },
-  { label: 'Broccoli', icon: '🥦' },
-  { label: 'Garlic', icon: '🧄' },
-  { label: 'Onion', icon: '🧅' },
-  { label: 'Mushroom', icon: '🍄' },
-  { label: 'Peanuts', icon: '🥜' },
-  { label: 'Cheese', icon: '🧀' },
-  { label: 'Chicken', icon: '🍗' },
-  { label: 'Bacon', icon: '🥓' },
-  { label: 'Beef', icon: '🥩' },
-  { label: 'Egg', icon: '🍳' },
-  { label: 'Pasta', icon: '🍝' },
-  { label: 'Sweet Potato', icon: '🍠' },
-  { label: 'Shrimp', icon: '🍤' },
-  { label: 'Rice', icon: '🍚' },
-  { label: 'Crab', icon: '🦀' },
-  { label: 'Lobster', icon: '🦞' },
-  { label: 'Oyster', icon: '🦪' },
-  { label: 'Butter', icon: '🧈' },
-  { label: 'Honey', icon: '🍯' },
-  { label: 'Milk', icon: '🥛' },
-]
 
 const ExcludedIngredients = () => {
   return <div></div>
