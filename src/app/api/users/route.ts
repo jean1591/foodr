@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { Plan, UserLegacy } from '@/utils/interfaces/users'
 import { DbUserLegacy } from '../interfaces/users'
-import { DbMeal } from '../interfaces/meals'
 import {
   Colours,
   MealType,
@@ -44,27 +43,5 @@ const formatDbUserToUser = (user: DbUserLegacy): UserLegacy => {
     hasCompletedOnboarding: user.has_completed_onboarding,
     options: user.options.map(({ label }) => label),
     plan: user.plan as Plan,
-    weeklyMeal: formatDbMealsToWeeklyMeals(user.meals),
   }
-}
-
-const formatDbMealsToWeeklyMeals = (meals: DbMeal[]): WeeklyMeals => {
-  return meals.reduce((acc, current) => {
-    const currentDay = current.day as WeekDays
-    if (!acc[currentDay]) {
-      acc[currentDay] = {
-        breakfast: undefined,
-        dinner: undefined,
-        lunch: undefined,
-      }
-    }
-
-    acc[currentDay][current.meal as MealType] = {
-      color: current.color as Colours,
-      icon: current.icon,
-      name: current.name,
-    }
-
-    return acc
-  }, {} as WeeklyMeals)
 }

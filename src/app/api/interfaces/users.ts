@@ -1,5 +1,4 @@
 import { Database } from '@/utils/supabase/database.types'
-import { DbMeal } from './meals'
 
 export type DbUserLegacy = Omit<
   Database['public']['Tables']['users']['Row'],
@@ -9,7 +8,7 @@ export type DbUserLegacy = Omit<
   | 'has_requested_credits'
   | 'id'
   | 'username'
-> & { options: { label: string }[]; meals: DbMeal[] }
+> & { options: { label: string }[] }
 
 export type DbUser = Pick<
   Database['public']['Tables']['users']['Row'],

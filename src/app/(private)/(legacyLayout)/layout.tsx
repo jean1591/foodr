@@ -28,7 +28,6 @@ export default function PrivateLayout({
 
         dispatch(setUserLegacy(user))
         dispatch(setSelectedOptions(user.options))
-        dispatch(setWeeklyMeals(user.weeklyMeal))
       } catch (error) {
         console.error('An error occured when fetching logged in user')
         router.push('/login')

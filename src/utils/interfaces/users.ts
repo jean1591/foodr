@@ -10,7 +10,6 @@ export interface UserLegacy {
   email: string
   hasCompletedOnboarding: boolean
   options: string[]
-  weeklyMeal: WeeklyMeals
   plan: Plan
 }
 

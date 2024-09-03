@@ -55,7 +55,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     await updateDbUser(supabase, { id: userId, credits })
     await insertRecipeInDb({
-      mealId,
       recipe: { ...recipeDetails, name },
       supabase,
     })
@@ -147,17 +146,15 @@ const getMealFromNameAndUserId = async (
 }
 
 const insertRecipeInDb = async ({
-  mealId,
   recipe,
   supabase,
 }: {
-  mealId: string
   recipe: Recipe
   supabase: SupabaseClient
 }) => {
   const { data: recipes, error: recipeInsertError } = await supabase
     .from('recipes')
-    .insert(formatRecipeToDb(mealId, recipe))
+    .insert(formatRecipeToDb(recipe))
     .select('id')
 
   if (recipeInsertError) {
@@ -193,13 +190,12 @@ const insertRecipeInDb = async ({
   }
 }
 
-const formatRecipeToDb = (mealId: string, recipe: Recipe): DbRecipe => {
+const formatRecipeToDb = (recipe: Recipe): DbRecipe => {
   return {
     cook_time: recipe.cookTime,
     day_of_the_week: 0, // TODO: use response from openAi
     description: recipe.description,
     icon: '🍙', // TODO: use response from openAi
-    meal_id: mealId,
     name: recipe.name,
     prep_time: recipe.prepTime,
     type: 'lunch', // TODO: use response from openAi
