@@ -188,6 +188,7 @@ const OptionSelector = ({
   return (
     <div>
       <p className="text-2xl font-bold">{title}</p>
+      <p className="mt-2 text-sm">{optionSelected.length} selected</p>
 
       <div
         onClick={() => dispatch(setDisplayOptionSelectorModal(true))}

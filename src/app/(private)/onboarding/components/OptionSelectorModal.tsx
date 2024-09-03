@@ -75,6 +75,7 @@ export const OptionSelectorModal = ({
               <DialogTitle className="text-left text-2xl font-bold capitalize leading-6 md:text-3xl">
                 {title}
               </DialogTitle>
+              <p className="mt-2 text-sm">{selectionOptions.length} selected</p>
 
               {withSearch && (
                 <div className="mt-8">
