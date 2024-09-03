@@ -16,10 +16,12 @@ export const OptionSelectorModal = ({
   onCloseHandler,
   options,
   selected,
+  title,
 }: {
   onCloseHandler: (options: string[]) => UnknownAction
   options: string[]
   selected: string[]
+  title: string
 }) => {
   const dispatch = useDispatch()
   const { displayOptionSelectorModal } = useSelector(
@@ -59,8 +61,8 @@ export const OptionSelectorModal = ({
             className="relative w-full transform overflow-hidden rounded-lg bg-white text-left lg:w-1/2"
           >
             <div className="px-4 py-8">
-              <DialogTitle className="text-left text-2xl font-bold leading-6 md:text-3xl">
-                Meals
+              <DialogTitle className="text-left text-2xl font-bold capitalize leading-6 md:text-3xl">
+                {title}
               </DialogTitle>
 
               <div className="mt-8 flex flex-col space-y-4">
@@ -77,7 +79,7 @@ export const OptionSelectorModal = ({
               <div className="flex items-center justify-end">
                 <button
                   onClick={modalOnClose}
-                  className="mt-8 rounded-lg border-2 border-blue-300 bg-blue-100 px-4 py-2"
+                  className="mt-8 rounded-lg bg-blue-950 px-4 py-2 font-bold text-white"
                 >
                   Validate
                 </button>

@@ -27,8 +27,9 @@ type OptionsMapper = Record<
   number,
   {
     options: string[]
-    selected: string[]
     handler: (options: string[]) => UnknownAction
+    selected: string[]
+    title: string
   }
 >
 
@@ -42,8 +43,18 @@ export default function OnboardingWeekly() {
   const [step, setStep] = useState<number>(0)
 
   const optionsMapper: OptionsMapper = {
-    0: { options: meals, selected: selectedMeals, handler: setSelectedMeals },
-    1: { options: days, selected: selectedDays, handler: setSelectedDays },
+    0: {
+      options: meals,
+      handler: setSelectedMeals,
+      selected: selectedMeals,
+      title: 'meals',
+    },
+    1: {
+      options: days,
+      handler: setSelectedDays,
+      selected: selectedDays,
+      title: 'days',
+    },
   }
 
   return (
@@ -51,12 +62,25 @@ export default function OnboardingWeekly() {
       <Header />
 
       <div className="mt-8 px-4">
-        {step === 0 && <MealSelection />}
-        {step === 1 && <DaySelection />}
+        {step === 0 && (
+          <OptionSelector title="Meals" optionSelected={selectedMeals} />
+        )}
+        {step === 1 && (
+          <OptionSelector title="Days" optionSelected={selectedDays} />
+        )}
 
         <div className="mt-4 flex items-center justify-end gap-x-4">
+          {step > 0 && (
+            <button
+              className="rounded-lg border-2 border-blue-950 bg-white px-4 py-2 font-bold"
+              onClick={() => setStep(step - 1)}
+            >
+              Back
+            </button>
+          )}
+
           <button
-            className="rounded-lg bg-blue-950 px-4 py-2 font-bold text-white"
+            className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white"
             onClick={() => setStep(step + 1)}
           >
             Continue
@@ -64,11 +88,13 @@ export default function OnboardingWeekly() {
         </div>
       </div>
 
+      {/* TODO: directly pass optionsMapper[step] instead of destructuring */}
       {displayOptionSelectorModal && (
         <OptionSelectorModal
           options={optionsMapper[step].options}
           selected={optionsMapper[step].selected}
           onCloseHandler={optionsMapper[step].handler}
+          title={optionsMapper[step].title}
         />
       )}
     </div>
@@ -89,23 +115,26 @@ const Header = () => {
   )
 }
 
-// TODO: mutualiser MealSelection et DaySelection
-// TODO: Ajouter bouton back si step > 0
-// TODO: continuer les step
-const MealSelection = () => {
+const OptionSelector = ({
+  optionSelected,
+  title,
+}: {
+  optionSelected: string[]
+  title: string
+}) => {
   const dispatch = useDispatch()
-  const { selectedMeals } = useSelector((state: RootState) => state.options)
 
   return (
     <div>
-      <p className="text-2xl font-bold">Meals</p>
+      <p className="text-2xl font-bold">{title}</p>
+
       <div
         onClick={() => dispatch(setDisplayOptionSelectorModal(true))}
-        className="mt-4 flex min-h-16 flex-wrap items-center justify-start gap-4 rounded-lg border-2 border-slate-400 p-4"
+        className="mt-4 flex min-h-16 flex-wrap items-center justify-start gap-2 rounded-lg border-2 border-slate-400 px-4 py-2"
       >
-        {selectedMeals.map((option) => (
+        {optionSelected.map((option) => (
           <p
-            className="rounded-lg border-2 border-blue-400 bg-blue-50 px-2 py-1 text-blue-700"
+            className="rounded-lg border-2 border-blue-400 bg-blue-50 px-2 py-1 text-sm text-blue-700"
             key={option}
           >
             {option}
@@ -116,26 +145,44 @@ const MealSelection = () => {
   )
 }
 
-const DaySelection = () => {
-  const dispatch = useDispatch()
-  const { selectedDays } = useSelector((state: RootState) => state.options)
+// TODO: continuer les step
+// TODO: voir pourquoi build failed
+// OptionPicker
 
-  return (
-    <div>
-      <p className="text-2xl font-bold">Days</p>
-      <div
-        onClick={() => dispatch(setDisplayOptionSelectorModal(true))}
-        className="mt-4 flex min-h-16 flex-wrap items-center justify-start gap-4 rounded-lg border-2 border-slate-400 p-4"
-      >
-        {selectedDays.map((option) => (
-          <p
-            className="rounded-lg border-2 border-blue-400 bg-blue-50 px-2 py-1 text-blue-700"
-            key={option}
-          >
-            {option}
-          </p>
-        ))}
-      </div>
-    </div>
-  )
+const ingredients: { label: string; icon: string }[] = [
+  { label: 'Lemon', icon: '🍋' },
+  { label: 'Melon', icon: '🍈' },
+  { label: 'Tomato', icon: '🍅' },
+  { label: 'Coconut', icon: '🥥' },
+  { label: 'Avocado', icon: '🥑' },
+  { label: 'Eggplant', icon: '🍆' },
+  { label: 'Potato', icon: '🥔' },
+  { label: 'Carrot', icon: '🥕' },
+  { label: 'Corn', icon: '🌽' },
+  { label: 'Cucumber', icon: '🥒' },
+  { label: 'Cabbage', icon: '🥬' },
+  { label: 'Broccoli', icon: '🥦' },
+  { label: 'Garlic', icon: '🧄' },
+  { label: 'Onion', icon: '🧅' },
+  { label: 'Mushroom', icon: '🍄' },
+  { label: 'Peanuts', icon: '🥜' },
+  { label: 'Cheese', icon: '🧀' },
+  { label: 'Chicken', icon: '🍗' },
+  { label: 'Bacon', icon: '🥓' },
+  { label: 'Beef', icon: '🥩' },
+  { label: 'Egg', icon: '🍳' },
+  { label: 'Pasta', icon: '🍝' },
+  { label: 'Sweet Potato', icon: '🍠' },
+  { label: 'Shrimp', icon: '🍤' },
+  { label: 'Rice', icon: '🍚' },
+  { label: 'Crab', icon: '🦀' },
+  { label: 'Lobster', icon: '🦞' },
+  { label: 'Oyster', icon: '🦪' },
+  { label: 'Butter', icon: '🧈' },
+  { label: 'Honey', icon: '🍯' },
+  { label: 'Milk', icon: '🥛' },
+]
+
+const ExcludedIngredients = () => {
+  return <div></div>
 }
