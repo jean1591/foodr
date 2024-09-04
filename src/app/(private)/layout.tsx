@@ -1,5 +1,6 @@
 'use client'
 
+import { Footer } from './components/Footer'
 import { User } from '@/utils/interfaces/users'
 import { setUser } from '../lib/store/features/user/slice'
 import { useDispatch } from 'react-redux'
@@ -33,5 +34,10 @@ export default function PrivateLayout({
     })()
   }, [])
 
-  return <div className="bg-slate-50 text-blue-950">{children}</div>
+  return (
+    <div className="flex min-h-screen flex-col bg-slate-50 text-blue-950">
+      <div className="flex-1">{children}</div>
+      <Footer />
+    </div>
+  )
 }
