@@ -3,7 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LatestAndTodayRecipesSkeleton } from './skeletons/LatestAndTodayRecipes'
-import { RecipeItem } from './RecipeItems'
+import { RecipeItem } from '../../components/RecipeItems'
 import { RecipeItem as RecipeItemType } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
 import { setLatestRecipes } from '@/app/lib/store/features/recipes/slice'

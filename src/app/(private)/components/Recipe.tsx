@@ -1,6 +1,6 @@
 'use client'
 
-import { RecipeDetailsModal } from '../../components/RecipeDetails'
+import { RecipeDetailsModal } from './RecipeDetails'
 import { RootState } from '@/app/lib/store/store'
 import { useSelector } from 'react-redux'
 

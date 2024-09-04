@@ -1,4 +1,4 @@
-import { RecipeItemSkeleton } from './RecipeItems'
+import { RecipeItemSkeleton } from '@/app/(private)/components/skeletons/RecipeItems'
 
 const todayRecipes = [1, 2]
 
