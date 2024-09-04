@@ -161,10 +161,7 @@ export default function OnboardingWeekly() {
           )}
 
           {step === 4 && (
-            <button
-              className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white"
-              onClick={() => setStep(step + 1)}
-            >
+            <button className="rounded-lg border-2 border-blue-950 bg-blue-950 px-4 py-2 font-bold text-white">
               Generate weekly meal plan
             </button>
           )}
@@ -244,11 +241,11 @@ const FinalStep = () => {
 
       <div className="mt-8 space-y-8">
         {summary.map((details) => (
-          <div>
+          <div key={details.label}>
             <p className="text-lg font-bold">{details.label}:</p>
             <div className="mt-2 flex flex-wrap items-center justify-start gap-2">
               {details.options.map((option) => (
-                <p>{option}</p>
+                <p key={option}>{option}</p>
               ))}
             </div>
           </div>

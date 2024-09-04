@@ -15,10 +15,6 @@ export default function Today() {
       </div>
 
       <div className="mt-16">
-        <QuickRecipes />
-      </div>
-
-      <div className="mt-12">
         <TodayRecipes />
       </div>
 
