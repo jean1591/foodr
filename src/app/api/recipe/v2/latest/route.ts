@@ -1,9 +1,7 @@
-import { RecipeItem } from '@/utils/interfaces/recipes'
-import { createClient } from '@/utils/supabase/server'
-import { NextResponse, type NextRequest } from 'next/server'
-import { redirect } from 'next/navigation'
-import { DbRecipeItem } from '@/app/api/interfaces/recipes'
 import { formatDbRecipeItemToRecipeItem } from '@/app/api/formatters/recipes'
+import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const supabase = createClient()
