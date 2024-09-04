@@ -3,6 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LatestAndTodayRecipesSkeleton } from './skeletons/LatestAndTodayRecipes'
+import { PiBowlFoodBold } from 'react-icons/pi'
 import { RecipeItem } from '../../components/RecipeItems'
 import { RecipeItem as RecipeItemType } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
@@ -45,9 +46,10 @@ export const TodayRecipes = () => {
             <button
               className={classNames(
                 buttonHoverTransition,
-                'mt-4 flex w-full items-center justify-center space-x-4 rounded-xl bg-white py-4 text-slate-600 shadow-lg hover:shadow-none'
+                'flex w-full items-center justify-center space-x-4 rounded-xl bg-white py-4 text-slate-600 shadow-lg hover:shadow-none'
               )}
             >
+              <PiBowlFoodBold className="h-4 w-4" />
               <p>Generate a weekly meals plan</p>
             </button>
           </div>
