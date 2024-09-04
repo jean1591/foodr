@@ -1,6 +1,22 @@
+export const days = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+] as const
+
+export type WeekDays = (typeof days)[number]
+
+export type WeeklyRecipes = Record<WeekDays, RecipeItem[]>
+
 export interface RecipeItem {
+  calories: number
   icon: string
   label: string
+  totalTime: number
   type: string
 }
 

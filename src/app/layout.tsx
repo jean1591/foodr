@@ -47,8 +47,9 @@ export default function RootLayout({
         <body
           className={classNames(inter.className, 'bg-slate-50 text-slate-900')}
         >
+          {children}
           <Toaster position="bottom-right" reverseOrder={true} />
-          <p>This website is under construction</p>
+          {/* <p>This website is under construction</p> */}
           <Analytics />
         </body>
       </html>

@@ -1,14 +1,4 @@
-export const days = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
-] as const
-
-export type WeekDays = (typeof days)[number]
+import { WeekDays } from './recipes'
 
 export type Colours =
   | 'amber'
