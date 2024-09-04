@@ -1,4 +1,4 @@
-import { GenerateWeeklyMealButton } from './components/GenerateMealButton'
+import { GenerateWeeklyMealsButton } from './components/GenerateWeeklyMealsButton'
 import { Recipe } from '../components/Recipe'
 import { UserDetails } from '../components/UserDetails'
 import { WeeklyRecipes } from './components/WeeklyRecipes'
@@ -9,7 +9,7 @@ export default function Weekly() {
       <UserDetails />
 
       <div className="relative">
-        <GenerateWeeklyMealButton />
+        <GenerateWeeklyMealsButton />
       </div>
 
       <div className="mt-16">
