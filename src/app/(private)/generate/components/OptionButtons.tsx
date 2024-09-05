@@ -2,11 +2,16 @@
 
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
+import { resetOptions } from '@/app/lib/store/features/options/slice'
+import { useDispatch } from 'react-redux'
 
 export const OptionButtons = () => {
+  const dispatch = useDispatch()
+
   return (
     <div className="grid grid-cols-4 gap-x-4">
       <button
+        onClick={() => dispatch(resetOptions())}
         className={classNames(
           buttonHoverTransition,
           'col-span-1 rounded-xl border-2 border-slate-950 py-4 text-center font-bold uppercase hover:bg-blue-100 hover:shadow-xl'
