@@ -117,6 +117,77 @@ const initialRecipes: WeeklyRecipes = {
     },
   ],
 }
+const initialRecipe: Recipe = {
+  cookTime: 20,
+  description:
+    'A light and flavorful Herbed Chicken Breast with Asparagus, perfect for a low-fat meal. This dish is packed with fresh herbs and is low in calories.',
+  ingredients: [
+    {
+      icon: '🍗',
+      name: 'Boneless skinless chicken breast',
+      quantity: 2,
+      unit: 'pieces',
+    },
+    { icon: '🌿', name: 'Fresh parsley', quantity: 2, unit: 'tablespoons' },
+    { icon: '🌿', name: 'Fresh basil', quantity: 2, unit: 'tablespoons' },
+    { icon: '🌿', name: 'Dried thyme', quantity: 1, unit: 'teaspoon' },
+    { icon: '🧄', name: 'Garlic (minced)', quantity: 3, unit: 'cloves' },
+    { icon: '🍋', name: 'Lemon juice', quantity: 2, unit: 'tablespoons' },
+    { icon: '🧂', name: 'Salt', quantity: 1, unit: 'teaspoon' },
+    { icon: '🧂', name: 'Black pepper', quantity: 1, unit: 'teaspoon' },
+    { icon: '🥦', name: 'Fresh asparagus', quantity: 300, unit: 'grams' },
+    { icon: '🧈', name: 'Olive oil (optional)', quantity: 1, unit: 'teaspoon' },
+  ],
+  instructions: [
+    {
+      instruction:
+        'Preheat the oven to 200 degrees Celsius (390 degrees Fahrenheit).',
+      stepNumber: 1,
+    },
+    {
+      instruction:
+        'In a bowl, mix the parsley, basil, thyme, garlic, lemon juice, salt, and pepper to create an herb mixture.',
+      stepNumber: 2,
+    },
+    {
+      instruction:
+        'Rub the chicken breasts with the herb mixture evenly on both sides.',
+      stepNumber: 3,
+    },
+    {
+      instruction:
+        'Place the seasoned chicken breasts on a baking tray lined with parchment paper.',
+      stepNumber: 4,
+    },
+    {
+      instruction:
+        'Trim the asparagus ends and arrange them around the chicken on the baking tray.',
+      stepNumber: 5,
+    },
+    {
+      instruction:
+        'Drizzle a little olive oil over the asparagus (optional) and sprinkle with salt and pepper.',
+      stepNumber: 6,
+    },
+    {
+      instruction:
+        'Bake in the preheated oven for about 20 minutes, or until the chicken reaches an internal temperature of 75 degrees Celsius (165 degrees Fahrenheit) and is no longer pink in the center.',
+      stepNumber: 7,
+    },
+    {
+      instruction:
+        'Remove from the oven and let the chicken rest for 5 minutes before slicing.',
+      stepNumber: 8,
+    },
+    {
+      instruction:
+        'Serve the chicken breast with the roasted asparagus on the side.',
+      stepNumber: 9,
+    },
+  ],
+  name: 'Club Sandwich',
+  prepTime: 10,
+}
 
 export interface RecipesSlice {
   latestRecipes: RecipeItem[] | null
@@ -128,7 +199,7 @@ export interface RecipesSlice {
 
 const initialState: RecipesSlice = {
   latestRecipes: null,
-  recipe: null,
+  recipe: initialRecipe,
   recipes: initialRecipes,
   selectedRecipe: null,
   todayRecipes: null,

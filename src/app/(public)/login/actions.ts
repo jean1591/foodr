@@ -55,5 +55,5 @@ export async function login({
   }
 
   revalidatePath('/', 'layout')
-  redirect('/planner')
+  redirect('/generate')
 }

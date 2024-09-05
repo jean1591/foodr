@@ -3,6 +3,7 @@ import { UnknownAction } from '@reduxjs/toolkit'
 import { classNames } from '@/utils/classNames'
 import { useDispatch } from 'react-redux'
 
+// TODO: add params to expand selector if too many options
 export const OptionSelector = ({
   options,
   selectedOptions,
@@ -31,7 +32,7 @@ export const OptionSelector = ({
         <p className="text-sm">{selectedOptions.length} selected</p>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center justify-start gap-2 rounded-xl bg-white p-2">
+      <div className="mt-4 flex flex-wrap items-center justify-start gap-2 rounded-xl bg-white bg-opacity-50 p-2">
         {options.map((option) => (
           <button
             key={option}
@@ -39,7 +40,7 @@ export const OptionSelector = ({
             className={classNames(
               selectedOptions.includes(option)
                 ? 'border-blue-800 bg-blue-50 text-blue-800'
-                : 'border-slate-200 bg-slate-50 text-slate-700',
+                : 'border-slate-200 bg-slate-50 text-slate-950',
               'flex items-center justify-center gap-x-2 rounded-xl border-2 px-2 py-1 text-sm font-medium capitalize'
             )}
           >
