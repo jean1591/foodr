@@ -230,6 +230,7 @@ export const recipesSlice = createSlice({
 export const {
   setLatestRecipes,
   setRecipe,
+  setRecipes,
   setSelectedRecipe,
   setTodayRecipes,
 } = recipesSlice.actions

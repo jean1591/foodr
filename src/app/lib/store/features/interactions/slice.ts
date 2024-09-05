@@ -7,6 +7,7 @@ export interface InteractionsSlice {
   displayRecipeDetails: boolean
   displayRecipeDetailsModal: boolean
   displayRecipeDetailsModalLegacy: boolean
+  isRecipesLoading: boolean
 }
 
 const initialState: InteractionsSlice = {
@@ -15,6 +16,7 @@ const initialState: InteractionsSlice = {
   displayRecipeDetails: false,
   displayRecipeDetailsModal: false,
   displayRecipeDetailsModalLegacy: false,
+  isRecipesLoading: false,
 }
 
 export const interactionsSlice = createSlice({
@@ -39,6 +41,9 @@ export const interactionsSlice = createSlice({
     ) => {
       state.displayRecipeDetailsModalLegacy = action.payload
     },
+    setIsrecipesLoading: (state, action: PayloadAction<boolean>) => {
+      state.isRecipesLoading = action.payload
+    },
   },
 })
 
@@ -48,6 +53,7 @@ export const {
   setDisplayRecipeDetails,
   setDisplayRecipeDetailsModal,
   setDisplayRecipeDetailsModalLegacy,
+  setIsrecipesLoading,
 } = interactionsSlice.actions
 
 export default interactionsSlice.reducer

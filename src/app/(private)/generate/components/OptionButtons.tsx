@@ -1,12 +1,42 @@
 'use client'
 
+import { useDispatch, useSelector } from 'react-redux'
+
+import { PiArrowsClockwise } from 'react-icons/pi'
+import { RootState } from '@/app/lib/store/store'
+import { WeeklyRecipes } from '@/utils/interfaces/recipes'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
 import { resetOptions } from '@/app/lib/store/features/options/slice'
-import { useDispatch } from 'react-redux'
+import { setIsrecipesLoading } from '@/app/lib/store/features/interactions/slice'
+import { setRecipes } from '@/app/lib/store/features/recipes/slice'
 
 export const OptionButtons = () => {
   const dispatch = useDispatch()
+  const options = useSelector((state: RootState) => state.options)
+  const { isRecipesLoading } = useSelector(
+    (state: RootState) => state.interactions
+  )
+
+  const handleGenerateWeeklyMeals = () => {
+    ;(async function getWeeklyRecipes() {
+      dispatch(setIsrecipesLoading(true))
+      const recipesResponse = await fetch('/api/recipes', {
+        method: 'POST',
+        body: JSON.stringify({
+          options,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const { recipes } = (await recipesResponse.json()) as {
+        recipes: WeeklyRecipes
+      }
+
+      dispatch(setRecipes(recipes))
+      dispatch(setIsrecipesLoading(false))
+    })()
+  }
 
   return (
     <div className="grid grid-cols-4 gap-x-4">
@@ -20,12 +50,16 @@ export const OptionButtons = () => {
         Reset
       </button>
       <button
+        onClick={handleGenerateWeeklyMeals}
         className={classNames(
           buttonHoverTransition,
-          'col-span-3 rounded-xl border-2 border-blue-950 bg-blue-950 py-4 text-center font-bold uppercase text-white hover:opacity-90 hover:shadow-xl'
+          'col-span-3 flex items-center justify-center gap-x-4 rounded-xl border-2 border-blue-950 bg-blue-950 py-4 text-center font-bold uppercase text-white hover:opacity-90 hover:shadow-xl'
         )}
       >
-        Generate meal plan
+        {isRecipesLoading && (
+          <PiArrowsClockwise className="h-6 w-6 animate-spin" />
+        )}
+        <p>Generate meal plan</p>
       </button>
     </div>
   )
