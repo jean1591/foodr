@@ -101,9 +101,10 @@ export type Database = {
       }
       recipes: {
         Row: {
+          calories: number
           cook_time: number
           created_at: string
-          day_of_the_week: number
+          day_of_the_week: string
           description: string
           icon: string | null
           id: string
@@ -113,9 +114,10 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          calories?: number
           cook_time: number
           created_at?: string
-          day_of_the_week?: number
+          day_of_the_week?: string
           description: string
           icon?: string | null
           id?: string
@@ -125,9 +127,10 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          calories?: number
           cook_time?: number
           created_at?: string
-          day_of_the_week?: number
+          day_of_the_week?: string
           description?: string
           icon?: string | null
           id?: string
