@@ -15,7 +15,7 @@ export type WeeklyRecipes = Record<WeekDays, RecipeItem[]>
 export interface RecipeItem {
   calories: number
   icon: string
-  label: string
+  name: string
   totalTime: number
   type: string
 }

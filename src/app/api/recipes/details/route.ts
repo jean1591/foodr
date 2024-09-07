@@ -35,7 +35,7 @@ const generatePrompt = (options: Options, selectedRecipe: RecipeItem) => {
   return `Generate a JSON object for a recipe with the following structure: { "label": string, "cookTime": number, "description": string, "ingredients": [ {"icon": string,"name": string,"quantity": number,"unit": string}],"instructions": [{"instruction": string,"stepNumber": number}],"name": string,"prepTime": number }
 
   Details:
-  - Recipe name: ${selectedRecipe.label}
+  - Recipe name: ${selectedRecipe.name}
   - Total preparation time: ${selectedRecipe.totalTime} minutes (split between prepTime and cookTime)
   - Times must be in minutes
   - ${options.excludedIngredients.length > 0 ? `Exclude these ingredients: ${options.excludedIngredients.join(', ')}` : 'No ingredients to exclude.'}

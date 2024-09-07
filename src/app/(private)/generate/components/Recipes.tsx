@@ -32,7 +32,7 @@ export const Recipes = () => {
           <div className="mt-4 space-y-4">
             {recipes.map((recipe) => (
               <div
-                key={recipe.label}
+                key={recipe.name}
                 onClick={() => onRecipeClicked(recipe)}
                 className="flex items-center justify-between space-x-4 rounded-lg bg-white pr-2 shadow-lg hover:cursor-pointer"
               >
@@ -45,7 +45,7 @@ export const Recipes = () => {
                     <p className="text-sm font-semibold capitalize">
                       {recipe.type}
                     </p>
-                    <p className="font-bold">{recipe.label}</p>
+                    <p className="font-bold">{recipe.name}</p>
                   </div>
                 </div>
               </div>

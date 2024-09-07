@@ -31,7 +31,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 const generatePrompt = (options: Options) => {
   return `
-      Generate a JSON object of meal ideas in the following format: {"monday": [{"calories": number,"icon": string,"label": string,"totalTime": number,"type": string}],"tuesday": [...], ...}
+      Generate a JSON object of meal ideas in the following format: {"monday": [{"calories": number,"icon": string,"name": string,"totalTime": number,"type": string}],"tuesday": [...], ...}
   
   Details:
   - Only use these days: ${options.selectedDays.length > 0 ? options.selectedDays.join(', ') : 'from monday to sunday'}

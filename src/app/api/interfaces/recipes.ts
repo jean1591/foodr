@@ -1,6 +1,5 @@
 import { Database } from '@/utils/supabase/database.types'
 
-// TODO: In DB, change name for label
 export type DbRecipe = Omit<
   Database['public']['Tables']['recipes']['Row'],
   'id' | 'created_at'
