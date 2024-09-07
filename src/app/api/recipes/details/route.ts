@@ -98,6 +98,30 @@ const insertRecipeInDb = async ({
     throw new Error(`No recipes found for ${recipe.name} for user ${userId}`)
   }
 
+  const recipeId = recipes[0].id
+
+  const { error: ingredientsDeletionError } = await supabase
+    .from('ingredients')
+    .delete()
+    .eq('recipe_id', recipeId)
+
+  if (ingredientsDeletionError) {
+    console.error('An error occured while deleting existing ingredients', {
+      error: JSON.stringify(ingredientsDeletionError, null, 2),
+    })
+  }
+
+  const { error: instructionsDeletionError } = await supabase
+    .from('instructions')
+    .delete()
+    .eq('recipe_id', recipeId)
+
+  if (instructionsDeletionError) {
+    console.error('An error occured while deleting existing instructions', {
+      error: JSON.stringify(instructionsDeletionError, null, 2),
+    })
+  }
+
   const { ingredients, instructions } = recipe
 
   const { error: ingredientsInsertError } = await supabase
@@ -105,7 +129,7 @@ const insertRecipeInDb = async ({
     .insert(
       ingredients.map((ingredient) => ({
         ...ingredient,
-        recipe_id: recipes[0].id,
+        recipe_id: recipeId,
       }))
     )
   if (ingredientsInsertError) {

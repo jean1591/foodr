@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Ingredients } from './recipeDetails/Ingredients'
 import { Instructions } from './recipeDetails/Instructions'
 import { PiArrowCircleLeft } from 'react-icons/pi'
+import { PiChefHatBold } from 'react-icons/pi'
 import { Recipe } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
 import { Stats } from './recipeDetails/Stats'
@@ -38,9 +39,13 @@ export const RecipeDetails = () => {
     dispatch(setRecipe(null))
   }
 
-  // TODO: add skeleton
   if (!recipe) {
-    return <></>
+    return (
+      <div className="flex animate-bounce flex-col items-center justify-center">
+        <PiChefHatBold className="h-20 w-20" />
+        <p className="text-2xl font-bold">Searching</p>
+      </div>
+    )
   }
 
   const { cookTime, description, ingredients, instructions, name, prepTime } =
