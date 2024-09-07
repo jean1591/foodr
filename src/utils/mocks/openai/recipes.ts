@@ -1,4 +1,6 @@
-export const completionRecipes = {
+import OpenAI from 'openai'
+
+export const completionRecipes: OpenAI.Chat.Completions.ChatCompletion = {
   id: 'chatcmpl-A4CCvwpTqvdamBZxLlEuvm3iocXxB',
   object: 'chat.completion',
   created: 1725563601,

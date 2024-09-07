@@ -199,7 +199,7 @@ export interface RecipesSlice {
 
 const initialState: RecipesSlice = {
   latestRecipes: null,
-  recipe: initialRecipe,
+  recipe: null,
   recipes: initialRecipes,
   selectedRecipe: null,
   todayRecipes: null,

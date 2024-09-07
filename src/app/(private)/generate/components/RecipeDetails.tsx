@@ -3,17 +3,40 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Ingredients } from './recipeDetails/Ingredients'
 import { Instructions } from './recipeDetails/Instructions'
 import { PiArrowCircleLeft } from 'react-icons/pi'
+import { Recipe } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
 import { Stats } from './recipeDetails/Stats'
 import { setDisplayRecipeDetails } from '@/app/lib/store/features/interactions/slice'
+import { setRecipe } from '@/app/lib/store/features/recipes/slice'
+import { useEffect } from 'react'
 
-// TODO: fetch recipe from DB or OpenAi with selectedRecipe
 export const RecipeDetails = () => {
   const dispatch = useDispatch()
-  const { recipe } = useSelector((state: RootState) => state.recipes)
-  const { displayRecipeDetails } = useSelector(
-    (state: RootState) => state.interactions
+  const options = useSelector((state: RootState) => state.options)
+  const { recipe, selectedRecipe } = useSelector(
+    (state: RootState) => state.recipes
   )
+
+  useEffect(() => {
+    ;(async function getRecipeDetails() {
+      const recipeResponse = await fetch('/api/recipes/details', {
+        method: 'POST',
+        body: JSON.stringify({
+          options,
+          selectedRecipe,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const { recipe } = (await recipeResponse.json()) as { recipe: Recipe }
+
+      dispatch(setRecipe(recipe))
+    })()
+  }, [])
+
+  const handleOnReturn = () => {
+    dispatch(setDisplayRecipeDetails(false))
+    dispatch(setRecipe(null))
+  }
 
   // TODO: add skeleton
   if (!recipe) {
@@ -27,10 +50,7 @@ export const RecipeDetails = () => {
     <div>
       <div className="relative">
         <p className="text-center text-2xl font-bold">{name}</p>
-        <button
-          onClick={() => dispatch(setDisplayRecipeDetails(false))}
-          className="absolute -translate-y-full"
-        >
+        <button onClick={handleOnReturn} className="absolute -translate-y-full">
           <PiArrowCircleLeft className="h-8 w-8" />
         </button>
       </div>
