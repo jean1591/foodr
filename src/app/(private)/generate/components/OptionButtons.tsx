@@ -18,10 +18,10 @@ export const OptionButtons = () => {
     (state: RootState) => state.interactions
   )
 
-  const handleGenerateWeeklyMeals = () => {
+  const handleGenerateWeeklyRecipes = () => {
     ;(async function getWeeklyRecipes() {
       dispatch(setIsrecipesLoading(true))
-      const recipesResponse = await fetch('/api/recipes', {
+      const recipesResponse = await fetch('/api/recipes/generate', {
         method: 'POST',
         body: JSON.stringify({
           options,
@@ -50,7 +50,7 @@ export const OptionButtons = () => {
         Reset
       </button>
       <button
-        onClick={handleGenerateWeeklyMeals}
+        onClick={handleGenerateWeeklyRecipes}
         className={classNames(
           buttonHoverTransition,
           'col-span-3 flex items-center justify-center gap-x-4 rounded-xl border-2 border-blue-950 bg-blue-950 py-4 text-center font-bold uppercase text-white hover:opacity-90 hover:shadow-xl'

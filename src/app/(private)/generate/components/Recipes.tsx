@@ -1,13 +1,36 @@
+import { RecipeItem, WeeklyRecipes } from '@/utils/interfaces/recipes'
+import {
+  setDisplayRecipeDetails,
+  setIsrecipesLoading,
+} from '@/app/lib/store/features/interactions/slice'
+import {
+  setRecipes,
+  setSelectedRecipe,
+} from '@/app/lib/store/features/recipes/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { RecipeItem } from '@/utils/interfaces/recipes'
 import { RootState } from '@/app/lib/store/store'
-import { setDisplayRecipeDetails } from '@/app/lib/store/features/interactions/slice'
-import { setSelectedRecipe } from '@/app/lib/store/features/recipes/slice'
+import { useEffect } from 'react'
 
 export const Recipes = () => {
   const dispatch = useDispatch()
   const { recipes } = useSelector((state: RootState) => state.recipes)
+
+  useEffect(() => {
+    ;(async function getWeeklyRecipes() {
+      dispatch(setIsrecipesLoading(true))
+      const recipesResponse = await fetch('/api/recipes', {
+        method: 'GET',
+      })
+
+      const { recipes } = (await recipesResponse.json()) as {
+        recipes: WeeklyRecipes
+      }
+
+      dispatch(setRecipes(recipes))
+      dispatch(setIsrecipesLoading(false))
+    })()
+  }, [])
 
   // TODO: add illustration
   if (!recipes) {

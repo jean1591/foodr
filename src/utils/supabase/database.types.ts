@@ -106,11 +106,11 @@ export type Database = {
           created_at: string
           day_of_the_week: string
           description: string
-          icon: string | null
+          icon: string
           id: string
           name: string
           prep_time: number
-          type: string | null
+          type: string
           user_id: string | null
         }
         Insert: {
@@ -119,11 +119,11 @@ export type Database = {
           created_at?: string
           day_of_the_week?: string
           description: string
-          icon?: string | null
+          icon: string
           id?: string
           name: string
           prep_time: number
-          type?: string | null
+          type: string
           user_id?: string | null
         }
         Update: {
@@ -132,11 +132,11 @@ export type Database = {
           created_at?: string
           day_of_the_week?: string
           description?: string
-          icon?: string | null
+          icon?: string
           id?: string
           name?: string
           prep_time?: number
-          type?: string | null
+          type?: string
           user_id?: string | null
         }
         Relationships: [
