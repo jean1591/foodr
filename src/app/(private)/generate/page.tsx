@@ -1,4 +1,5 @@
 import { Header } from './components/recipeDetails/Header'
+import { Modal } from './components/Modal'
 import { OptionButtons } from './components/OptionButtons'
 import { OptionsPanel } from './components/OptionsPanel'
 import { RightPanel } from './components/RightPanel'
@@ -17,6 +18,8 @@ export default function Generate() {
         </div>
 
         <RightPanel />
+
+        <Modal />
       </div>
     </div>
   )

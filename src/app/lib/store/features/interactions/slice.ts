@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface InteractionsSlice {
+  displayConfirmOrBuyModal: boolean
   displayNoCreditsModal: boolean
   displayOptionSelectorModal: boolean
   displayRecipeDetails: boolean
@@ -11,6 +12,7 @@ export interface InteractionsSlice {
 }
 
 const initialState: InteractionsSlice = {
+  displayConfirmOrBuyModal: false,
   displayNoCreditsModal: false,
   displayOptionSelectorModal: false,
   displayRecipeDetails: false,
@@ -23,6 +25,9 @@ export const interactionsSlice = createSlice({
   name: 'interactionsSlice',
   initialState,
   reducers: {
+    setDisplayConfirmOrBuyModal: (state, action: PayloadAction<boolean>) => {
+      state.displayConfirmOrBuyModal = action.payload
+    },
     setDisplayNoCreditsModal: (state, action: PayloadAction<boolean>) => {
       state.displayNoCreditsModal = action.payload
     },
@@ -48,6 +53,7 @@ export const interactionsSlice = createSlice({
 })
 
 export const {
+  setDisplayConfirmOrBuyModal,
   setDisplayNoCreditsModal,
   setDisplayOptionSelectorModal,
   setDisplayRecipeDetails,
