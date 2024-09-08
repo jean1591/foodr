@@ -33,7 +33,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   console.info(prompt)
 
   const completion = await getOpenAiData(completionRecipe, openai, prompt)
-  console.info(JSON.stringify(completion, null, 2))
 
   const recipe = openAiResponseToJsonFormatter<Recipe>(
     completion.choices[0].message.content ?? '{}'
