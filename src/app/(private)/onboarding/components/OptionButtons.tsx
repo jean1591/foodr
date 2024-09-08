@@ -10,34 +10,45 @@ import { classNames } from '@/utils/classNames'
 import { resetOptions } from '@/app/lib/store/features/options/slice'
 import { setIsrecipesLoading } from '@/app/lib/store/features/interactions/slice'
 import { setRecipes } from '@/app/lib/store/features/recipes/slice'
+import { setUser } from '@/app/lib/store/features/user/slice'
 import { useRouter } from 'next/navigation'
 
 export const OptionButtons = ({ canGenerate }: { canGenerate: boolean }) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const options = useSelector((state: RootState) => state.options)
+  const { selectedDays, selectedMeals } = options
   const { isRecipesLoading } = useSelector(
     (state: RootState) => state.interactions
   )
+  const { user } = useSelector((state: RootState) => state.user)
 
   const handleGenerateWeeklyRecipes = () => {
     ;(async function getWeeklyRecipes() {
-      dispatch(setIsrecipesLoading(true))
-      const recipesResponse = await fetch('/api/recipes/generate', {
-        method: 'POST',
-        body: JSON.stringify({
-          options,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      })
+      if (user) {
+        dispatch(setIsrecipesLoading(true))
+        const recipesResponse = await fetch('/api/recipes/generate', {
+          method: 'POST',
+          body: JSON.stringify({
+            options,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+        })
 
-      const { recipes } = (await recipesResponse.json()) as {
-        recipes: WeeklyRecipes
+        const { recipes } = (await recipesResponse.json()) as {
+          recipes: WeeklyRecipes
+        }
+
+        dispatch(
+          setUser({
+            ...user,
+            credits: user.credits - selectedDays.length * selectedMeals.length,
+          })
+        )
+        dispatch(setRecipes(recipes))
+        dispatch(setIsrecipesLoading(false))
+        router.push('/generate')
       }
-
-      dispatch(setRecipes(recipes))
-      dispatch(setIsrecipesLoading(false))
-      router.push('/generate')
     })()
   }
 

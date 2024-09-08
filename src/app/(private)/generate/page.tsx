@@ -1,3 +1,4 @@
+import { Header } from './components/recipeDetails/Header'
 import { OptionButtons } from './components/OptionButtons'
 import { OptionsPanel } from './components/OptionsPanel'
 import { RightPanel } from './components/RightPanel'
@@ -5,11 +6,7 @@ import { RightPanel } from './components/RightPanel'
 export default function Generate() {
   return (
     <div className="mx-auto py-16 md:max-w-7xl">
-      <div className="flex items-center justify-center">
-        <p className="text-8xl font-extrabold leading-none tracking-tight">
-          Foodr
-        </p>
-      </div>
+      <Header />
 
       <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-x-24">
         <div>

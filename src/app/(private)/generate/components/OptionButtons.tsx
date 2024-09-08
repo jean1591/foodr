@@ -11,6 +11,7 @@ import { classNames } from '@/utils/classNames'
 import { resetOptions } from '@/app/lib/store/features/options/slice'
 import { setIsrecipesLoading } from '@/app/lib/store/features/interactions/slice'
 import { setRecipes } from '@/app/lib/store/features/recipes/slice'
+import { setUser } from '@/app/lib/store/features/user/slice'
 
 export const OptionButtons = () => {
   const [isGenerateDisabled, setIsGenerateDisabled] = useState<boolean>(true)
@@ -50,21 +51,24 @@ export const OptionButtons = () => {
 
   const handleGenerateWeeklyRecipes = () => {
     ;(async function getWeeklyRecipes() {
-      dispatch(setIsrecipesLoading(true))
-      const recipesResponse = await fetch('/api/recipes/generate', {
-        method: 'POST',
-        body: JSON.stringify({
-          options,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      })
+      if (user) {
+        dispatch(setIsrecipesLoading(true))
+        const recipesResponse = await fetch('/api/recipes/generate', {
+          method: 'POST',
+          body: JSON.stringify({
+            options,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+        })
 
-      const { recipes } = (await recipesResponse.json()) as {
-        recipes: WeeklyRecipes
+        const { recipes } = (await recipesResponse.json()) as {
+          recipes: WeeklyRecipes
+        }
+
+        dispatch(setUser({ ...user, credits: user.credits - creditsCost }))
+        dispatch(setRecipes(recipes))
+        dispatch(setIsrecipesLoading(false))
       }
-
-      dispatch(setRecipes(recipes))
-      dispatch(setIsrecipesLoading(false))
     })()
   }
 

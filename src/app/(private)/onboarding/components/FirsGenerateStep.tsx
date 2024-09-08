@@ -12,22 +12,25 @@ export const FirstGenerateStep = () => {
   const { selectedDays, selectedMeals } = useSelector(
     (state: RootState) => state.options
   )
+  const { user } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
-    if (
-      selectedMeals.length * selectedDays.length > 5 ||
-      selectedMeals.length === 0 ||
-      selectedDays.length === 0
-    ) {
-      setIsGenerateDisabled(true)
-    } else {
-      setIsGenerateDisabled(false)
-    }
+    if (user) {
+      if (
+        selectedMeals.length * selectedDays.length > user.credits ||
+        selectedMeals.length === 0 ||
+        selectedDays.length === 0
+      ) {
+        setIsGenerateDisabled(true)
+      } else {
+        setIsGenerateDisabled(false)
+      }
 
-    if (selectedMeals.length * selectedDays.length > 5) {
-      setDisplayErrorMessage(true)
-    } else {
-      setDisplayErrorMessage(false)
+      if (selectedMeals.length * selectedDays.length > user.credits) {
+        setDisplayErrorMessage(true)
+      } else {
+        setDisplayErrorMessage(false)
+      }
     }
   }, [selectedDays, selectedMeals])
 
