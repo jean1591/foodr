@@ -14,12 +14,15 @@ import { openAiResponseToJsonFormatter } from '../../utils/openAiResponseFormate
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 // TODO: do not send ingredients icons
-// TODO: deduct credits from user
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { options }: { options: Options } = await request.json()
+  const { selectedDays, selectedMeals } = options
 
   const supabase = createClient()
-  const { id: userId } = await getLoggedInUser(supabase)
+  const { credits, id: userId } = await getLoggedInUser(supabase)
+
+  const creditsCost = calculateCost(selectedDays, selectedMeals)
+  throwIfNotEnoughCredits(credits, creditsCost, userId)
 
   const prompt = generatePrompt(options)
   console.info(prompt)
@@ -33,6 +36,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const newDbRecipes = formatRecipesToDbRecipes(recipes, userId)
   await insertDbRecipesInDb({ recipes: newDbRecipes, supabase, userId })
+  await updateDbUser(creditsCost, supabase, { credits, id: userId })
 
   return NextResponse.json({ recipes })
 }
@@ -108,4 +112,53 @@ const insertDbRecipesInDb = async ({
       error: JSON.stringify(recipesInsertError, null, 2),
     })
   }
+}
+
+const updateDbUser = async (
+  creditsCost: number,
+  supabase: SupabaseClient,
+  user: {
+    credits: number
+    id: string
+  }
+) => {
+  const { credits, id: userId } = user
+
+  const { error: updateUserCreditError } = await supabase
+    .from('users')
+    .update({ credits: credits - creditsCost })
+    .eq('id', userId)
+
+  if (updateUserCreditError) {
+    console.error('An error occured while updating user credits', {
+      error: JSON.stringify(updateUserCreditError, null, 2),
+    })
+  }
+}
+
+const throwIfNotEnoughCredits = (
+  credits: number,
+  creditsCost: number,
+  userId: string
+) => {
+  if (creditsCost > credits) {
+    console.error(
+      `The user ${userId} does not have enough credits (${credits})`
+    )
+    throw new Error(
+      `The user ${userId} does not have enough credits (${credits})`
+    )
+  }
+}
+
+const calculateCost = (
+  selectedDays: string[],
+  selectedMeals: string[]
+): number => {
+  // Default to 7 (every day of the week)
+  const daysCount = selectedDays.length === 0 ? 7 : selectedDays.length
+  // Default to 3 (every meal of the day)
+  const mealsCount = selectedMeals.length === 0 ? 3 : selectedMeals.length
+
+  return daysCount * mealsCount
 }

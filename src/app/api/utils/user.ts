@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 
 export const getLoggedInUser = async (
   supabase: SupabaseClient
-): Promise<{ id: string }> => {
+): Promise<{ credits: number; id: string }> => {
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -16,7 +16,7 @@ export const getLoggedInUser = async (
 
   const { data: users } = await supabase
     .from('users')
-    .select('id')
+    .select('credits, id')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
