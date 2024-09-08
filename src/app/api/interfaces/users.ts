@@ -12,5 +12,5 @@ export type DbUserLegacy = Omit<
 
 export type DbUser = Pick<
   Database['public']['Tables']['users']['Row'],
-  'credits' | 'has_completed_onboarding' | 'username'
+  'credits' | 'has_completed_onboarding'
 >
