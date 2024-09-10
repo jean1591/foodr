@@ -7,6 +7,7 @@ import { PiArrowsClockwise } from 'react-icons/pi'
 import { RootState } from '@/app/lib/store/store'
 import { buttonHoverTransition } from '@/utils/design/constants'
 import { classNames } from '@/utils/classNames'
+import { isNil } from 'lodash'
 import { resetOptions } from '@/app/lib/store/features/options/slice'
 import { setDisplayConfirmOrBuyModal } from '@/app/lib/store/features/interactions/slice'
 
@@ -26,12 +27,13 @@ export const OptionButtons = () => {
   const { user } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
-    if (user?.credits) {
-      if (selectedMeals.length === 0 || selectedDays.length === 0) {
-        setIsGenerateDisabled(true)
-      } else {
-        setIsGenerateDisabled(false)
-      }
+    if (selectedMeals.length === 0 || selectedDays.length === 0) {
+      setIsGenerateDisabled(true)
+    } else {
+      setIsGenerateDisabled(false)
+    }
+
+    if (!isNil(user)) {
       if (selectedMeals.length * selectedDays.length > user.credits) {
         setDisplayNotEnoughCredits(true)
       } else {

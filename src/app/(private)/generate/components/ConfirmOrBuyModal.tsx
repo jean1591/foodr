@@ -11,6 +11,7 @@ import {
 } from '@/app/lib/store/features/interactions/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { CheckoutButton } from './CheckoutButton'
 import { RootState } from '@/app/lib/store/store'
 import { WeeklyRecipes } from '@/utils/interfaces/recipes'
 import { buttonHoverTransition } from '@/utils/design/constants'
@@ -136,16 +137,7 @@ export const ConfirmOrBuyModal = () => {
                 </button>
               )}
 
-              {!displayGenerateButton && (
-                <button
-                  className={classNames(
-                    buttonHoverTransition,
-                    'col-span-3 flex items-center justify-center gap-x-4 rounded-xl border-2 border-blue-950 bg-blue-950 p-4 text-center font-bold uppercase text-white hover:opacity-90 hover:shadow-xl disabled:border-opacity-20 disabled:bg-opacity-20 disabled:hover:shadow-none'
-                  )}
-                >
-                  <p>Buy more credits</p>
-                </button>
-              )}
+              {!displayGenerateButton && <CheckoutButton />}
             </div>
           </DialogPanel>
         </div>
