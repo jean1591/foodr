@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import Stripe from 'stripe'
+import { createClient } from '@/utils/supabase/server'
+import { getLoggedInUser } from '../utils/user'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
@@ -8,8 +10,13 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
 
+    // TODO: move this to supabase admin
+    const supabase = createClient()
+    const { id: userId } = await getLoggedInUser(supabase)
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      client_reference_id: userId, // Supabase user id
       mode: 'payment',
       line_items: [
         {

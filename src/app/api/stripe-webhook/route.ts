@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import Stripe from 'stripe'
+import { addCreditsByUserId } from '@/utils/supabase/admin'
+import { isNil } from 'lodash'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
@@ -32,17 +34,28 @@ export async function POST(req: NextRequest) {
 
   try {
     switch (event.type) {
-      // Indicates a refund of a successful payment
+      // Refund of a successful payment
       case 'charge.refunded':
         // TODO: remove credits
         break
 
-      // Indicates a completed payment process and successful payment
+      // Completed payment process and successful payment
       case 'checkout.session.completed':
-        // TODO: add credits
+        const checkoutSession = event.data.object as Stripe.Checkout.Session
+
+        if (checkoutSession.payment_status !== 'paid') {
+          throw new Error('TODO')
+        }
+
+        const supabaseUserId = checkoutSession.client_reference_id
+        if (isNil(supabaseUserId)) {
+          throw new Error('TODO')
+        }
+
+        await addCreditsByUserId(supabaseUserId)
         break
 
-      // Indicates a potential fraud risk for a charge, early warning a dispute
+      // Potential fraud risk for a charge, early warning a dispute
       case 'radar.early_fraud_warning.created':
         const warning = event.data.object as any // Cast to the appropriate type
         const chargeId = warning.charge
@@ -61,7 +74,7 @@ export async function POST(req: NextRequest) {
         console.info(`Unhandled event: ${event.type}`)
     }
   } catch (error) {
-    console.error(`Webhook handler failed ${event.type}- `)
+    console.error(`Webhook handler failed ${event.type}`, { error })
     return new Response(`Webhook handler failed - ${event.type}`, {
       status: 400,
     })
