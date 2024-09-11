@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import {
+  addCreditsByUserId,
+  addPayment,
+  getUserByPaymentIntentId,
+  withdrawCreditsByUserId,
+} from '@/utils/supabase/admin'
 
 import Stripe from 'stripe'
-import { addCreditsByUserId } from '@/utils/supabase/admin'
 import { isNil } from 'lodash'
+
+// TODO: Rename all admin method to be business agnostic
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
@@ -35,40 +42,57 @@ export async function POST(req: NextRequest) {
   try {
     switch (event.type) {
       // Refund of a successful payment
-      case 'charge.refunded':
-        // TODO: remove credits
+      case 'charge.refunded': {
+        const refundSession = event.data.object
+        const paymentIntentId = refundSession.payment_intent
+
+        if (isNil(paymentIntentId)) {
+          throw new Error('No paymentIntentId linked')
+        }
+
+        const { id: supabaseUserId } = await getUserByPaymentIntentId(
+          paymentIntentId as string
+        )
+        await withdrawCreditsByUserId(supabaseUserId)
+
         break
+      }
 
       // Completed payment process and successful payment
-      case 'checkout.session.completed':
-        const checkoutSession = event.data.object as Stripe.Checkout.Session
+      case 'checkout.session.completed': {
+        const checkoutSession = event.data.object
 
         if (checkoutSession.payment_status !== 'paid') {
-          throw new Error('TODO')
+          throw new Error(
+            `An error occured during payment: paymentStatus: ${checkoutSession.payment_status}`
+          )
         }
 
-        const supabaseUserId = checkoutSession.client_reference_id
-        if (isNil(supabaseUserId)) {
-          throw new Error('TODO')
+        const paymentIntentId = checkoutSession.payment_intent
+
+        if (
+          checkoutSession.metadata &&
+          checkoutSession.metadata.supabase_user_id &&
+          paymentIntentId
+        ) {
+          const supabaseUserId = checkoutSession.metadata.supabase_user_id
+          await addCreditsByUserId(supabaseUserId)
+          await addPayment(supabaseUserId, paymentIntentId as string)
         }
 
-        await addCreditsByUserId(supabaseUserId)
         break
+      }
 
       // Potential fraud risk for a charge, early warning a dispute
       case 'radar.early_fraud_warning.created':
-        const warning = event.data.object as any // Cast to the appropriate type
-        const chargeId = warning.charge
-
-        // Retrieve the charge details
-        const charge = await stripe.charges.retrieve(chargeId)
+        const warning = event.data.object
+        const chargeId = warning.charge as string
 
         // Issue a refund
-        const refund = await stripe.refunds.create({
+        await stripe.refunds.create({
           charge: chargeId,
         })
 
-        console.log('Refund created:', refund)
         break
       default:
         console.info(`Unhandled event: ${event.type}`)

@@ -16,7 +16,9 @@ export async function POST(req: NextRequest) {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      client_reference_id: userId, // Supabase user id
+      metadata: {
+        supabase_user_id: userId,
+      },
       mode: 'payment',
       line_items: [
         {

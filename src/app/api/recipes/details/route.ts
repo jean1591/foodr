@@ -24,7 +24,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const dbRecipe = await getDbRecipe(supabase, selectedRecipe.name, userId)
 
   if (!isNil(dbRecipe)) {
-    console.log('Data source is DB')
     const recipe = formatDbRecipeToRecipe(dbRecipe)
     return NextResponse.json({ recipe })
   }
