@@ -1,7 +1,7 @@
 import OpenAI from 'openai'
 import { sleep } from './sleep'
 
-const FETCH_FROM_OPEN_AI = false
+const FETCH_FROM_OPEN_AI = true
 
 type Completion = OpenAI.Chat.Completions.ChatCompletion
 
