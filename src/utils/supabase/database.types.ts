@@ -99,41 +99,76 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          created_at: string
+          id: string
+          stripe_payment_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          stripe_payment_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          stripe_payment_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       recipes: {
         Row: {
+          calories: number
           cook_time: number
           created_at: string
-          day_of_the_week: number
+          day_of_the_week: string
           description: string
-          icon: string | null
+          icon: string
           id: string
           name: string
           prep_time: number
-          type: string | null
+          type: string
           user_id: string | null
         }
         Insert: {
+          calories?: number
           cook_time: number
           created_at?: string
-          day_of_the_week?: number
+          day_of_the_week?: string
           description: string
-          icon?: string | null
+          icon: string
           id?: string
           name: string
           prep_time: number
-          type?: string | null
+          type: string
           user_id?: string | null
         }
         Update: {
+          calories?: number
           cook_time?: number
           created_at?: string
-          day_of_the_week?: number
+          day_of_the_week?: string
           description?: string
-          icon?: string | null
+          icon?: string
           id?: string
           name?: string
           prep_time?: number
-          type?: string | null
+          type?: string
           user_id?: string | null
         }
         Relationships: [

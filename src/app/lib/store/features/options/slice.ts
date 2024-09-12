@@ -20,6 +20,12 @@ export const optionsSlice = createSlice({
   name: 'optionsSlice',
   initialState,
   reducers: {
+    resetOptions: (state) => {
+      state.favoriteIngredients = []
+      state.excludedIngredients = []
+      state.selectedDays = []
+      state.selectedMeals = []
+    },
     setFavoriteIngredients: (state, action: PayloadAction<string[]>) => {
       state.favoriteIngredients = action.payload
     },
@@ -36,6 +42,7 @@ export const optionsSlice = createSlice({
 })
 
 export const {
+  resetOptions,
   setFavoriteIngredients,
   setExcludedIngredients,
   setSelectedDays,

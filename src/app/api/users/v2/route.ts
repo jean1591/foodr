@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
   const { data: users } = await supabase
     .from('users')
-    .select('credits, has_completed_onboarding, username')
+    .select('credits, has_completed_onboarding')
     .eq('auth_user_id', authUser.id)
 
   if (!users || users.length === 0) {
@@ -32,6 +32,5 @@ const formatDbUserToUser = (user: DbUser): User => {
   return {
     credits: user.credits,
     hasCompletedOnboarding: user.has_completed_onboarding,
-    username: user.username,
   }
 }
