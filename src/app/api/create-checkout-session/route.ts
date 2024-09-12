@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: 'eur',
             product_data: {
               name: body.productName,
             },
@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${req.headers.get('origin')}/generate?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get('origin')}/cancel`,
+      success_url: `${req.headers.get('origin')}/generate`,
+      cancel_url: `${req.headers.get('origin')}/generate`,
     })
 
     return NextResponse.json({ id: session.id })

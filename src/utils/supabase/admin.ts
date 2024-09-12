@@ -72,18 +72,12 @@ export const withdrawCreditsByUserId = async (
 
 export const getUserByPaymentIntentId = async (
   paymentIntentId: string
-): Promise<User> => {
+): Promise<User | null> => {
   const { data: user } = await supabase
     .from('payments')
     .select('...users!inner(*)')
     .eq('stripe_payment_id', paymentIntentId)
     .single()
-
-  if (isNil(user)) {
-    throw new Error(
-      `No user found linked to paymentIntentId ${paymentIntentId}`
-    )
-  }
 
   return user
 }

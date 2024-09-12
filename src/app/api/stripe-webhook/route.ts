@@ -41,6 +41,18 @@ export async function POST(req: NextRequest) {
 
   try {
     switch (event.type) {
+      case 'charge.dispute.created': {
+        const disputeSession = event.data.object
+
+        const chargeId = disputeSession.charge as string
+
+        // Issue a refund
+        await stripe.refunds.create({
+          charge: chargeId,
+        })
+
+        break
+      }
       // Refund of a successful payment
       case 'charge.refunded': {
         const refundSession = event.data.object
@@ -50,9 +62,18 @@ export async function POST(req: NextRequest) {
           throw new Error('No paymentIntentId linked')
         }
 
-        const { id: supabaseUserId } = await getUserByPaymentIntentId(
-          paymentIntentId as string
-        )
+        const user = await getUserByPaymentIntentId(paymentIntentId as string)
+
+        if (isNil(user)) {
+          console.error(
+            `No user found linked to paymentIntentId ${paymentIntentId}`
+          )
+
+          return
+        }
+
+        const { id: supabaseUserId } = user
+
         await withdrawCreditsByUserId(supabaseUserId)
 
         break
@@ -84,9 +105,10 @@ export async function POST(req: NextRequest) {
       }
 
       // Potential fraud risk for a charge, early warning a dispute
-      case 'radar.early_fraud_warning.created':
-        const warning = event.data.object
-        const chargeId = warning.charge as string
+      case 'radar.early_fraud_warning.created': {
+        const warningSession = event.data.object
+
+        const chargeId = warningSession.charge as string
 
         // Issue a refund
         await stripe.refunds.create({
@@ -94,6 +116,7 @@ export async function POST(req: NextRequest) {
         })
 
         break
+      }
       default:
         console.info(`Unhandled event: ${event.type}`)
     }
